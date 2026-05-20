@@ -36,96 +36,63 @@
 
 <!-- CONTENT -->
 <section class="lesson-content">
-
-  <!-- INTRO -->
-  <div class="card intro">
-    Operators are used to perform operations on variables and values. Java supports arithmetic, comparison, and logical operators.
-  </div>
-
-  <div class="card">
-    <h2>Why This Lesson Matters</h2>
-    <p>Every Java lesson builds a stronger foundation for writing real applications. These concepts are used every day in desktop, web, and mobile development.</p>
-    <ul>
-      <li>Understand how Java works behind the scenes</li>
-      <li>Learn the syntax and structure clearly</li>
-      <li>Practice examples that translate directly into real projects</li>
-      <li>See how the lesson connects to larger programming concepts</li>
-    </ul>
-  </div>
-
-  <!-- TYPES -->
-  <div class="card">
-    <h2>Types of Operators</h2>
-
-    <h3>1. Arithmetic Operators</h3>
-    <p>Used for basic math operations:</p>
-    <ul>
-      <li>+ (Addition)</li>
-      <li>- (Subtraction)</li>
-      <li>* (Multiplication)</li>
-      <li>/ (Division)</li>
-    </ul>
-
-    <h3>2. Comparison Operators</h3>
-    <p>Used to compare values:</p>
-    <ul>
-      <li>== (Equal)</li>
-      <li>!= (Not equal)</li>
-      <li>> (Greater than)</li>
-      <li>< (Less than)</li>
-    </ul>
-
-    <h3>3. Logical Operators</h3>
-    <ul>
-      <li>&& (AND)</li>
-      <li>|| (OR)</li>
-      <li>! (NOT)</li>
-    </ul>
-  </div>
-
-  <!-- CODE EXAMPLE -->
-  <div class="card code-section">
-    <div class="code-header">
-      <span>Example Code</span>
+    <div class="card intro">
+      <h2>Lesson 3: Operators</h2>
+      <p>Operators are symbols that perform actions on values, such as adding numbers or comparing two values. They are the tools Java uses to calculate, compare, and decide what happens next.</p>
     </div>
 
-<pre>
+    <div class="card">
+      <h3>What you will learn</h3>
+      <ul>
+        <li>Learn how to perform math and build expressions.</li>
+        <li>Use operators to compare values and make decisions.</li>
+        <li>Understand how expressions are evaluated in Java.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Important concepts</h3>
+      <ul>
+        <li><strong>Arithmetic</strong> — Addition, subtraction, multiplication, division.</li>
+        <li><strong>Comparison</strong> — Compare values using ==, !=, >, <, etc.</li>
+        <li><strong>Logical</strong> — Combine true/false conditions with && and ||.</li>
+        <li><strong>Assignment</strong> — Store the result of an operation into a variable.</li>
+        <li><strong>Concatenation</strong> — Join strings using +.</li>
+      </ul>
+    </div>
+
+    <div class="card code-section">
+      <div class="code-header"><span>Example Code</span></div>
+      <pre>
 public class Main {
   public static void main(String[] args) {
-
     int a = 10;
-    int b = 5;
-
-    System.out.println("Addition: " + (a + b));
-    System.out.println("Subtraction: " + (a - b));
-    System.out.println("Multiplication: " + (a * b));
-    System.out.println("Division: " + (a / b));
-
-    System.out.println("Is a > b? " + (a > b));
-
+    int b = 4;
+    System.out.println("Add: " + (a + b));
+    System.out.println("Subtract: " + (a - b));
+    System.out.println("Multiply: " + (a * b));
+    System.out.println("Divide: " + (a / b));
+    System.out.println("Compare: " + (a > b));
   }
 }
-</pre>
-  </div>
-
-  <!-- TAKEAWAY -->
-  <div class="takeaway">
-    <div class="icon">?</div>
-    <div>
-      <h3>Key Takeaway</h3>
-      <p>
-        Operators allow you to manipulate data, perform calculations, and make decisions in your program.
-      </p>
+      </pre>
     </div>
-  </div>
 
-  <!-- NAV -->
-  <div class="lesson-nav">
-    <a href="lesson2.html"><button class="btn-outline">? Previous Lesson</button></a>
-    <a href="lesson4.html"><button class="btn-primary">Next Lesson ?</button></a>
-  </div>
+    <div class="takeaway">
+      <div class="icon">?</div>
+      <div>
+        <h3>Key Takeaway</h3>
+        <p>Operators let you change values, compare data, and build conditions that control how your program behaves.</p>
+      </div>
+    </div>
 
+    <div class="lesson-nav">
+      <a href="lesson2.html"><button class="btn-outline">← Previous Lesson</button></a>
+      <a href="lesson4.html"><button class="btn-primary">Next Lesson →</button></a>
+    </div>
 </section>
+
+
 
 <!-- COMPILER -->
 <div class="card exercise">
@@ -144,8 +111,8 @@ public class Main {
   }
 }</textarea>
 
-  <button onclick="runCode()">Run</button>
-  <button onclick="resetCode()">Reset</button>
+  <button onclick="runCode()" class="btn-primary">Run Code</button>
+  <button onclick="resetCode()" class="btn-primary">Reset Code</button>
 
   <div id="status" class="status"></div>
   <pre id="output"></pre>
@@ -216,7 +183,7 @@ async function runCode() {
 
 <!-- FOOTER -->
 <footer>
-  � 2025 JavaLearn Hub. All rights reserved.
+  � 2025 JavaLearn Hub. All rights reserved.
 </footer>
 </body>
 </html>

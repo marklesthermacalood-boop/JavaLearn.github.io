@@ -27,58 +27,69 @@
 </section>
 
 <section class="lesson-content">
+    <div class="card intro">
+      <h2>Lesson 9: Classes & Objects</h2>
+      <p>Classes define the structure of objects, and objects are the things your program works with. This is the heart of object-oriented programming in Java.</p>
+    </div>
 
-<div class="card intro">
-Java is object-oriented. Everything is based on classes and objects.
-</div>
+    <div class="card">
+      <h3>What you will learn</h3>
+      <ul>
+        <li>Learn the relationship between classes and objects.</li>
+        <li>See how fields store object data.</li>
+        <li>Use methods to make objects perform actions.</li>
+      </ul>
+    </div>
 
-  <div class="card">
-    <h2>Why This Lesson Matters</h2>
-    <p>Every Java lesson builds a stronger foundation for writing real applications. These concepts are used every day in desktop, web, and mobile development.</p>
-    <ul>
-      <li>Understand how Java works behind the scenes</li>
-      <li>Learn the syntax and structure clearly</li>
-      <li>Practice examples that translate directly into real projects</li>
-      <li>See how the lesson connects to larger programming concepts</li>
-    </ul>
-  </div>
+    <div class="card">
+      <h3>Important concepts</h3>
+      <ul>
+        <li><strong>Class</strong> — A blueprint that defines data and behavior.</li>
+        <li><strong>Object</strong> — A specific instance created from a class.</li>
+        <li><strong>Field</strong> — A value stored inside an object.</li>
+        <li><strong>Constructor</strong> — Sets up a new object when it is created.</li>
+        <li><strong>Method</strong> — A behavior the object can perform.</li>
+      </ul>
+    </div>
 
-  <div class="card">
-<h2>Class Example</h2>
-<pre>
-class Car {
-  String model = "Toyota";
-}
-</pre>
-</div>
-
-<div class="card code-section">
-<pre>
+    <div class="card code-section">
+      <div class="code-header"><span>Example Code</span></div>
+      <pre>
 public class Main {
   public static void main(String[] args) {
-
-    Car car = new Car();
-    System.out.println(car.model);
-
+    Car car = new Car("Red", 2024);
+    car.showInfo();
+  }
+  static class Car {
+    String color;
+    int year;
+    Car(String color, int year) {
+      this.color = color;
+      this.year = year;
+    }
+    void showInfo() {
+      System.out.println("Car: " + color + " " + year);
+    }
   }
 }
+      </pre>
+    </div>
 
-class Car {
-  String model = "Toyota";
-}
-</pre>
-</div>
+    <div class="takeaway">
+      <div class="icon">?</div>
+      <div>
+        <h3>Key Takeaway</h3>
+        <p>Classes and objects help you organize code around real-world ideas, making it easier to build bigger programs.</p>
+      </div>
+    </div>
 
-<div class="takeaway">
-<p><b>Key Takeaway:</b> Classes define objects, and objects are real instances of those classes.</p>
-</div>
-
-<div class="lesson-nav">
- <a href="lesson8.html"><button class="btn-outline">? Previous Lesson</button></a>
-   <a href="lesson10.html"><button class="btn-primary">Next Lesson ?</button></a>
-</div>
-
+    <div class="lesson-nav">
+      <a href="lesson8.html"><button class="btn-outline">← Previous Lesson</button></a>
+      <a href="lesson10.html"><button class="btn-primary">Next Lesson →</button></a>
+    </div>
 </section>
+
+
 
 <div class="card exercise">
 <textarea id="code">
@@ -96,7 +107,9 @@ public class Main {
 }
 </textarea>
 
-<button onclick="runCode()">Run</button>
+
+  <button onclick="runCode()" class="btn-primary">Run Code</button>
+  <button onclick="resetCode()" class="btn-primary">Reset Code</button>
 <pre id="output"></pre>
 </div>
 

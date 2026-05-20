@@ -27,72 +27,64 @@
 </section>
 
 <section class="lesson-content">
+    <div class="card intro">
+      <h2>Lesson 4: If Statements</h2>
+      <p>If statements teach Java how to make decisions. Your program can choose one path when something is true, and a different path when it is false.</p>
+    </div>
 
-<div class="card intro">
-  If statements allow your program to make decisions based on conditions.
-</div>
+    <div class="card">
+      <h3>What you will learn</h3>
+      <ul>
+        <li>See how Java uses conditions to control the flow of a program.</li>
+        <li>Use if, else if, and else to handle multiple outcomes.</li>
+        <li>Avoid common mistakes when writing boolean expressions.</li>
+      </ul>
+    </div>
 
-  <div class="card">
-    <h2>Why This Lesson Matters</h2>
-    <p>Every Java lesson builds a stronger foundation for writing real applications. These concepts are used every day in desktop, web, and mobile development.</p>
-    <ul>
-      <li>Understand how Java works behind the scenes</li>
-      <li>Learn the syntax and structure clearly</li>
-      <li>Practice examples that translate directly into real projects</li>
-      <li>See how the lesson connects to larger programming concepts</li>
-    </ul>
-  </div>
+    <div class="card">
+      <h3>Important concepts</h3>
+      <ul>
+        <li><strong>if</strong> — Run code only when a condition is true.</li>
+        <li><strong>else if</strong> — Check another condition when the first is false.</li>
+        <li><strong>else</strong> — Run code when no conditions are true.</li>
+        <li><strong>Condition</strong> — A true/false expression that decides what happens.</li>
+        <li><strong>Boolean</strong> — A value that is true or false.</li>
+      </ul>
+    </div>
 
-  <div class="card">
-  <h2>Basic If Statement</h2>
-<pre>
-if (condition) {
-  // code runs if true
-}
-</pre>
-
-  <h2>If-Else</h2>
-<pre>
-if (condition) {
-  // true
-} else {
-  // false
-}
-</pre>
-</div>
-
-<div class="card code-section">
-<pre>
+    <div class="card code-section">
+      <div class="code-header"><span>Example Code</span></div>
+      <pre>
 public class Main {
   public static void main(String[] args) {
-
-    int age = 18;
-
-    if (age >= 18) {
-      System.out.println("Adult");
+    int score = 75;
+    if (score >= 90) {
+      System.out.println("Excellent");
+    } else if (score >= 60) {
+      System.out.println("Good job");
     } else {
-      System.out.println("Minor");
+      System.out.println("Keep practicing");
     }
-
   }
 }
-</pre>
-</div>
+      </pre>
+    </div>
 
-<div class="takeaway">
-    <div class="icon">?</div>
-    <div>
-  <h3>Key Takeaway</h3>
-  <p>If statements let your program choose what to do based on conditions.</p>
-</div>
-</div>
+    <div class="takeaway">
+      <div class="icon">?</div>
+      <div>
+        <h3>Key Takeaway</h3>
+        <p>If statements make your program smart by choosing what to do next based on true/false conditions.</p>
+      </div>
+    </div>
 
- <div class="lesson-nav">
-    <a href="lesson3.html"><button class="btn-outline">? Previous Lesson</button></a>
-    <a href="lesson5.html"><button class="btn-primary">Next Lesson ?</button></a>
-  </div>
-
+    <div class="lesson-nav">
+      <a href="lesson3.html"><button class="btn-outline">← Previous Lesson</button></a>
+      <a href="lesson5.html"><button class="btn-primary">Next Lesson →</button></a>
+    </div>
 </section>
+
+
 
 <div class="card exercise">
 <textarea id="code">
@@ -111,7 +103,9 @@ public class Main {
 }
 </textarea>
 
-<button onclick="runCode()">Run</button>
+
+  <button onclick="runCode()" class="btn-primary">Run Code</button>
+  <button onclick="resetCode()" class="btn-primary">Reset Code</button>
 <pre id="output"></pre>
 </div>
 

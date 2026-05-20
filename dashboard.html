@@ -236,15 +236,26 @@ firebase.auth().onAuthStateChanged(async (user) => {
   document.getElementById("username").textContent = user.displayName || user.email;
   document.getElementById("userEmail").textContent = user.email;
 
+  // Load user role from Firestore
+  const userDoc = await db.collection("users").doc(user.uid).get();
+  if (userDoc.exists) {
+    const role = userDoc.data().role || "Student";
+    document.getElementById("userRole").textContent = "Role: " + role.charAt(0).toUpperCase() + role.slice(1);
+  }
+
   // Load user scores
   await loadUserScores(user.uid);
 });
 
 async function loadUserScores(userId) {
   try {
+    console.log("Loading scores for user:", userId);
     const result = await getUserScores();
     
+    console.log("Score result:", result);
+    
     if (!result.success || result.scores.length === 0) {
+      console.warn("No scores found for user");
       document.getElementById("scoresContainer").innerHTML = 
         '<div class="empty-state">No scores yet. Start with a quiz to get started!</div>';
       updateStats([], userId);
@@ -252,6 +263,7 @@ async function loadUserScores(userId) {
     }
 
     const scores = result.scores;
+    console.log("Displaying scores:", scores.length);
 
     // Update stats
     updateStats(scores, userId);
@@ -315,108 +327,6 @@ async function logout() {
     console.error("Logout error:", err);
   }
 }
-</script>
-
-</body>
-</html>
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-/* FIREBASE CONFIG */
-const firebaseConfig = {
-  apiKey: "AIzaSyDewXAlvh_vtQKEM147EJuPARkuka0ILfo",
-  authDomain: "javalearnhub.firebaseapp.com",
-  projectId: "javalearnhub",
-  storageBucket: "javalearnhub.firebasestorage.app",
-  messagingSenderId: "722964716262",
-  appId: "1:722964716262:web:66b70aade9b6cd00543927"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-/* AUTH CHECK */
-/**onAuthStateChanged(auth, async (user) => {
-
-  if (!user) {
-    document.getElementById("userName").innerText = "Not logged in";
-    setTimeout(() => window.location.href = "login.html", 1000);
-    return;
-  }*/
-
-  document.getElementById("userEmail").innerText = "Email: " + user.email;
-
-  try {
-    const userRef = doc(db, "users", user.uid);
-    const userSnap = await getDoc(userRef);
-
-    if (!userSnap.exists()) {
-      document.getElementById("userName").innerText = "No user data found";
-      return;
-    }
-
-    const data = userSnap.data();
-
-    // USER NAME
-    document.getElementById("userName").innerText =
-      "Name: " + (data.name || "User");
-
-    /* ---------------- QUIZ SCORES ---------------- */
-    const quizList = document.getElementById("quizScores");
-    quizList.innerHTML = "";
-
-    if (data.quizScores?.length) {
-      data.quizScores.forEach((score, i) => {
-        let li = document.createElement("li");
-        li.textContent = `Quiz ${i + 1}: ${score}/20`;
-        quizList.appendChild(li);
-      });
-    } else {
-      quizList.innerHTML = "<li>No quizzes yet</li>";
-    }
-
-    /* -------- OUTPUT PREDICTION SCORES -------- */
-    const outputList = document.getElementById("outputScores");
-    outputList.innerHTML = "";
-
-    if (data.outputScores?.length) {
-      data.outputScores.forEach((score, i) => {
-        let li = document.createElement("li");
-        li.textContent = `Exercise ${i + 1}: ${score}/10`;
-        outputList.appendChild(li);
-      });
-    } else {
-      outputList.innerHTML = "<li>No output prediction attempts yet</li>";
-    }
-
-    /* -------- CODING CHALLENGE SCORES -------- */
-    const codingList = document.getElementById("codingScores");
-    codingList.innerHTML = "";
-
-    if (data.codingScores?.length) {
-      data.codingScores.forEach((score, i) => {
-        let li = document.createElement("li");
-        li.textContent = `Challenge ${i + 1}: ${score}/20`;
-        codingList.appendChild(li);
-      });
-    } else {
-      codingList.innerHTML = "<li>No coding challenges yet</li>";
-    }
-
-  } catch (err) {
-    console.error(err);
-    document.getElementById("userName").innerText = "Error loading data";
-  }
-;
-
-/* LOGOUT */
-window.logout = function() {
-  signOut(auth).then(() => {
-    window.location.href = "login.html";
-  });
-};
 </script>
 
 </body>

@@ -100,14 +100,16 @@ async function saveScore(lessonId, challengeId, score, correct, total) {
       username: user.displayName || user.email.split('@')[0]
     };
 
+    console.log("Saving score data:", scoreData);
+
     // Add to Firestore
     const docRef = await db.collection("scores").add(scoreData);
-    console.log("Score saved:", docRef.id);
+    console.log("Score saved with ID:", docRef.id);
 
-    // Also update user's scores array
-    await db.collection("users").doc(user.uid).update({
+    // Also update user's scores array (use set with merge to create if doesn't exist)
+    await db.collection("users").doc(user.uid).set({
       scores: firebase.firestore.FieldValue.arrayUnion(docRef.id)
-    });
+    }, { merge: true });
 
     return { success: true, scoreId: docRef.id };
   } catch (error) {
@@ -124,17 +126,43 @@ async function getUserScores() {
       return { success: false, error: "User not authenticated" };
     }
 
-    const snapshot = await db.collection("scores")
-      .where("userId", "==", user.uid)
-      .orderBy("timestamp", "desc")
-      .get();
+    // Try to get scores with orderBy
+    try {
+      const snapshot = await db.collection("scores")
+        .where("userId", "==", user.uid)
+        .orderBy("timestamp", "desc")
+        .get();
 
-    const scores = [];
-    snapshot.forEach((doc) => {
-      scores.push({ id: doc.id, ...doc.data() });
-    });
+      const scores = [];
+      snapshot.forEach((doc) => {
+        scores.push({ id: doc.id, ...doc.data() });
+      });
 
-    return { success: true, scores: scores };
+      console.log("Scores loaded successfully:", scores.length);
+      return { success: true, scores: scores };
+    } catch (indexError) {
+      // If composite index error, try without orderBy
+      console.warn("Composite index not ready, trying fallback query:", indexError.message);
+      
+      const snapshot = await db.collection("scores")
+        .where("userId", "==", user.uid)
+        .get();
+
+      const scores = [];
+      snapshot.forEach((doc) => {
+        scores.push({ id: doc.id, ...doc.data() });
+      });
+
+      // Sort client-side
+      scores.sort((a, b) => {
+        const timeA = a.timestamp?.seconds || 0;
+        const timeB = b.timestamp?.seconds || 0;
+        return timeB - timeA;
+      });
+
+      console.log("Scores loaded with fallback:", scores.length);
+      return { success: true, scores: scores };
+    }
   } catch (error) {
     console.error("Error fetching scores:", error.message);
     return { success: false, error: error.message };

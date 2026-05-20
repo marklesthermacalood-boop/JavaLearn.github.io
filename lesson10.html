@@ -27,59 +27,77 @@
 </section>
 
 <section class="lesson-content">
+    <div class="card intro">
+      <h2>Lesson 10: Polymorphism</h2>
+      <p>Polymorphism allows the same method call to behave differently depending on the object. It makes Java code more flexible and easier to expand.</p>
+    </div>
 
-<div class="card intro">
-Polymorphism allows objects of different classes to be treated as objects of a common superclass. It enables method overriding and dynamic method dispatch.
-</div>
+    <div class="card">
+      <h3>What you will learn</h3>
+      <ul>
+        <li>See how one interface can support many object types.</li>
+        <li>Understand method overriding and dynamic behavior.</li>
+        <li>Write code that works with general types instead of specific ones.</li>
+      </ul>
+    </div>
 
-  <div class="card">
-    <h2>Why This Lesson Matters</h2>
-    <p>Every Java lesson builds a stronger foundation for writing real applications. These concepts are used every day in desktop, web, and mobile development.</p>
-    <ul>
-      <li>Understand how Java works behind the scenes</li>
-      <li>Learn the syntax and structure clearly</li>
-      <li>Practice examples that translate directly into real projects</li>
-      <li>See how the lesson connects to larger programming concepts</li>
-    </ul>
-  </div>
+    <div class="card">
+      <h3>Important concepts</h3>
+      <ul>
+        <li><strong>Polymorphism</strong> — One action, many forms.</li>
+        <li><strong>Inheritance</strong> — A subclass reuses a parent class.</li>
+        <li><strong>Override</strong> — A subclass changes a method.</li>
+        <li><strong>Superclass</strong> — The parent class.</li>
+        <li><strong>Dynamic binding</strong> — Java chooses which method to run at runtime.</li>
+      </ul>
+    </div>
 
-  <div class="card">
-<ul>
-  <li>Variables & Data Types</li>
-  <li>Operators</li>
-  <li>If Statements</li>
-  <li>Loops</li>
-  <li>Methods</li>
-  <li>Arrays</li>
-  <li>Strings</li>
-  <li>OOP Basics</li>
-</ul>
-</div>
-
-<div class="card code-section">
-<pre>
+    <div class="card code-section">
+      <div class="code-header"><span>Example Code</span></div>
+      <pre>
 public class Main {
   public static void main(String[] args) {
-
-    for (int i = 1; i <= 5; i++) {
-      System.out.println("Lesson " + i);
+    Animal animal = new Dog();
+    animal.speak();
+    animal = new Cat();
+    animal.speak();
+  }
+  static class Animal {
+    void speak() {
+      System.out.println("Animal sound");
     }
-
+  }
+  static class Dog extends Animal {
+    @Override
+    void speak() {
+      System.out.println("Dog says woof");
+    }
+  }
+  static class Cat extends Animal {
+    @Override
+    void speak() {
+      System.out.println("Cat says meow");
+    }
   }
 }
-</pre>
-</div>
+      </pre>
+    </div>
 
-<div class="takeaway">
-<p><b>Key Takeaway:</b> You now understand Java fundamentals and can start building simple programs.</p>
-</div>
+    <div class="takeaway">
+      <div class="icon">?</div>
+      <div>
+        <h3>Key Takeaway</h3>
+        <p>Polymorphism helps your program work with many kinds of objects through a common interface.</p>
+      </div>
+    </div>
 
-<div class="lesson-nav">
- <a href="lesson9.html"><button class="btn-outline">? Previous Lesson</button></a>
-<a href="index.html#"><button class="btn-primary">Finish Course</button></a>
-</div>
-
+    <div class="lesson-nav">
+      <a href="lesson9.html"><button class="btn-outline">← Previous Lesson</button></a>
+      <a href="index.html#"><button class="btn-primary">Finish Course</button></a>
+    </div>
 </section>
+
+
 
 <div class="card exercise">
 <textarea id="code">
@@ -92,8 +110,10 @@ public class Main {
 }
 </textarea>
 
-<button onclick="runCode()">Run</button>
-<pre id="output"></pre>
+
+  <button onclick="runCode()" class="btn-primary">Run Code</button>
+  <button onclick="resetCode()" class="btn-primary">Reset Code</button>
+  <pre id="output"></pre>
 </div>
 
 <script>

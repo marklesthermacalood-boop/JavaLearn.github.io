@@ -27,57 +27,60 @@
 </section>
 
 <section class="lesson-content">
+    <div class="card intro">
+      <h2>Lesson 7: Arrays</h2>
+      <p>Arrays store multiple values under one name. Instead of separate variables for each item, arrays let you keep a whole list together and use loops to process it.</p>
+    </div>
 
-<div class="card intro">
-Arrays are used to store multiple values in a single variable instead of creating separate variables for each value.
-</div>
+    <div class="card">
+      <h3>What you will learn</h3>
+      <ul>
+        <li>Keep lists of values in one place.</li>
+        <li>Access items by their position in the array.</li>
+        <li>Use loops to handle many values at once.</li>
+      </ul>
+    </div>
 
-  <div class="card">
-    <h2>Why This Lesson Matters</h2>
-    <p>Every Java lesson builds a stronger foundation for writing real applications. These concepts are used every day in desktop, web, and mobile development.</p>
-    <ul>
-      <li>Understand how Java works behind the scenes</li>
-      <li>Learn the syntax and structure clearly</li>
-      <li>Practice examples that translate directly into real projects</li>
-      <li>See how the lesson connects to larger programming concepts</li>
-    </ul>
-  </div>
+    <div class="card">
+      <h3>Important concepts</h3>
+      <ul>
+        <li><strong>Array</strong> — A collection of values stored in order.</li>
+        <li><strong>Index</strong> — The position of an item, starting from 0.</li>
+        <li><strong>length</strong> — The number of items in the array.</li>
+        <li><strong>Element</strong> — One value inside the array.</li>
+        <li><strong>Traversal</strong> — Visiting each item with a loop.</li>
+      </ul>
+    </div>
 
-  <div class="card">
-<h2>Example</h2>
-<pre>
-int[] numbers = {1, 2, 3, 4, 5};
-</pre>
-
-<p>You access elements using index starting from 0.</p>
-</div>
-
-<div class="card code-section">
-<pre>
+    <div class="card code-section">
+      <div class="code-header"><span>Example Code</span></div>
+      <pre>
 public class Main {
   public static void main(String[] args) {
-
-    int[] nums = {10, 20, 30};
-
-    System.out.println(nums[0]);
-    System.out.println(nums[1]);
-    System.out.println(nums[2]);
-
+    String[] fruits = {"Apple", "Banana", "Cherry"};
+    for (int i = 0; i < fruits.length; i++) {
+      System.out.println("Fruit " + (i + 1) + ": " + fruits[i]);
+    }
   }
 }
-</pre>
-</div>
+      </pre>
+    </div>
 
-<div class="takeaway">
-<p><b>Key Takeaway:</b> Arrays help store multiple values in one variable using indexes.</p>
-</div>
+    <div class="takeaway">
+      <div class="icon">?</div>
+      <div>
+        <h3>Key Takeaway</h3>
+        <p>Arrays let you store and process multiple values in a simple, ordered way.</p>
+      </div>
+    </div>
 
-<div class="lesson-nav">
- <a href="lesson6.html"><button class="btn-outline">? Previous Lesson</button></a>
-   <a href="lesson8.html"><button class="btn-primary">Next Lesson ?</button></a>
-</div>
-
+    <div class="lesson-nav">
+      <a href="lesson6.html"><button class="btn-outline">← Previous Lesson</button></a>
+      <a href="lesson8.html"><button class="btn-primary">Next Lesson →</button></a>
+    </div>
 </section>
+
+
 
 <div class="card exercise">
 <textarea id="code">
@@ -94,7 +97,9 @@ public class Main {
 }
 </textarea>
 
-<button onclick="runCode()">Run</button>
+
+  <button onclick="runCode()" class="btn-primary">Run Code</button>
+  <button onclick="resetCode()" class="btn-primary">Reset Code</button>
 <pre id="output"></pre>
 </div>
 

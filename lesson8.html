@@ -27,57 +27,62 @@
 </section>
 
 <section class="lesson-content">
+    <div class="card intro">
+      <h2>Lesson 8: Strings</h2>
+      <p>Strings hold text, like names or messages. Java treats strings as objects with helpful tools for joining, measuring, and changing text.</p>
+    </div>
 
-<div class="card intro">
-A String is used to store text in Java.
-</div>
+    <div class="card">
+      <h3>What you will learn</h3>
+      <ul>
+        <li>Work with text in your programs.</li>
+        <li>Use string methods to inspect and combine text.</li>
+        <li>Know the difference between String and characters.</li>
+      </ul>
+    </div>
 
-  <div class="card">
-    <h2>Why This Lesson Matters</h2>
-    <p>Every Java lesson builds a stronger foundation for writing real applications. These concepts are used every day in desktop, web, and mobile development.</p>
-    <ul>
-      <li>Understand how Java works behind the scenes</li>
-      <li>Learn the syntax and structure clearly</li>
-      <li>Practice examples that translate directly into real projects</li>
-      <li>See how the lesson connects to larger programming concepts</li>
-    </ul>
-  </div>
+    <div class="card">
+      <h3>Important concepts</h3>
+      <ul>
+        <li><strong>String</strong> — Text inside quotes like "Hello".</li>
+        <li><strong>Concatenation</strong> — Joining text with +.</li>
+        <li><strong>length()</strong> — Find how many characters are in a string.</li>
+        <li><strong>charAt()</strong> — Get one character by position.</li>
+        <li><strong>equals()</strong> — Compare strings correctly.</li>
+      </ul>
+    </div>
 
-  <div class="card">
-<h2>Example Methods</h2>
-<ul>
-  <li>length()</li>
-  <li>toUpperCase()</li>
-  <li>toLowerCase()</li>
-</ul>
-</div>
-
-<div class="card code-section">
-<pre>
+    <div class="card code-section">
+      <div class="code-header"><span>Example Code</span></div>
+      <pre>
 public class Main {
   public static void main(String[] args) {
-
-    String name = "Java";
-
-    System.out.println(name.length());
-    System.out.println(name.toUpperCase());
-    System.out.println(name.toLowerCase());
-
+    String first = "Java";
+    String second = "Basics";
+    String message = first + " " + second;
+    System.out.println(message);
+    System.out.println("Length: " + message.length());
+    System.out.println("First char: " + message.charAt(0));
   }
 }
-</pre>
-</div>
+      </pre>
+    </div>
 
-<div class="takeaway">
-<p><b>Key Takeaway:</b> Strings are objects used to store and manipulate text.</p>
-</div>
+    <div class="takeaway">
+      <div class="icon">?</div>
+      <div>
+        <h3>Key Takeaway</h3>
+        <p>Strings let you work with written text and Java gives you methods to manipulate that text safely.</p>
+      </div>
+    </div>
 
-<div class="lesson-nav">
- <a href="lesson7.html"><button class="btn-outline">? Previous Lesson</button></a>
-<a href="lesson9.html"><button class="btn-primary">Next Lesson ?</button></a>
-</div>
-
+    <div class="lesson-nav">
+      <a href="lesson7.html"><button class="btn-outline">← Previous Lesson</button></a>
+      <a href="lesson9.html"><button class="btn-primary">Next Lesson →</button></a>
+    </div>
 </section>
+
+
 
 <div class="card exercise">
 <textarea id="code">
@@ -93,7 +98,9 @@ public class Main {
 }
 </textarea>
 
-<button onclick="runCode()">Run</button>
+
+  <button onclick="runCode()" class="btn-primary">Run Code</button>
+  <button onclick="resetCode()" class="btn-primary">Reset Code</button>
 <pre id="output"></pre>
 </div>
 

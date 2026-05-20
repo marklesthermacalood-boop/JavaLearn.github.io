@@ -26,71 +26,59 @@
 </section>
 
 <section class="lesson-content">
+    <div class="card intro">
+      <h2>Lesson 5: Loops</h2>
+      <p>Loops let Java repeat actions many times without writing the same code over and over. They are perfect for counting, processing lists, and repeating tasks.</p>
+    </div>
 
-<div class="card intro">
-  Loops allow you to repeat code multiple times.
-</div>
+    <div class="card">
+      <h3>What you will learn</h3>
+      <ul>
+        <li>Practice repeating code efficiently.</li>
+        <li>Learn the three main loop types in Java.</li>
+        <li>Avoid duplicate code with loop logic.</li>
+      </ul>
+    </div>
 
-  <div class="card">
-    <h2>Why This Lesson Matters</h2>
-    <p>Every Java lesson builds a stronger foundation for writing real applications. These concepts are used every day in desktop, web, and mobile development.</p>
-    <ul>
-      <li>Understand how Java works behind the scenes</li>
-      <li>Learn the syntax and structure clearly</li>
-      <li>Practice examples that translate directly into real projects</li>
-      <li>See how the lesson connects to larger programming concepts</li>
-    </ul>
-  </div>
+    <div class="card">
+      <h3>Important concepts</h3>
+      <ul>
+        <li><strong>for loop</strong> — Repeat a fixed number of times.</li>
+        <li><strong>while loop</strong> — Repeat while a condition remains true.</li>
+        <li><strong>do-while loop</strong> — Run at least once, then repeat while true.</li>
+        <li><strong>break</strong> — Stop the loop immediately.</li>
+        <li><strong>continue</strong> — Skip to the next loop iteration.</li>
+      </ul>
+    </div>
 
-  <div class="card">
-  <h2>For Loop</h2>
-<pre>
-for (int i = 0; i < 5; i++) {
-  System.out.println(i);
-}
-</pre>
-
-  <h2>While Loop</h2>
-<pre>
-while (condition) {
-  // runs while true
-}
-</pre>
-</div>
-
-<div class="card code-section">
-<pre>
+    <div class="card code-section">
+      <div class="code-header"><span>Example Code</span></div>
+      <pre>
 public class Main {
   public static void main(String[] args) {
-
     for (int i = 1; i <= 5; i++) {
       System.out.println("Count: " + i);
     }
-
   }
 }
-</pre>
-</div>
+      </pre>
+    </div>
 
-<div class="takeaway">
-    <div class="icon">?</div>
-    <div>
-  <h3>Key Takeaway</h3>
-   <p>
-      Loops allow you to repeat code multiple times without rewriting it.
-      A <b>for loop</b> is best when you know how many times to repeat,
-      while a <b>while loop</b> runs as long as a condition is true.
-      Using loops makes your code shorter, cleaner, and more efficient.
-    </p>
-</div>
-</div>
+    <div class="takeaway">
+      <div class="icon">?</div>
+      <div>
+        <h3>Key Takeaway</h3>
+        <p>Loops are a powerful tool for repeating code and working through multiple values quickly and clearly.</p>
+      </div>
+    </div>
 
-<div class="lesson-nav">
-    <a href="lesson4.html"><button class="btn-outline">? Previous Lesson</button></a>
-    <a href="lesson6.html"><button class="btn-primary">Next Lesson ?</button></a>
-  </div>
-
+    <div class="lesson-nav">
+      <a href="lesson4.html"><button class="btn-outline">← Previous Lesson</button></a>
+      <a href="lesson6.html"><button class="btn-primary">Next Lesson →</button></a>
+    </div>
 </section>
+
+
 
 <div class="card exercise">
 <textarea id="code">
@@ -105,7 +93,10 @@ public class Main {
 }
 </textarea>
 
-<button onclick="runCode()">Run</button>
+
+  <button onclick="runCode()" class="btn-primary">Run Code</button>
+  <button onclick="resetCode()" class="btn-primary">Reset Code</button>
+  
 <pre id="output"></pre>
 </div>
 

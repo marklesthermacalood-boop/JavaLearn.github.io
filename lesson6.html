@@ -26,70 +26,65 @@
 </section>
 
 <section class="lesson-content">
+    <div class="card intro">
+      <h2>Lesson 6: Methods</h2>
+      <p>Methods organize code into reusable pieces. Each method performs one task, which makes your program easier to read and easier to fix.</p>
+    </div>
 
-<div class="card intro">
-  Methods are reusable blocks of code that perform a specific task.
-</div>
+    <div class="card">
+      <h3>What you will learn</h3>
+      <ul>
+        <li>Learn how to break programs into smaller parts.</li>
+        <li>See how methods make code reusable.</li>
+        <li>Understand parameters and return values.</li>
+      </ul>
+    </div>
 
-  <div class="card">
-    <h2>Why This Lesson Matters</h2>
-    <p>Every Java lesson builds a stronger foundation for writing real applications. These concepts are used every day in desktop, web, and mobile development.</p>
-    <ul>
-      <li>Understand how Java works behind the scenes</li>
-      <li>Learn the syntax and structure clearly</li>
-      <li>Practice examples that translate directly into real projects</li>
-      <li>See how the lesson connects to larger programming concepts</li>
-    </ul>
-  </div>
+    <div class="card">
+      <h3>Important concepts</h3>
+      <ul>
+        <li><strong>Method</strong> — A named block of code that performs a task.</li>
+        <li><strong>Parameter</strong> — A value given to a method.</li>
+        <li><strong>Return type</strong> — The kind of value a method gives back.</li>
+        <li><strong>Call</strong> — Running a method from another part of code.</li>
+        <li><strong>Static</strong> — A method that belongs to the class itself.</li>
+      </ul>
+    </div>
 
-  <div class="card">
-  <h2>Creating a Method</h2>
-<pre>
-public static void greet() {
-  System.out.println("Hello!");
-}
-</pre>
-
-  <h2>Calling a Method</h2>
-<pre>
-greet();
-</pre>
-</div>
-
-<div class="card code-section">
-<pre>
+    <div class="card code-section">
+      <div class="code-header"><span>Example Code</span></div>
+      <pre>
 public class Main {
-
-  public static void greet() {
-    System.out.println("Hello Java!");
-  }
-
   public static void main(String[] args) {
     greet();
+    int sum = add(4, 6);
+    System.out.println("Sum: " + sum);
   }
-
+  public static void greet() {
+    System.out.println("Hello from a method!");
+  }
+  public static int add(int x, int y) {
+    return x + y;
+  }
 }
-</pre>
-</div>
+      </pre>
+    </div>
 
+    <div class="takeaway">
+      <div class="icon">?</div>
+      <div>
+        <h3>Key Takeaway</h3>
+        <p>Methods let you reuse logic and keep each part of your program focused on a single job.</p>
+      </div>
+    </div>
 
-<div class="takeaway">
-    <div class="icon">?</div>
-    <div>
-  <h3>Key Takeaway</h3>
-  <p>
-      Methods are reusable blocks of code that help organize your program.
-      They allow you to avoid repetition by writing code once and using it many times.
-      Good use of methods makes your code easier to read, maintain, and debug.
-    </p></div>
-</div>
-
-<div class="lesson-nav">
-    <a href="lesson5.html"><button class="btn-outline">? Previous Lesson</button></a>
-   <a href="lesson7.html"><button class="btn-primary">Next Lesson ?</button></a>
-  </div>
-
+    <div class="lesson-nav">
+      <a href="lesson5.html"><button class="btn-outline">← Previous Lesson</button></a>
+      <a href="lesson7.html"><button class="btn-primary">Next Lesson →</button></a>
+    </div>
 </section>
+
+
 
 <div class="card exercise">
 <textarea id="code">
@@ -106,7 +101,9 @@ public class Main {
 }
 </textarea>
 
-<button onclick="runCode()">Run</button>
+
+  <button onclick="runCode()" class="btn-primary">Run Code</button>
+  <button onclick="resetCode()" class="btn-primary">Reset Code</button>
 <pre id="output"></pre>
 </div>
 
