@@ -108,7 +108,14 @@ button:hover {
   box-shadow: 0 18px 36px rgba(255, 138, 0, 0.2);
 }
 </style>
-  <script src="backend-config.js"></script>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+  
+  <!-- Firebase Config -->
+  <script src="firebase-config.js"></script>
+  <script src="firebase-auth.js"></script>
 </head>
 
 <body>
@@ -148,20 +155,18 @@ button:hover {
 
 <script>
 // Check if already logged in
-function checkAuth() {
-  const token = localStorage.getItem("authToken");
-  if (token) {
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
     window.location.href = "dashboard.html";
   }
-}
-checkAuth();
+});
 
 async function loginUser() {
-  const username = document.getElementById("username").value.trim();
+  const email = document.getElementById("username").value.trim(); // Using email as username
   const password = document.getElementById("password").value.trim();
   const messageDiv = document.getElementById("message");
 
-  if (!username || !password) {
+  if (!email || !password) {
     messageDiv.style.display = "block";
     messageDiv.textContent = "⚠️ Please fill in all fields!";
     messageDiv.style.background = "rgba(239, 68, 68, 0.12)";
@@ -170,25 +175,15 @@ async function loginUser() {
   }
 
   try {
-    const response = await fetch(getApiUrl("/api/auth/login"), {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
+    const result = await handleLogin(email, password);
 
-    const data = await response.json();
-
-    if (!data.success) {
+    if (!result.success) {
       messageDiv.style.display = "block";
-      messageDiv.textContent = "❌ " + data.error;
+      messageDiv.textContent = "❌ " + result.error;
       messageDiv.style.background = "rgba(239, 68, 68, 0.12)";
       messageDiv.style.color = "#fecaca";
       return;
     }
-
-    // Save token and user info
-    localStorage.setItem("authToken", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
 
     messageDiv.style.display = "block";
     messageDiv.textContent = "✅ Login successful! Redirecting...";
@@ -200,7 +195,7 @@ async function loginUser() {
     }, 1500);
   } catch (err) {
     messageDiv.style.display = "block";
-    messageDiv.textContent = "❌ Server error: " + err.message;
+    messageDiv.textContent = "❌ Error: " + err.message;
     messageDiv.style.background = "rgba(239, 68, 68, 0.12)";
     messageDiv.style.color = "#fecaca";
   }
