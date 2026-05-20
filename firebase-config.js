@@ -21,3 +21,5 @@ const db = firebase.firestore();
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { auth, db };
 }
+
+

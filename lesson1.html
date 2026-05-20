@@ -1,13 +1,13 @@
-Ôªø<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Lesson 1</title>
   <link rel="stylesheet" href="styles.css">
   <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
   <script src="firebase-config.js"></script>
   <script src="firebase-auth.js"></script>
 </head>
@@ -16,7 +16,7 @@
 
 <!-- NAVBAR -->
 <header>
-  <div class="logo">‚ö° JavaLearn Hub</div>
+  <div class="logo">? JavaLearn Hub</div>
   <nav>
     <a href="index.html#">Home</a>
     <a href="lessons.html">Lessons</a>
@@ -27,7 +27,7 @@
 <!-- HERO / TITLE -->
 <section class="lesson-hero">
   <div class="hero-content">
-    <div class="icon">üß†</div>
+    <div class="icon">??</div>
     <div>
       <h1>Lesson 1: What is Java?</h1>
       <p class="breadcrumb">Home > Lessons > Lesson 1</p>
@@ -43,11 +43,11 @@
 
   <br><br>
 
-  One of Java‚Äôs defining features is its <b>platform independence</b>. Unlike many programming languages that must be compiled specifically for each operating system, Java follows a unique approach. When you write Java code, it is first compiled into an intermediate format called <i>bytecode</i>. This bytecode is not tied to any specific machine. Instead, it runs on a program called the <b>Java Virtual Machine (JVM)</b>.
+  One of Javaís defining features is its <b>platform independence</b>. Unlike many programming languages that must be compiled specifically for each operating system, Java follows a unique approach. When you write Java code, it is first compiled into an intermediate format called <i>bytecode</i>. This bytecode is not tied to any specific machine. Instead, it runs on a program called the <b>Java Virtual Machine (JVM)</b>.
 
   <br><br>
 
-  The JVM acts as a translator between your Java program and the computer‚Äôs operating system. Because of this, the same Java program can run on different systems such as Windows, macOS, Linux, and even embedded devices without modification. This concept is commonly known as:
+  The JVM acts as a translator between your Java program and the computerís operating system. Because of this, the same Java program can run on different systems such as Windows, macOS, Linux, and even embedded devices without modification. This concept is commonly known as:
   <br><br>
   <b>"Write Once, Run Anywhere (WORA)."</b>
 
@@ -65,15 +65,15 @@
 
   <br><br>
 
-  One of Java‚Äôs greatest strengths is its <b>versatility</b>. It is used across many different areas of technology:
+  One of Javaís greatest strengths is its <b>versatility</b>. It is used across many different areas of technology:
 
   <ul>
-    <li><b>Web Development</b> ‚Äì Java is widely used for building server-side applications and backend systems using frameworks like Spring.</li>
-    <li><b>Mobile Development</b> ‚Äì Java has long been a primary language for Android app development.</li>
-    <li><b>Enterprise Systems</b> ‚Äì Large organizations use Java to build scalable and secure business applications, such as banking, e-commerce, and cloud systems.</li>
-    <li><b>Desktop Applications</b> ‚Äì Java can be used to create GUI-based desktop applications.</li>
-    <li><b>Game Development</b> ‚Äì Some games and game engines use Java.</li>
-    <li><b>Embedded Systems</b> ‚Äì Java can also run on smaller devices and systems.</li>
+    <li><b>Web Development</b> ñ Java is widely used for building server-side applications and backend systems using frameworks like Spring.</li>
+    <li><b>Mobile Development</b> ñ Java has long been a primary language for Android app development.</li>
+    <li><b>Enterprise Systems</b> ñ Large organizations use Java to build scalable and secure business applications, such as banking, e-commerce, and cloud systems.</li>
+    <li><b>Desktop Applications</b> ñ Java can be used to create GUI-based desktop applications.</li>
+    <li><b>Game Development</b> ñ Some games and game engines use Java.</li>
+    <li><b>Embedded Systems</b> ñ Java can also run on smaller devices and systems.</li>
   </ul>
 
   <br>
@@ -114,7 +114,7 @@ public class Main {
 
   <!-- TAKEAWAY -->
   <div class="takeaway">
-    <div class="icon">‚ú®</div>
+    <div class="icon">?</div>
     <div>
       <h3>Key Takeaway</h3>
       <p>
@@ -126,7 +126,7 @@ public class Main {
   <!-- NAV BUTTONS -->
   <div class="lesson-nav">
     
-   <a href="lesson2.html"><button class="btn-primary">Next Lesson ‚Üí</button></a>
+   <a href="lesson2.html"><button class="btn-primary">Next Lesson ?</button></a>
   
   </div>
 
@@ -180,13 +180,13 @@ async function runCode() {
     console.log(result);
 
     if (!result.success) {
-      status.textContent = "‚ùå Code failed to compile or run.";
+      status.textContent = "? Code failed to compile or run.";
       status.className = "status error";
       output.innerText = result.error;
       return;
     }
 
-    status.textContent = "‚úÖ Success!";
+    status.textContent = "? Success!";
     status.className = "status success";
     output.innerText = result.output;
 
@@ -194,7 +194,7 @@ async function runCode() {
     saveScore(1, 100);
 
   } catch (err) {
-    status.textContent = "‚ùå Server error.";
+    status.textContent = "? Server error.";
     status.className = "status error";
     output.innerText = err.message;
   }
@@ -248,10 +248,12 @@ async function saveScore(lessonId, score) {
 
 <!-- FOOTER -->
 <footer>
-  ¬© 2025 JavaLearn Hub. All rights reserved.
+  © 2025 JavaLearn Hub. All rights reserved.
 </footer>
 </body>
 </html>
+
+
 
 
 

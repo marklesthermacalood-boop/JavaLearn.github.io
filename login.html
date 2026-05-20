@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -109,9 +109,9 @@ button:hover {
 }
 </style>
   <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
   
   <!-- Firebase Config -->
   <script src="firebase-config.js"></script>
@@ -121,7 +121,7 @@ button:hover {
 <body>
 
 <header>
-  <div class="logo">⚡ JavaLearn Hub</div>
+  <div class="logo">? JavaLearn Hub</div>
   <nav>
     <a href="index.html">Home</a>
     <a href="lessons.html">Lessons</a>
@@ -168,7 +168,7 @@ async function loginUser() {
 
   if (!email || !password) {
     messageDiv.style.display = "block";
-    messageDiv.textContent = "⚠️ Please fill in all fields!";
+    messageDiv.textContent = "?? Please fill in all fields!";
     messageDiv.style.background = "rgba(239, 68, 68, 0.12)";
     messageDiv.style.color = "#fecaca";
     return;
@@ -179,14 +179,14 @@ async function loginUser() {
 
     if (!result.success) {
       messageDiv.style.display = "block";
-      messageDiv.textContent = "❌ " + result.error;
+      messageDiv.textContent = "? " + result.error;
       messageDiv.style.background = "rgba(239, 68, 68, 0.12)";
       messageDiv.style.color = "#fecaca";
       return;
     }
 
     messageDiv.style.display = "block";
-    messageDiv.textContent = "✅ Login successful! Redirecting...";
+    messageDiv.textContent = "? Login successful! Redirecting...";
     messageDiv.style.background = "rgba(16, 185, 129, 0.12)";
     messageDiv.style.color = "#a7f3d0";
 
@@ -195,7 +195,7 @@ async function loginUser() {
     }, 1500);
   } catch (err) {
     messageDiv.style.display = "block";
-    messageDiv.textContent = "❌ Error: " + err.message;
+    messageDiv.textContent = "? Error: " + err.message;
     messageDiv.style.background = "rgba(239, 68, 68, 0.12)";
     messageDiv.style.color = "#fecaca";
   }
@@ -204,3 +204,5 @@ async function loginUser() {
 
 </body>
 </html>
+
+

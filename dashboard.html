@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -154,9 +154,9 @@
     }
   </style>
   <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
   <script src="firebase-config.js"></script>
   <script src="firebase-auth.js"></script>
 </head>
@@ -164,7 +164,7 @@
 <body>
 
 <header>
-  <div class="logo">⚡ JavaLearn Hub</div>
+  <div class="logo">? JavaLearn Hub</div>
   <nav>
     <a href="index.html">Home</a>
     <a href="lessons.html">Lessons</a>
@@ -175,7 +175,7 @@
 
 <section class="lesson-hero">
   <div class="hero-content">
-    <div class="icon">📊</div>
+    <div class="icon">??</div>
     <div>
       <h1>Your Dashboard</h1>
       <p class="breadcrumb">Track your learning progress and scores</p>
@@ -212,7 +212,7 @@
   </div>
 
   <div class="scores-section">
-    <h2>📈 Recent Scores</h2>
+    <h2>?? Recent Scores</h2>
     <div id="scoresContainer">
       <div class="empty-state">Loading your scores...</div>
     </div>
@@ -221,7 +221,7 @@
 </div>
 
 <footer style="margin-top: 60px;">
-  © 2025 JavaLearn Hub. All rights reserved.
+  � 2025 JavaLearn Hub. All rights reserved.
 </footer>
 
 <script>
@@ -258,7 +258,7 @@ async function loadUserScores(userId) {
 
     // Display scores
     const scoresHtml = scores.slice(0, 10).map(score => {
-      const type = score.lessonId ? `📚 Lesson ${score.lessonId}` : `🎯 Challenge ${score.challengeId}`;
+      const type = score.lessonId ? `?? Lesson ${score.lessonId}` : `?? Challenge ${score.challengeId}`;
       const date = new Date(score.timestamp.seconds * 1000).toLocaleDateString();
       
       return `
@@ -315,7 +315,7 @@ async function logout() {
 
   <!-- USER INFO -->
   <div class="card">
-    <h2>Welcome 👋</h2>
+    <h2>Welcome ??</h2>
     <p id="userName">Loading user...</p>
     <p id="userEmail"></p>
   </div>
@@ -450,3 +450,5 @@ window.logout = function() {
 
 </body>
 </html>
+
+

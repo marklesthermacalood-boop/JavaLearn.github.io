@@ -10,3 +10,5 @@ document.querySelectorAll(".card").forEach((card, index) => {
     alert("Opening Lesson " + (index + 1));
   });
 });
+
+
