@@ -27,13 +27,13 @@ async function handleSignUp(email, password, username) {
       displayName: username
     });
 
-    // Create user document in Firestore
+    // Create user document in Firestore (use server timestamp)
     await db.collection("users").doc(user.uid).set({
       uid: user.uid,
       email: email,
       username: username,
       role: "student",
-      createdAt: new Date(),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       scores: []
     });
 
@@ -95,9 +95,9 @@ async function saveScore(lessonId, challengeId, score, correct, total) {
       score: score,
       correct: correct,
       total: total,
-      timestamp: new Date(),
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       userEmail: user.email,
-      username: user.displayName
+      username: user.displayName || user.email.split('@')[0]
     };
 
     // Add to Firestore

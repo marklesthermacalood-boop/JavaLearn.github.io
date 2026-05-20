@@ -221,7 +221,7 @@
 </div>
 
 <footer style="margin-top: 60px;">
-  © 2025 JavaLearn Hub. All rights reserved.
+  ï¿½ 2025 JavaLearn Hub. All rights reserved.
 </footer>
 
 <script>
@@ -259,13 +259,22 @@ async function loadUserScores(userId) {
     // Display scores
     const scoresHtml = scores.slice(0, 10).map(score => {
       const type = score.lessonId ? `?? Lesson ${score.lessonId}` : `?? Challenge ${score.challengeId}`;
-      const date = new Date(score.timestamp.seconds * 1000).toLocaleDateString();
+      
+      // Handle both server timestamp object and Date
+      let dateStr = "N/A";
+      if (score.timestamp) {
+        if (score.timestamp.seconds) {
+          dateStr = new Date(score.timestamp.seconds * 1000).toLocaleDateString();
+        } else if (score.timestamp instanceof Date) {
+          dateStr = score.timestamp.toLocaleDateString();
+        }
+      }
       
       return `
         <div class="score-item">
           <div class="score-info">
             <h4>${type}</h4>
-            <p>Completed: ${date}</p>
+            <p>Completed: ${dateStr}</p>
           </div>
           <div class="score-value">${score.score}%</div>
         </div>
@@ -299,55 +308,17 @@ function updateStats(scores, userId) {
 
 // Logout function
 async function logout() {
-  const result = await handleLogout();
-  if (result.success) {
+  try {
+    await firebase.auth().signOut();
     window.location.href = "login.html";
+  } catch (err) {
+    console.error("Logout error:", err);
   }
 }
 </script>
 
 </body>
 </html>
-</header>
-
-<!-- CONTENT -->
-<div class="container">
-
-  <!-- USER INFO -->
-  <div class="card">
-    <h2>Welcome ??</h2>
-    <p id="userName">Loading user...</p>
-    <p id="userEmail"></p>
-  </div>
-
-  <!-- SCORES -->
-  <div class="card">
-    <h2>Performance Overview</h2>
-
-    <p><b>Quiz Scores</b></p>
-    <ul id="quizScores">
-      <li>Loading...</li>
-    </ul>
-
-    <br>
-
-    <p><b>Output Prediction Scores</b></p>
-    <ul id="outputScores">
-      <li>Loading...</li>
-    </ul>
-
-    <br>
-
-    <p><b>Coding Challenge Scores</b></p>
-    <ul id="codingScores">
-      <li>Loading...</li>
-    </ul>
-  </div>
-
-</div>
-
-<!-- FIREBASE SCRIPT -->
-<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";

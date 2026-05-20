@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -43,11 +43,11 @@
 
   <br><br>
 
-  One of Java’s defining features is its <b>platform independence</b>. Unlike many programming languages that must be compiled specifically for each operating system, Java follows a unique approach. When you write Java code, it is first compiled into an intermediate format called <i>bytecode</i>. This bytecode is not tied to any specific machine. Instead, it runs on a program called the <b>Java Virtual Machine (JVM)</b>.
+  One of Javaï¿½s defining features is its <b>platform independence</b>. Unlike many programming languages that must be compiled specifically for each operating system, Java follows a unique approach. When you write Java code, it is first compiled into an intermediate format called <i>bytecode</i>. This bytecode is not tied to any specific machine. Instead, it runs on a program called the <b>Java Virtual Machine (JVM)</b>.
 
   <br><br>
 
-  The JVM acts as a translator between your Java program and the computer’s operating system. Because of this, the same Java program can run on different systems such as Windows, macOS, Linux, and even embedded devices without modification. This concept is commonly known as:
+  The JVM acts as a translator between your Java program and the computerï¿½s operating system. Because of this, the same Java program can run on different systems such as Windows, macOS, Linux, and even embedded devices without modification. This concept is commonly known as:
   <br><br>
   <b>"Write Once, Run Anywhere (WORA)."</b>
 
@@ -65,15 +65,15 @@
 
   <br><br>
 
-  One of Java’s greatest strengths is its <b>versatility</b>. It is used across many different areas of technology:
+  One of Javaï¿½s greatest strengths is its <b>versatility</b>. It is used across many different areas of technology:
 
   <ul>
-    <li><b>Web Development</b> – Java is widely used for building server-side applications and backend systems using frameworks like Spring.</li>
-    <li><b>Mobile Development</b> – Java has long been a primary language for Android app development.</li>
-    <li><b>Enterprise Systems</b> – Large organizations use Java to build scalable and secure business applications, such as banking, e-commerce, and cloud systems.</li>
-    <li><b>Desktop Applications</b> – Java can be used to create GUI-based desktop applications.</li>
-    <li><b>Game Development</b> – Some games and game engines use Java.</li>
-    <li><b>Embedded Systems</b> – Java can also run on smaller devices and systems.</li>
+    <li><b>Web Development</b> ï¿½ Java is widely used for building server-side applications and backend systems using frameworks like Spring.</li>
+    <li><b>Mobile Development</b> ï¿½ Java has long been a primary language for Android app development.</li>
+    <li><b>Enterprise Systems</b> ï¿½ Large organizations use Java to build scalable and secure business applications, such as banking, e-commerce, and cloud systems.</li>
+    <li><b>Desktop Applications</b> ï¿½ Java can be used to create GUI-based desktop applications.</li>
+    <li><b>Game Development</b> ï¿½ Some games and game engines use Java.</li>
+    <li><b>Embedded Systems</b> ï¿½ Java can also run on smaller devices and systems.</li>
   </ul>
 
   <br>
@@ -219,36 +219,15 @@ function resetCode() {
   }
 }
 
-async function saveScore(lessonId, score) {
-  const token = localStorage.getItem("authToken");
-  if (!token) {
-    console.log("User not logged in. Skipping score save.");
-    return;
-  }
-
-  try {
-    await fetch(getApiUrl("/api/scores/save"), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        lesson_id: lessonId,
-        score: score,
-        max_score: 100,
-      }),
-    });
-  } catch (err) {
-    console.error("Error saving score:", err);
-  }
-}
+// Score saving now handled by Firebase (firestore)
+// Use saveScore() from firebase-auth.js when needed
+// Example: await saveScore(1, null, 85, 85, 100);
 
 </script>
 
 <!-- FOOTER -->
 <footer>
-  © 2025 JavaLearn Hub. All rights reserved.
+  ï¿½ 2025 JavaLearn Hub. All rights reserved.
 </footer>
 </body>
 </html>
