@@ -373,7 +373,7 @@ const db = getFirestore(app);
     document.getElementById("userName").innerText = "Not logged in";
     setTimeout(() => window.location.href = "login.html", 1000);
     return;
-  }*//
+  }*/
 
   document.getElementById("userEmail").innerText = "Email: " + user.email;
 
@@ -438,7 +438,7 @@ const db = getFirestore(app);
     console.error(err);
     document.getElementById("userName").innerText = "Error loading data";
   }
-});
+;
 
 /* LOGOUT */
 window.logout = function() {
