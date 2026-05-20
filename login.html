@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - JavaLearn Hub</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, rgba(255, 138, 0, 0.18), transparent 20%),
+    radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.22), transparent 18%),
+    linear-gradient(180deg, #100817 0%, #170c29 55%, #100817 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 24px 40px;
+  color: #f8f7ff;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(16, 8, 23, 0.88);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 36px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(18px);
+  z-index: 1000;
+}
+
+header .logo {
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+header nav {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+header nav a {
+  color: #d8cbff;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+header nav a:hover {
+  color: #fff;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.08);
+  width: min(420px, 100%);
+  padding: 36px;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 26px;
+  color: #fff;
+}
+
+.input-box {
+  margin-bottom: 16px;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+button {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  background: linear-gradient(135deg, #ff8a00, #d97706);
+  color: #111;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 36px rgba(255, 138, 0, 0.2);
+}
+</style>
+  <script src="backend-config.js"></script>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">⚡ JavaLearn Hub</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="lessons.html">Lessons</a>
+    <a href="exercises.html">Exercises</a>
+    <a href="login.html">Login</a>
+    <a href="signup.html">Register</a>
+  </nav>
+</header>
+
+<div class="container">
+
+  <h2>Login</h2>
+
+  <div class="input-box">
+    <input type="text" id="username" placeholder="Enter username">
+  </div>
+
+  <div class="input-box">
+    <input type="password" id="password" placeholder="Enter password">
+  </div>
+
+  <button onclick="loginUser()">Login</button>
+  
+  <div id="message" style="margin-top: 16px; padding: 12px; border-radius: 12px; text-align: center; display: none;"></div>
+  
+  <p style="text-align: center; margin-top: 20px; color: #cec6ff;">
+    Don't have an account? <a href="signup.html" style="color: #ff8a00; text-decoration: none; font-weight: 600;">Sign up here</a>
+  </p>
+
+</div>
+
+<script>
+// Check if already logged in
+function checkAuth() {
+  const token = localStorage.getItem("authToken");
+  if (token) {
+    window.location.href = "dashboard.html";
+  }
+}
+checkAuth();
+
+async function loginUser() {
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const messageDiv = document.getElementById("message");
+
+  if (!username || !password) {
+    messageDiv.style.display = "block";
+    messageDiv.textContent = "⚠️ Please fill in all fields!";
+    messageDiv.style.background = "rgba(239, 68, 68, 0.12)";
+    messageDiv.style.color = "#fecaca";
+    return;
+  }
+
+  try {
+    const response = await fetch(getApiUrl("/api/auth/login"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    });
+
+    const data = await response.json();
+
+    if (!data.success) {
+      messageDiv.style.display = "block";
+      messageDiv.textContent = "❌ " + data.error;
+      messageDiv.style.background = "rgba(239, 68, 68, 0.12)";
+      messageDiv.style.color = "#fecaca";
+      return;
+    }
+
+    // Save token and user info
+    localStorage.setItem("authToken", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+
+    messageDiv.style.display = "block";
+    messageDiv.textContent = "✅ Login successful! Redirecting...";
+    messageDiv.style.background = "rgba(16, 185, 129, 0.12)";
+    messageDiv.style.color = "#a7f3d0";
+
+    setTimeout(() => {
+      window.location.href = "dashboard.html";
+    }, 1500);
+  } catch (err) {
+    messageDiv.style.display = "block";
+    messageDiv.textContent = "❌ Server error: " + err.message;
+    messageDiv.style.background = "rgba(239, 68, 68, 0.12)";
+    messageDiv.style.color = "#fecaca";
+  }
+}
+</script>
+
+</body>
+</html>

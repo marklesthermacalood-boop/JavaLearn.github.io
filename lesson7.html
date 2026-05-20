@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lesson 7 - Arrays</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="backend-config.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="logo">⚡ JavaLearn Hub</div>
+  <nav>
+    <a href="index.html#">Home</a>
+    <a href="lessons.html">Lessons</a>
+    <a href="dashboard.html">Dashboard</a>
+  </nav>
+</header>
+
+<section class="lesson-hero">
+  <h1>Lesson 7: Arrays</h1>
+</section>
+
+<section class="lesson-content">
+
+<div class="card intro">
+Arrays are used to store multiple values in a single variable instead of creating separate variables for each value.
+</div>
+
+  <div class="card">
+    <h2>Why This Lesson Matters</h2>
+    <p>Every Java lesson builds a stronger foundation for writing real applications. These concepts are used every day in desktop, web, and mobile development.</p>
+    <ul>
+      <li>Understand how Java works behind the scenes</li>
+      <li>Learn the syntax and structure clearly</li>
+      <li>Practice examples that translate directly into real projects</li>
+      <li>See how the lesson connects to larger programming concepts</li>
+    </ul>
+  </div>
+
+  <div class="card">
+<h2>Example</h2>
+<pre>
+int[] numbers = {1, 2, 3, 4, 5};
+</pre>
+
+<p>You access elements using index starting from 0.</p>
+</div>
+
+<div class="card code-section">
+<pre>
+public class Main {
+  public static void main(String[] args) {
+
+    int[] nums = {10, 20, 30};
+
+    System.out.println(nums[0]);
+    System.out.println(nums[1]);
+    System.out.println(nums[2]);
+
+  }
+}
+</pre>
+</div>
+
+<div class="takeaway">
+<p><b>Key Takeaway:</b> Arrays help store multiple values in one variable using indexes.</p>
+</div>
+
+<div class="lesson-nav">
+ <a href="lesson6.html"><button class="btn-outline">← Previous Lesson</button></a>
+   <a href="lesson8.html"><button class="btn-primary">Next Lesson →</button></a>
+</div>
+
+</section>
+
+<div class="card exercise">
+<textarea id="code">
+public class Main {
+  public static void main(String[] args) {
+
+    int[] nums = {5, 10, 15};
+
+    System.out.println(nums[0]);
+    System.out.println(nums[1]);
+    System.out.println(nums[2]);
+
+  }
+}
+</textarea>
+
+<button onclick="runCode()">Run</button>
+<pre id="output"></pre>
+</div>
+
+<script>
+async function runCode() {
+  const code = document.getElementById("code").value;
+
+  const runUrl = getRunUrl();
+    const res = await fetch(runUrl, {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({code})
+  });
+
+      let result;
+    const contentType = res.headers.get("content-type") || "";
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || `Server returned ${res.status}`);
+    }
+    if (contentType.includes("application/json")) {
+      result = await res.json();
+    } else {
+      const text = await res.text();
+      throw new Error(text || "Server returned non-JSON response");
+    }
+  document.getElementById("output").innerText =
+    result.success ? result.output : result.error;
+}
+</script>
+</body>
+</html>
+
+
+

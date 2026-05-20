@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <title>Lesson 6 - Methods</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="backend-config.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="logo">⚡ JavaLearn Hub</div>
+   <nav>
+    <a href="index.html#">Home</a>
+    <a href="lessons.html">Lessons</a>
+    <a href="dashboard.html">Dashboard</a>
+  </nav>
+</header>
+
+<section class="lesson-hero">
+  <h1>Lesson 6: Methods</h1>
+</section>
+
+<section class="lesson-content">
+
+<div class="card intro">
+  Methods are reusable blocks of code that perform a specific task.
+</div>
+
+  <div class="card">
+    <h2>Why This Lesson Matters</h2>
+    <p>Every Java lesson builds a stronger foundation for writing real applications. These concepts are used every day in desktop, web, and mobile development.</p>
+    <ul>
+      <li>Understand how Java works behind the scenes</li>
+      <li>Learn the syntax and structure clearly</li>
+      <li>Practice examples that translate directly into real projects</li>
+      <li>See how the lesson connects to larger programming concepts</li>
+    </ul>
+  </div>
+
+  <div class="card">
+  <h2>Creating a Method</h2>
+<pre>
+public static void greet() {
+  System.out.println("Hello!");
+}
+</pre>
+
+  <h2>Calling a Method</h2>
+<pre>
+greet();
+</pre>
+</div>
+
+<div class="card code-section">
+<pre>
+public class Main {
+
+  public static void greet() {
+    System.out.println("Hello Java!");
+  }
+
+  public static void main(String[] args) {
+    greet();
+  }
+
+}
+</pre>
+</div>
+
+
+<div class="takeaway">
+    <div class="icon">✨</div>
+    <div>
+  <h3>Key Takeaway</h3>
+  <p>
+      Methods are reusable blocks of code that help organize your program.
+      They allow you to avoid repetition by writing code once and using it many times.
+      Good use of methods makes your code easier to read, maintain, and debug.
+    </p></div>
+</div>
+
+<div class="lesson-nav">
+    <a href="lesson5.html"><button class="btn-outline">← Previous Lesson</button></a>
+   <a href="lesson7.html"><button class="btn-primary">Next Lesson →</button></a>
+  </div>
+
+</section>
+
+<div class="card exercise">
+<textarea id="code">
+public class Main {
+
+  public static void sayHi() {
+    System.out.println("Hi!");
+  }
+
+  public static void main(String[] args) {
+    sayHi();
+  }
+
+}
+</textarea>
+
+<button onclick="runCode()">Run</button>
+<pre id="output"></pre>
+</div>
+
+<script>
+async function runCode() {
+  const code = document.getElementById("code").value;
+  const runUrl = getRunUrl();
+    const res = await fetch(runUrl, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({code})
+  });
+      let result;
+    const contentType = res.headers.get("content-type") || "";
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || `Server returned ${res.status}`);
+    }
+    if (contentType.includes("application/json")) {
+      result = await res.json();
+    } else {
+      const text = await res.text();
+      throw new Error(text || "Server returned non-JSON response");
+    }
+  document.getElementById("output").innerText =
+    result.success ? result.output : result.error;
+}
+</script>
+</body>
+</html>
+
+
+

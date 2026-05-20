@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lesson 3 - Operators</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="backend-config.js"></script>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header>
+  <div class="logo">⚡ JavaLearn Hub</div>
+  <nav>
+    <a href="index.html#">Home</a>
+    <a href="lessons.html">Lessons</a>
+    <a href="dashboard.html">Dashboard</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="lesson-hero">
+  <div class="hero-content">
+    <div class="icon">🎯</div>
+    <div>
+      <h1>Lesson 3: Operators</h1>
+      <p class="breadcrumb">Home > Lessons > Lesson 3</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<section class="lesson-content">
+
+  <!-- INTRO -->
+  <div class="card intro">
+    Operators are used to perform operations on variables and values. Java supports arithmetic, comparison, and logical operators.
+  </div>
+
+  <div class="card">
+    <h2>Why This Lesson Matters</h2>
+    <p>Every Java lesson builds a stronger foundation for writing real applications. These concepts are used every day in desktop, web, and mobile development.</p>
+    <ul>
+      <li>Understand how Java works behind the scenes</li>
+      <li>Learn the syntax and structure clearly</li>
+      <li>Practice examples that translate directly into real projects</li>
+      <li>See how the lesson connects to larger programming concepts</li>
+    </ul>
+  </div>
+
+  <!-- TYPES -->
+  <div class="card">
+    <h2>Types of Operators</h2>
+
+    <h3>1. Arithmetic Operators</h3>
+    <p>Used for basic math operations:</p>
+    <ul>
+      <li>+ (Addition)</li>
+      <li>- (Subtraction)</li>
+      <li>* (Multiplication)</li>
+      <li>/ (Division)</li>
+    </ul>
+
+    <h3>2. Comparison Operators</h3>
+    <p>Used to compare values:</p>
+    <ul>
+      <li>== (Equal)</li>
+      <li>!= (Not equal)</li>
+      <li>> (Greater than)</li>
+      <li>< (Less than)</li>
+    </ul>
+
+    <h3>3. Logical Operators</h3>
+    <ul>
+      <li>&& (AND)</li>
+      <li>|| (OR)</li>
+      <li>! (NOT)</li>
+    </ul>
+  </div>
+
+  <!-- CODE EXAMPLE -->
+  <div class="card code-section">
+    <div class="code-header">
+      <span>Example Code</span>
+    </div>
+
+<pre>
+public class Main {
+  public static void main(String[] args) {
+
+    int a = 10;
+    int b = 5;
+
+    System.out.println("Addition: " + (a + b));
+    System.out.println("Subtraction: " + (a - b));
+    System.out.println("Multiplication: " + (a * b));
+    System.out.println("Division: " + (a / b));
+
+    System.out.println("Is a > b? " + (a > b));
+
+  }
+}
+</pre>
+  </div>
+
+  <!-- TAKEAWAY -->
+  <div class="takeaway">
+    <div class="icon">✨</div>
+    <div>
+      <h3>Key Takeaway</h3>
+      <p>
+        Operators allow you to manipulate data, perform calculations, and make decisions in your program.
+      </p>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <div class="lesson-nav">
+    <a href="lesson2.html"><button class="btn-outline">← Previous Lesson</button></a>
+    <a href="lesson4.html"><button class="btn-primary">Next Lesson →</button></a>
+  </div>
+
+</section>
+
+<!-- COMPILER -->
+<div class="card exercise">
+  <h2>Try It Yourself</h2>
+
+  <textarea id="code">public class Main {
+  public static void main(String[] args) {
+
+    int x = 20;
+    int y = 4;
+
+    System.out.println("Add: " + (x + y));
+    System.out.println("Multiply: " + (x * y));
+    System.out.println("Is x greater than y? " + (x > y));
+
+  }
+}</textarea>
+
+  <button onclick="runCode()">Run</button>
+  <button onclick="resetCode()">Reset</button>
+
+  <div id="status" class="status"></div>
+  <pre id="output"></pre>
+</div>
+
+<script>
+function resetCode() {
+  document.getElementById("code").value = `public class Main {
+  public static void main(String[] args) {
+
+    int x = 20;
+    int y = 4;
+
+    System.out.println("Add: " + (x + y));
+    System.out.println("Multiply: " + (x * y));
+    System.out.println("Is x greater than y? " + (x > y));
+
+  }
+}`;
+}
+
+async function runCode() {
+  const code = document.getElementById("code").value;
+  const output = document.getElementById("output");
+  const status = document.getElementById("status");
+
+  try {
+    const runUrl = getRunUrl();
+    const response = await fetch(runUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ code }),
+    });
+
+        let result;
+    const contentType = response.headers.get("content-type") || "";
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(text || `Server returned ${response.status}`);
+    }
+    if (contentType.includes("application/json")) {
+      result = await response.json();
+    } else {
+      const text = await response.text();
+      throw new Error(text || "Server returned non-JSON response");
+    }
+
+    if (!result.success) {
+      status.textContent = "❌ Error";
+      status.className = "status error";
+      output.innerText = result.error;
+      return;
+    }
+
+    status.textContent = "✅ Success!";
+    status.className = "status success";
+    output.innerText = result.output;
+
+  } catch (err) {
+    status.textContent = "❌ Server error";
+    status.className = "status error";
+    output.innerText = err.message;
+  }
+}
+</script>
+
+<!-- FOOTER -->
+<footer>
+  © 2025 JavaLearn Hub. All rights reserved.
+</footer>
+</body>
+</html>
+
+

@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professor - Class & Student Management</title>
+  <style>
+    :root {
+      --bg: #100817;
+      --bg-soft: #1a0d23;
+      --surface: rgba(255, 255, 255, 0.08);
+      --surface-strong: rgba(255, 255, 255, 0.14);
+      --text: #f8f7ff;
+      --muted: #d8cbff;
+      --accent: #ff8a00;
+      --accent-strong: #d97706;
+      --purple: #8b5cf6;
+      --border: rgba(255, 255, 255, 0.12);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, rgba(255, 138, 0, 0.22), transparent 20%),
+        radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.24), transparent 20%),
+        linear-gradient(180deg, #100817 0%, #1a0d23 55%, #100817 100%);
+      color: var(--text);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 36px;
+      background: rgba(16, 8, 23, 0.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      z-index: 20;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    nav {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.25s ease, transform 0.25s ease;
+      position: relative;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
+    }
+
+    .title-section {
+      margin-bottom: 32px;
+      padding: 32px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, rgba(255, 138, 0, 0.9), rgba(139, 92, 246, 0.9));
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.28);
+    }
+
+    .title-section h1 {
+      font-size: clamp(2.4rem, 3vw, 3.4rem);
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .title-section p {
+      color: rgba(255, 255, 255, 0.92);
+      line-height: 1.75;
+      font-size: 1rem;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 30px;
+    }
+
+    .sidebar,
+    .main-content,
+    .student-form,
+    .students-table {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 28px;
+      box-shadow: 0 24px 72px rgba(0, 0, 0, 0.2);
+    }
+
+    .sidebar {
+      padding: 26px;
+      position: sticky;
+      top: 96px;
+    }
+
+    .title-section h1,
+    .sidebar h2,
+    .main-content h2 {
+      color: #fff;
+    }
+
+    .sidebar h2 {
+      font-size: 1.15rem;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      padding: 14px 16px;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: rgba(255, 138, 0, 0.9);
+      box-shadow: 0 0 0 4px rgba(255, 138, 0, 0.12);
+    }
+
+    .btn-primary,
+    .btn-add-student,
+    .btn-edit,
+    .btn-delete,
+    .btn-delete-class {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 18px;
+      font-weight: 700;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary,
+    .btn-add-student,
+    .btn-edit {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #111;
+    }
+
+    .btn-primary:hover,
+    .btn-add-student:hover,
+    .btn-edit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 40px rgba(255, 138, 0, 0.24);
+    }
+
+    .btn-delete,
+    .btn-delete-class {
+      background: #ef4444;
+      color: white;
+    }
+
+    .btn-delete:hover,
+    .btn-delete-class:hover {
+      background: #dc2626;
+    }
+
+    .classes-list {
+      max-height: 400px;
+      overflow-y: auto;
+      margin-top: 10px;
+    }
+
+    .class-item {
+      padding: 18px;
+      margin-bottom: 14px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.25s ease, background 0.25s ease;
+      cursor: pointer;
+    }
+
+    .class-item:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .class-item.active {
+      background: rgba(255, 138, 0, 0.12);
+      border-color: rgba(255, 138, 0, 0.3);
+    }
+
+    .class-item-name {
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .class-item-count {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .main-content {
+      padding: 32px;
+    }
+
+    .main-content p,
+    .class-item-count,
+    .empty-state p,
+    .credential-badge {
+      color: var(--muted);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .tab {
+      padding: 12px 18px;
+      border: none;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--muted);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    .tab.active {
+      background: rgba(255, 138, 0, 0.18);
+      color: #fff;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .student-form {
+      padding: 24px;
+      border-radius: 24px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .form-row.full {
+      grid-template-columns: 1fr;
+    }
+
+    .student-form .form-group input {
+      padding: 14px 16px;
+    }
+
+    .students-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .students-table thead {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .students-table th,
+    .students-table td {
+      padding: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.95rem;
+      color: #fff;
+    }
+
+    .students-table tbody tr:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .credential-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(139, 92, 246, 0.15);
+      color: #e0d7ff;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 48px 20px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+    }
+
+    .msg {
+      padding: 14px 18px;
+      border-radius: 18px;
+      font-size: 0.95rem;
+    }
+
+    .msg-success {
+      background: rgba(16, 185, 129, 0.12);
+      color: #a7f3d0;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+
+    .msg-error {
+      background: rgba(239, 68, 68, 0.12);
+      color: #fecaca;
+      border: 1px solid rgba(239, 68, 68, 0.25);
+    }
+
+    @media (max-width: 968px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 16px;
+        padding: 18px;
+      }
+
+      nav {
+        display: flex;
+        gap: 10px;
+      }
+
+      nav a {
+        margin-left: 0;
+      }
+
+      .container {
+        padding: 20px 14px;
+      }
+
+      .students-table th,
+      .students-table td {
+        padding: 12px 10px;
+      }
+    }
+  </style>
+  <script src="backend-config.js"></script>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">👨‍🏫 Professor Portal - Class Management</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="admin.html">Admin Panel</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </nav>
+</header>
+
+<!-- MAIN CONTAINER -->
+<div class="container">
+
+  <div class="title-section">
+    <h1>📖 Class & Student Management</h1>
+    <p>Create classes, manage students, and assign login credentials. All data is saved automatically.</p>
+  </div>
+
+  <div class="content">
+
+    <!-- SIDEBAR - CLASSES -->
+    <div class="sidebar">
+      <h2>📚 Your Classes</h2>
+      
+      <div class="form-group">
+        <label for="className">Class Name</label>
+        <input type="text" id="className" placeholder="e.g., DSA 101, Java Basics...">
+      </div>
+
+      <button class="btn-primary" onclick="addClass()">+ Add Class</button>
+
+      <div id="message" style="margin-bottom: 15px;"></div>
+
+      <div class="classes-list" id="classList"></div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <div id="noClassMessage" class="empty-state">
+        <p>📌 Select or create a class to get started</p>
+        <p style="font-size: 13px;">Create a new class using the form on the left, then add students and manage their credentials.</p>
+      </div>
+
+      <div id="classContent" style="display: none;">
+        <h2 id="selectedClassName"></h2>
+        <p id="classStats"></p>
+
+        <!-- TABS -->
+        <div class="tabs">
+          <button class="tab active" onclick="switchTab(event, 'addStudentTab')">➕ Add Student</button>
+          <button class="tab" onclick="switchTab(event, 'credentialsTab')">🔐 Manage Credentials</button>
+        </div>
+
+        <!-- ADD STUDENT TAB -->
+        <div id="addStudentTab" class="tab-content active">
+          <div class="student-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="studentName">Student Name</label>
+                <input type="text" id="studentName" placeholder="Full name">
+              </div>
+              <div class="form-group">
+                <label for="studentEmail">Email</label>
+                <input type="email" id="studentEmail" placeholder="student@email.com">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="studentUsername">Username</label>
+                <input type="text" id="studentUsername" placeholder="username">
+              </div>
+              <div class="form-group">
+                <label for="studentPassword">Password</label>
+                <input type="password" id="studentPassword" placeholder="password">
+              </div>
+            </div>
+            <div class="form-row full">
+              <div class="form-group">
+                <label for="studentRoll">Roll Number (Optional)</label>
+                <input type="text" id="studentRoll" placeholder="Roll number">
+              </div>
+            </div>
+            <button class="btn-add-student" onclick="addStudent()">Add Student</button>
+          </div>
+
+          <div id="studentsTableContainer" style="display: none;">
+            <h3 style="margin-bottom: 15px;">Students in Class</h3>
+            <table class="students-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Roll No.</th>
+                  <th>Username</th>
+                  <th>Credentials Set</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="studentsTableBody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- CREDENTIALS MANAGEMENT TAB -->
+        <div id="credentialsTab" class="tab-content">
+          <div id="credentialsTableContainer" style="display: none;">
+            <h3 style="margin-bottom: 15px;">Student Login Credentials</h3>
+            <table class="students-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Username</th>
+                  <th>Password</th>
+                  <th>Email</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="credentialsTableBody">
+              </tbody>
+            </table>
+          </div>
+          <div id="noCredentialsMessage" class="empty-state">
+            <p>No students added to this class yet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+// Load data from localStorage
+function loadClasses() {
+  return JSON.parse(localStorage.getItem('professorClasses')) || [];
+}
+
+function saveClasses(classes) {
+  localStorage.setItem('professorClasses', JSON.stringify(classes));
+}
+
+let currentClassId = null;
+
+// Display classes in sidebar
+function displayClasses() {
+  const classes = loadClasses();
+  const classList = document.getElementById('classList');
+
+  if (classes.length === 0) {
+    classList.innerHTML = '<p style="color: #999; font-size: 13px;">No classes created yet.</p>';
+    return;
+  }
+
+  classList.innerHTML = classes.map(cls => `
+    <div class="class-item ${currentClassId === cls.id ? 'active' : ''}" onclick="selectClass('${cls.id}')">
+      <div class="class-item-name">${cls.name}</div>
+      <div class="class-item-count">${cls.students.length} students</div>
+      <button class="btn-delete-class" onclick="event.stopPropagation(); deleteClass('${cls.id}')">Delete Class</button>
+    </div>
+  `).join('');
+}
+
+// Add new class
+function addClass() {
+  const className = document.getElementById('className').value.trim();
+
+  if (!className) {
+    showMessage('Please enter a class name', 'error');
+    return;
+  }
+
+  const classes = loadClasses();
+  const newClass = {
+    id: Date.now().toString(),
+    name: className,
+    students: [],
+    createdAt: new Date().toLocaleString()
+  };
+
+  classes.push(newClass);
+  saveClasses(classes);
+  document.getElementById('className').value = '';
+  displayClasses();
+  showMessage('Class created successfully!', 'success');
+}
+
+// Delete class
+function deleteClass(classId) {
+  if (confirm('Are you sure you want to delete this class and all its students?')) {
+    const classes = loadClasses();
+    const filtered = classes.filter(cls => cls.id !== classId);
+    saveClasses(filtered);
+    
+    if (currentClassId === classId) {
+      currentClassId = null;
+      document.getElementById('noClassMessage').style.display = 'block';
+      document.getElementById('classContent').style.display = 'none';
+    }
+    
+    displayClasses();
+    showMessage('Class deleted successfully!', 'success');
+  }
+}
+
+// Select class
+function selectClass(classId) {
+  currentClassId = classId;
+  displayClasses();
+  displayClassContent();
+}
+
+// Display class content
+function displayClassContent() {
+  const classes = loadClasses();
+  const currentClass = classes.find(cls => cls.id === currentClassId);
+
+  if (!currentClass) return;
+
+  document.getElementById('noClassMessage').style.display = 'none';
+  document.getElementById('classContent').style.display = 'block';
+  document.getElementById('selectedClassName').textContent = `📚 ${currentClass.name}`;
+  document.getElementById('classStats').textContent = `Total Students: ${currentClass.students.length}`;
+
+  displayStudentsTable();
+  displayCredentialsTable();
+}
+
+// Add student to class
+function addStudent() {
+  const name = document.getElementById('studentName').value.trim();
+  const email = document.getElementById('studentEmail').value.trim();
+  const username = document.getElementById('studentUsername').value.trim();
+  const password = document.getElementById('studentPassword').value.trim();
+  const roll = document.getElementById('studentRoll').value.trim();
+
+  if (!name || !email || !username || !password) {
+    showMessage('Please fill in all required fields', 'error');
+    return;
+  }
+
+  const classes = loadClasses();
+  const classIndex = classes.findIndex(cls => cls.id === currentClassId);
+
+  if (classIndex === -1) return;
+
+  const newStudent = {
+    id: Date.now().toString(),
+    name: name,
+    email: email,
+    username: username,
+    password: password,
+    roll: roll,
+    createdAt: new Date().toLocaleString()
+  };
+
+  classes[classIndex].students.push(newStudent);
+  saveClasses(classes);
+
+  // Clear form
+  document.getElementById('studentName').value = '';
+  document.getElementById('studentEmail').value = '';
+  document.getElementById('studentUsername').value = '';
+  document.getElementById('studentPassword').value = '';
+  document.getElementById('studentRoll').value = '';
+
+  displayClassContent();
+  showMessage('Student added successfully!', 'success');
+}
+
+// Display students table
+function displayStudentsTable() {
+  const classes = loadClasses();
+  const currentClass = classes.find(cls => cls.id === currentClassId);
+
+  if (!currentClass) return;
+
+  const container = document.getElementById('studentsTableContainer');
+  const tableBody = document.getElementById('studentsTableBody');
+
+  if (currentClass.students.length === 0) {
+    container.style.display = 'none';
+    return;
+  }
+
+  container.style.display = 'block';
+  tableBody.innerHTML = currentClass.students.map(student => `
+    <tr>
+      <td>${student.name}</td>
+      <td>${student.email}</td>
+      <td>${student.roll || '-'}</td>
+      <td><code style="background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">${student.username}</code></td>
+      <td><span class="credential-badge">✓ Set</span></td>
+      <td>
+        <button class="btn-delete" onclick="deleteStudent('${student.id}')">Remove</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// Display credentials table
+function displayCredentialsTable() {
+  const classes = loadClasses();
+  const currentClass = classes.find(cls => cls.id === currentClassId);
+
+  if (!currentClass) return;
+
+  const container = document.getElementById('credentialsTableContainer');
+  const noMessage = document.getElementById('noCredentialsMessage');
+  const tableBody = document.getElementById('credentialsTableBody');
+
+  if (currentClass.students.length === 0) {
+    container.style.display = 'none';
+    noMessage.style.display = 'block';
+    return;
+  }
+
+  container.style.display = 'block';
+  noMessage.style.display = 'none';
+
+  tableBody.innerHTML = currentClass.students.map(student => `
+    <tr>
+      <td>${student.name}</td>
+      <td><code style="background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">${student.username}</code></td>
+      <td><code style="background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">${student.password}</code></td>
+      <td>${student.email}</td>
+      <td>
+        <button class="btn-edit" onclick="editStudentCredentials('${student.id}')">Edit</button>
+        <button class="btn-delete" onclick="deleteStudent('${student.id}')">Remove</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// Delete student
+function deleteStudent(studentId) {
+  if (confirm('Are you sure you want to remove this student?')) {
+    const classes = loadClasses();
+    const classIndex = classes.findIndex(cls => cls.id === currentClassId);
+
+    if (classIndex !== -1) {
+      classes[classIndex].students = classes[classIndex].students.filter(s => s.id !== studentId);
+      saveClasses(classes);
+      displayClassContent();
+      showMessage('Student removed successfully!', 'success');
+    }
+  }
+}
+
+// Edit student credentials
+function editStudentCredentials(studentId) {
+  const classes = loadClasses();
+  const currentClass = classes.find(cls => cls.id === currentClassId);
+  const student = currentClass.students.find(s => s.id === studentId);
+
+  if (student) {
+    document.getElementById('studentName').value = student.name;
+    document.getElementById('studentEmail').value = student.email;
+    document.getElementById('studentUsername').value = student.username;
+    document.getElementById('studentPassword').value = student.password;
+    document.getElementById('studentRoll').value = student.roll;
+
+    // Switch to Add Student tab
+    switchTab({target: {textContent: ''}}, 'addStudentTab');
+  }
+}
+
+// Switch tabs
+function switchTab(event, tabName) {
+  const tabs = document.querySelectorAll('.tab');
+  const contents = document.querySelectorAll('.tab-content');
+
+  tabs.forEach(tab => tab.classList.remove('active'));
+  contents.forEach(content => content.classList.remove('active'));
+
+  event.target.classList.add('active');
+  document.getElementById(tabName).classList.add('active');
+}
+
+// Show message
+function showMessage(text, type) {
+  const messageDiv = document.getElementById('message');
+  messageDiv.innerHTML = `<div class="msg msg-${type}">${text}</div>`;
+  setTimeout(() => {
+    messageDiv.innerHTML = '';
+  }, 3000);
+}
+
+// Logout
+function logout() {
+  alert('Logging out...');
+  window.location.href = 'login.html';
+}
+
+// Load classes on page load
+window.addEventListener('load', displayClasses);
+</script>
+
+</body>
+</html>

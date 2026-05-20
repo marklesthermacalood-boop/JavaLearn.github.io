@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lesson 10 - Polymorphism</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="backend-config.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="logo">⚡ JavaLearn Hub</div>
+  <nav>
+    <a href="index.html#">Home</a>
+    <a href="lessons.html">Lessons</a>
+    <a href="dashboard.html">Dashboard</a>
+  </nav>
+</header>
+
+<section class="lesson-hero">
+<h1>Lesson 10: Polymorphism</h1>
+</section>
+
+<section class="lesson-content">
+
+<div class="card intro">
+Polymorphism allows objects of different classes to be treated as objects of a common superclass. It enables method overriding and dynamic method dispatch.
+</div>
+
+  <div class="card">
+    <h2>Why This Lesson Matters</h2>
+    <p>Every Java lesson builds a stronger foundation for writing real applications. These concepts are used every day in desktop, web, and mobile development.</p>
+    <ul>
+      <li>Understand how Java works behind the scenes</li>
+      <li>Learn the syntax and structure clearly</li>
+      <li>Practice examples that translate directly into real projects</li>
+      <li>See how the lesson connects to larger programming concepts</li>
+    </ul>
+  </div>
+
+  <div class="card">
+<ul>
+  <li>Variables & Data Types</li>
+  <li>Operators</li>
+  <li>If Statements</li>
+  <li>Loops</li>
+  <li>Methods</li>
+  <li>Arrays</li>
+  <li>Strings</li>
+  <li>OOP Basics</li>
+</ul>
+</div>
+
+<div class="card code-section">
+<pre>
+public class Main {
+  public static void main(String[] args) {
+
+    for (int i = 1; i <= 5; i++) {
+      System.out.println("Lesson " + i);
+    }
+
+  }
+}
+</pre>
+</div>
+
+<div class="takeaway">
+<p><b>Key Takeaway:</b> You now understand Java fundamentals and can start building simple programs.</p>
+</div>
+
+<div class="lesson-nav">
+ <a href="lesson9.html"><button class="btn-outline">← Previous Lesson</button></a>
+<a href="index.html#"><button class="btn-primary">Finish Course</button></a>
+</div>
+
+</section>
+
+<div class="card exercise">
+<textarea id="code">
+public class Main {
+  public static void main(String[] args) {
+
+    System.out.println("I completed Java Basics!");
+
+  }
+}
+</textarea>
+
+<button onclick="runCode()">Run</button>
+<pre id="output"></pre>
+</div>
+
+<script>
+async function runCode() {
+  const code = document.getElementById("code").value;
+
+  const runUrl = getRunUrl();
+    const res = await fetch(runUrl, {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({code})
+  });
+
+      let result;
+    const contentType = res.headers.get("content-type") || "";
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || `Server returned ${res.status}`);
+    }
+    if (contentType.includes("application/json")) {
+      result = await res.json();
+    } else {
+      const text = await res.text();
+      throw new Error(text || "Server returned non-JSON response");
+    }
+  document.getElementById("output").innerText =
+    result.success ? result.output : result.error;
+}
+</script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,236 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Java Quiz</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, rgba(255, 138, 0, 0.18), transparent 20%),
+    radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.22), transparent 18%),
+    linear-gradient(180deg, #100817 0%, #170c29 55%, #100817 100%);
+  color: #f8f7ff;
+}
+
+header {
+  background: rgba(16, 8, 23, 0.88);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 36px;
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(18px);
+}
+
+header .logo {
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+header nav {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+header nav a {
+  color: #d8cbff;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+header nav a:hover {
+  color: #fff;
+}
+
+.hero {
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  padding: 0 40px;
+  background: linear-gradient(135deg, rgba(255, 138, 0, 0.92), rgba(139, 92, 246, 0.92));
+  color: white;
+}
+
+.hero h1 {
+  font-size: clamp(2.6rem, 4vw, 3.8rem);
+}
+
+.container {
+  max-width: 920px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+.score-box {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 30px;
+  border-radius: 24px;
+  text-align: center;
+  margin-bottom: 30px;
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+#score {
+  font-size: 3rem;
+  color: #fff;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 24px;
+  border-radius: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+label {
+  display: block;
+  margin: 10px 0;
+  cursor: pointer;
+  color: #cec6ff;
+}
+
+button {
+  padding: 14px 22px;
+  background: linear-gradient(135deg, #ff8a00, #d97706);
+  color: #111;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 36px rgba(255, 138, 0, 0.2);
+}
+</style>
+  <script src="backend-config.js"></script>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">⚡ JavaLearn Hub</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="lessons.html">Lessons</a>
+    <a href="dashboard.html">Dashboard</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Java Quiz</h1>
+</section>
+
+<div class="container">
+
+<div class="score-box">
+  <h2>Your Score</h2>
+  <h1 id="score">0 / 20</h1>
+</div>
+
+<form id="quizForm"> <!-- 1 --> <div class="card"> <h3>1. Java is a?</h3> <label><input type="radio" name="q1" value="a"> Operating System</label> <label><input type="radio" name="q1" value="b"> Programming Language</label> <label><input type="radio" name="q1" value="c"> Hardware</label> </div> <!-- 2 --> <div class="card"> <h3>2. Which symbol ends a statement?</h3> <label><input type="radio" name="q2" value="a"> :</label> <label><input type="radio" name="q2" value="b"> ;</label> <label><input type="radio" name="q2" value="c"> .</label> </div> <!-- 3 --> <div class="card"> <h3>3. Keyword to create class?</h3> <label><input type="radio" name="q3" value="a"> class</label> <label><input type="radio" name="q3" value="b"> define</label> <label><input type="radio" name="q3" value="c"> function</label> </div> <!-- 4 --> <div class="card"> <h3>4. Output of 2 + 3?</h3> <label><input type="radio" name="q4" value="a"> 23</label> <label><input type="radio" name="q4" value="b"> 5</label> <label><input type="radio" name="q4" value="c"> 6</label> </div> <!-- 5 --> <div class="card"> <h3>5. Java runs on?</h3> <label><input type="radio" name="q5" value="a"> JVM</label> <label><input type="radio" name="q5" value="b"> BIOS</label> <label><input type="radio" name="q5" value="c"> CPU only</label> </div> <!-- 6–20 (Java basics mixed MCQ) --> <div class="card"><h3>6. int stores?</h3> <label><input type="radio" name="q6" value="a"> text</label> <label><input type="radio" name="q6" value="b"> numbers</label> <label><input type="radio" name="q6" value="c"> images</label> </div> <div class="card"><h3>7. String is used for?</h3> <label><input type="radio" name="q7" value="a"> decimals</label> <label><input type="radio" name="q7" value="b"> text</label> <label><input type="radio" name="q7" value="c"> loops</label> </div> <div class="card"><h3>8. System.out.println prints?</h3> <label><input type="radio" name="q8" value="a"> input</label> <label><input type="radio" name="q8" value="b"> output</label> <label><input type="radio" name="q8" value="c"> files</label> </div> <div class="card"><h3>9. Java is object-oriented?</h3> <label><input type="radio" name="q9" value="a"> true</label> <label><input type="radio" name="q9" value="b"> false</label> </div> <div class="card"><h3>10. Loop keyword?</h3> <label><input type="radio" name="q10" value="a"> for</label> <label><input type="radio" name="q10" value="b"> loop</label> <label><input type="radio" name="q10" value="c"> repeat</label> </div> <div class="card"><h3>11. Array starts at index?</h3> <label><input type="radio" name="q11" value="a"> 0</label> <label><input type="radio" name="q11" value="b"> 1</label> <label><input type="radio" name="q11" value="c"> 10</label> </div> <div class="card"><h3>12. Method keyword?</h3> <label><input type="radio" name="q12" value="a"> function</label> <label><input type="radio" name="q12" value="b"> void</label> <label><input type="radio" name="q12" value="c"> method</label> </div> <div class="card"><h3>13. Boolean values?</h3> <label><input type="radio" name="q13" value="a"> true/false</label> <label><input type="radio" name="q13" value="b"> yes/no</label> <label><input type="radio" name="q13" value="c"> 1/2</label> </div> <div class="card"><h3>14. Java file ends with?</h3> <label><input type="radio" name="q14" value="a"> .java</label> <label><input type="radio" name="q14" value="b"> .js</label> <label><input type="radio" name="q14" value="c"> .html</label> </div> <div class="card"><h3>15. Compiler converts?</h3> <label><input type="radio" name="q15" value="a"> code to bytecode</label> <label><input type="radio" name="q15" value="b"> images</label> <label><input type="radio" name="q15" value="c"> files</label> </div> <div class="card"><h3>16. Java is platform?</h3> <label><input type="radio" name="q16" value="a"> independent</label> <label><input type="radio" name="q16" value="b"> dependent</label> </div> <div class="card"><h3>17. main method is?</h3> <label><input type="radio" name="q17" value="a"> entry point</label> <label><input type="radio" name="q17" value="b"> loop</label> </div> <div class="card"><h3>18. OOP stands for?</h3> <label><input type="radio" name="q18" value="a"> Object Oriented Programming</label> <label><input type="radio" name="q18" value="b"> Online Open Program</label> </div> <div class="card"><h3>19. Java created by?</h3> <label><input type="radio" name="q19" value="a"> Sun Microsystems</label> <label><input type="radio" name="q19" value="b"> Microsoft</label> </div> <div class="card"><h3>20. Java uses memory?</h3> <label><input type="radio" name="q20" value="a"> automatic garbage collection</label> <label><input type="radio" name="q20" value="b"> manual only</label> </div> </form> <button id="submitBtn">Submit Quiz</button> </div>
+
+
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+// 🔥 Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyDewXAlvh_vtQKEM147EJuPARkuka0ILfo",
+  authDomain: "javalearnhub.firebaseapp.com",
+  projectId: "javalearnhub",
+  storageBucket: "javalearnhub.firebasestorage.app",
+  messagingSenderId: "722964716262",
+  appId: "1:722964716262:web:66b70aade9b6cd00543927"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ✅ Check if user is logged in
+let currentUser = null;
+
+/*onAuthStateChanged(auth, user => {
+  if(!user){
+    alert("You are not logged in! Redirecting to login...");
+    window.location.href = "login.html";
+    return;
+  }
+  currentUser = user;
+});*/
+
+// ✅ Submit Quiz
+document.getElementById("submitBtn").addEventListener("click", async function() {
+  
+  if(!currentUser){
+    alert("You are not logged in!");
+    return;
+  }
+
+  let score = 0;
+
+  const answers = {
+    q1:"b", q2:"b", q3:"a", q4:"b", q5:"a",
+    q6:"b", q7:"b", q8:"b", q9:"a", q10:"a",
+    q11:"a", q12:"b", q13:"a", q14:"a", q15:"a",
+    q16:"a", q17:"a", q18:"a", q19:"a", q20:"a"
+  };
+
+  for(let q in answers){
+    let selected = document.querySelector(`input[name="${q}"]:checked`);
+    if(selected && selected.value === answers[q]){
+      score++;
+    }
+  }
+
+  document.getElementById("score").innerText = score + " / 20";
+  alert("You scored " + score + " / 20");
+
+  const userRef = doc(db, "users", currentUser.uid);
+  const snap = await getDoc(userRef);
+
+  if(snap.exists()){
+    // Update existing
+    await updateDoc(userRef, {
+      quizScores: arrayUnion(score),
+      name: currentUser.displayName || currentUser.email.split("@")[0] // keep name updated
+    });
+  } else {
+    // Create user doc
+    await setDoc(userRef, {
+      name: currentUser.displayName || currentUser.email.split("@")[0],
+      quizScores: [score]
+    });
+  }
+
+  alert("Score saved successfully!");
+});
+</script>
+
+</body>
+</html>

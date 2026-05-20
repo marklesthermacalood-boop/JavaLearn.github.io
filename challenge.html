@@ -1,0 +1,328 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Java Coding Challenges</title>
+
+<link rel="stylesheet" href="styles.css">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, rgba(255, 138, 0, 0.18), transparent 20%),
+    radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.22), transparent 18%),
+    linear-gradient(180deg, #100817 0%, #170c29 55%, #100817 100%);
+  color: #f8f7ff;
+}
+
+.challenge-container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+.challenge-card {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 28px;
+  border-radius: 24px;
+  margin-bottom: 30px;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.challenge-card h2 {
+  margin-bottom: 18px;
+  color: #fff;
+}
+
+.challenge-card p {
+  margin-bottom: 18px;
+  line-height: 1.85;
+  color: #cec6ff;
+}
+
+textarea {
+  width: 100%;
+  height: 250px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 18px;
+  padding: 18px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 15px;
+  margin-top: 15px;
+}
+
+.run-btn {
+  margin-top: 15px;
+  padding: 14px 22px;
+  background: linear-gradient(135deg, #ff8a00, #d97706);
+  color: #111;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.run-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 36px rgba(255, 138, 0, 0.2);
+}
+
+.output-box {
+  background: rgba(15, 10, 25, 0.96);
+  color: #f4f4ff;
+  padding: 18px;
+  border-radius: 18px;
+  margin-top: 15px;
+  min-height: 80px;
+  white-space: pre-wrap;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.score-box {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 26px;
+  border-radius: 24px;
+  text-align: center;
+  margin-bottom: 30px;
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+#score {
+  color: #fff;
+  font-size: 3.2rem;
+}
+</style>
+  <script src="backend-config.js"></script>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">⚡ JavaLearn Hub</div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="lessons.html">Lessons</a>
+    <a href="dashboard.html">Dashboard</a>
+  </nav>
+</header>
+
+<section class="lesson-hero">
+  <h1>Java Coding Challenges</h1>
+</section>
+
+<div class="challenge-container">
+
+<div class="score-box">
+  <h2>Your Score</h2>
+  <h1 id="score">0 / 3</h1>
+</div>
+
+<!-- CHALLENGE 1 -->
+<div class="challenge-card">
+
+<h2>Challenge 1 - Loops</h2>
+
+<p>
+Create a Java program using a <b>for loop</b> that prints numbers from 1 to 10.
+</p>
+
+<textarea id="code1">
+public class Main {
+  public static void main(String[] args) {
+
+    
+
+  }
+}
+</textarea>
+
+<button class="run-btn" onclick="runCode('code1','output1',1)">
+Run Code
+</button>
+
+<pre class="output-box" id="output1"></pre>
+
+</div>
+
+<!-- CHALLENGE 2 -->
+<div class="challenge-card">
+
+<h2>Challenge 2 - Arrays</h2>
+
+<p>
+Create an array containing 5 integers and print the first element.
+</p>
+
+<textarea id="code2">
+public class Main {
+  public static void main(String[] args) {
+
+    
+
+  }
+}
+</textarea>
+
+<button class="run-btn" onclick="runCode('code2','output2',2)">
+Run Code
+</button>
+
+<pre class="output-box" id="output2"></pre>
+
+</div>
+
+<!-- CHALLENGE 3 -->
+<div class="challenge-card">
+
+<h2>Challenge 3 - Methods</h2>
+
+<p>
+Create a method named <b>greet()</b> that prints:
+</p>
+
+<pre>Hello Student</pre>
+
+<textarea id="code3">
+public class Main {
+
+  
+
+  public static void main(String[] args) {
+
+    
+
+  }
+}
+</textarea>
+
+<button class="run-btn" onclick="runCode('code3','output3',3)">
+Run Code
+</button>
+
+<pre class="output-box" id="output3"></pre>
+
+</div>
+
+</div>
+
+<script>
+
+let score = 0;
+
+let completed = {
+  1:false,
+  2:false,
+  3:false
+};
+
+async function runCode(codeId, outputId, challengeNumber){
+
+  const code =
+  document.getElementById(codeId).value;
+
+  const output =
+  document.getElementById(outputId);
+
+  output.innerText = "Running...";
+
+  try{
+
+    const runUrl = getRunUrl();
+    const res = await fetch(runUrl, {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({code})
+    });
+
+        let result;
+    const contentType = res.headers.get("content-type") || "";
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || `Server returned ${res.status}`);
+    }
+    if (contentType.includes("application/json")) {
+      result = await res.json();
+    } else {
+      const text = await res.text();
+      throw new Error(text || "Server returned non-JSON response");
+    }
+
+    output.innerText =
+      result.success
+      ? result.output
+      : result.error;
+
+    checkChallenge(
+      challengeNumber,
+      result.output
+    );
+
+  } catch(error){
+
+    output.innerText =
+      "Server Error. Make sure backend is running.";
+
+  }
+
+}
+
+function checkChallenge(number, output){
+
+  output = output.trim();
+
+  if(number === 1 && output.includes("10")){
+
+    if(!completed[1]){
+      score++;
+      completed[1] = true;
+    }
+
+  }
+
+  if(number === 2){
+
+    if(!completed[2]){
+      score++;
+      completed[2] = true;
+    }
+
+  }
+
+  if(number === 3 &&
+     output.includes("Hello Student")){
+
+    if(!completed[3]){
+      score++;
+      completed[3] = true;
+    }
+
+  }
+
+  document.getElementById("score").innerText =
+    score + " / 3";
+
+}
+
+</script>
+
+</body>
+</html>
+
+

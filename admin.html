@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Lesson Management</title>
+  <style>
+    :root {
+      --bg: #100817;
+      --bg-soft: #1a0d23;
+      --surface: rgba(255, 255, 255, 0.08);
+      --surface-strong: rgba(255, 255, 255, 0.14);
+      --text: #f8f7ff;
+      --muted: #d8cbff;
+      --accent: #ff8a00;
+      --accent-strong: #d97706;
+      --purple: #8b5cf6;
+      --border: rgba(255, 255, 255, 0.12);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, rgba(255, 138, 0, 0.22), transparent 20%),
+        radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.24), transparent 20%),
+        linear-gradient(180deg, #100817 0%, #1a0d23 55%, #100817 100%);
+      color: var(--text);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 36px;
+      background: rgba(16, 8, 23, 0.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      z-index: 20;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    nav {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.25s ease, transform 0.25s ease;
+      position: relative;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
+    }
+
+    .title-section {
+      margin-bottom: 32px;
+      padding: 32px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, rgba(255, 138, 0, 0.9), rgba(139, 92, 246, 0.9));
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.28);
+    }
+
+    .title-section h1 {
+      font-size: clamp(2.4rem, 3vw, 3.4rem);
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .title-section p {
+      color: rgba(255, 255, 255, 0.92);
+      line-height: 1.75;
+      font-size: 1rem;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 30px;
+    }
+
+    .form-section,
+    .lessons-section,
+    .sidebar,
+    .main-content {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 28px;
+      box-shadow: 0 24px 72px rgba(0, 0, 0, 0.2);
+      padding: 28px;
+    }
+
+    .form-section h2,
+    .lessons-section h2,
+    .sidebar h2,
+    .main-content h2 {
+      font-size: 1.35rem;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      padding: 14px 16px;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: rgba(255, 138, 0, 0.9);
+      box-shadow: 0 0 0 4px rgba(255, 138, 0, 0.12);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .btn-primary,
+    .btn-add-student,
+    .btn-edit,
+    .btn-delete,
+    .btn-secondary,
+    .btn-delete-class {
+      border: none;
+      border-radius: 999px;
+      padding: 14px 20px;
+      font-weight: 700;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary,
+    .btn-add-student,
+    .btn-edit {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #111;
+    }
+
+    .btn-primary:hover,
+    .btn-add-student:hover,
+    .btn-edit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 40px rgba(255, 138, 0, 0.24);
+    }
+
+    .btn-secondary,
+    .btn-delete-class {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .btn-secondary:hover,
+    .btn-delete-class:hover {
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .lesson-card,
+    .class-item,
+    .students-table,
+    .student-form {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .lessons-section {
+      overflow: hidden;
+    }
+
+    .lesson-card {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 22px;
+      margin-bottom: 18px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .lesson-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 138, 0, 0.3);
+    }
+
+    .lesson-info h3 {
+      color: #fff;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .lesson-info p {
+      color: var(--muted);
+      margin-bottom: 4px;
+      font-size: 0.94rem;
+    }
+
+    .lesson-icon,
+    .class-item-name {
+      font-size: 1.3rem;
+      margin-right: 14px;
+    }
+
+    .lesson-actions,
+    .class-item {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .class-item {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 20px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      transition: transform 0.25s ease, background 0.25s ease;
+    }
+
+    .class-item:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .class-item.active {
+      background: rgba(255, 138, 0, 0.12);
+      border-color: rgba(255, 138, 0, 0.3);
+    }
+
+    .class-item-count,
+    .lesson-info p,
+    .students-table td,
+    .students-table th,
+    .empty-state p,
+    .credential-badge {
+      color: var(--muted);
+    }
+
+    .students-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 22px;
+      overflow: hidden;
+    }
+
+    .students-table th,
+    .students-table td {
+      padding: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.94rem;
+    }
+
+    .students-table thead {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .students-table tbody tr:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .credential-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(139, 92, 246, 0.15);
+      color: #e0d7ff;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+    }
+
+    .empty-state {
+      color: var(--muted);
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .empty-state p {
+      margin-bottom: 10px;
+      font-size: 0.98rem;
+    }
+
+    .msg {
+      padding: 14px 18px;
+      border-radius: 18px;
+      font-size: 0.95rem;
+    }
+
+    .msg-success {
+      background: rgba(16, 185, 129, 0.12);
+      color: #a7f3d0;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+
+    .msg-error {
+      background: rgba(239, 68, 68, 0.12);
+      color: #fecaca;
+      border: 1px solid rgba(239, 68, 68, 0.25);
+    }
+
+    @media (max-width: 992px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 16px;
+        padding: 18px;
+      }
+
+      .container {
+        padding: 24px 18px 36px;
+      }
+    }
+  </style>
+  <script src="backend-config.js"></script>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">☕ Admin Panel - Lesson Management</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="professor.html">Professor Portal</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </nav>
+</header>
+
+<!-- MAIN CONTAINER -->
+<div class="container">
+
+  <div class="title-section">
+    <h1>📚 Lesson Management System</h1>
+    <p>Add, edit, or remove lessons from the platform. Changes are saved automatically.</p>
+  </div>
+
+  <div class="content">
+
+    <!-- ADD/EDIT LESSON FORM -->
+    <div class="form-section">
+      <h2>Add New Lesson</h2>
+      <div id="message"></div>
+
+      <form id="lessonForm">
+        <div class="form-group">
+          <label for="lessonNumber">Lesson Number</label>
+          <input type="number" id="lessonNumber" placeholder="e.g., 1, 2, 3..." min="1" required>
+        </div>
+
+        <div class="form-group">
+          <label for="lessonIcon">Icon Emoji</label>
+          <input type="text" id="lessonIcon" placeholder="e.g., 💻, 🔧, 📝..." maxlength="5" value="💻">
+        </div>
+
+        <div class="form-group">
+          <label for="lessonTitle">Lesson Title</label>
+          <input type="text" id="lessonTitle" placeholder="e.g., What is Java?" required>
+        </div>
+
+        <div class="form-group">
+          <label for="lessonDifficulty">Difficulty Level</label>
+          <select id="lessonDifficulty">
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="lessonContent">Content Preview (HTML)</label>
+          <textarea id="lessonContent" placeholder="Enter lesson content or HTML template..." required></textarea>
+        </div>
+
+        <div class="button-group">
+          <button type="submit" class="btn-primary">Add Lesson</button>
+          <button type="reset" class="btn-secondary">Clear Form</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- LESSONS LIST -->
+    <div class="lessons-section">
+      <h2>Current Lessons</h2>
+      <div id="lessonsList"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+// Load lessons from localStorage
+function loadLessons() {
+  const lessons = JSON.parse(localStorage.getItem('adminLessons')) || [];
+  return lessons;
+}
+
+// Save lessons to localStorage
+function saveLessons(lessons) {
+  localStorage.setItem('adminLessons', JSON.stringify(lessons));
+}
+
+// Display all lessons
+function displayLessons() {
+  const lessons = loadLessons();
+  const lessonsList = document.getElementById('lessonsList');
+
+  if (lessons.length === 0) {
+    lessonsList.innerHTML = '<div class="empty-state"><p>No lessons added yet. Create your first lesson!</p></div>';
+    return;
+  }
+
+  lessonsList.innerHTML = lessons.map((lesson, index) => `
+    <div class="lesson-card">
+      <span class="lesson-icon">${lesson.icon}</span>
+      <div class="lesson-info">
+        <h3>${lesson.icon} Lesson ${lesson.number}: ${lesson.title}</h3>
+        <p><strong>Difficulty:</strong> ${lesson.difficulty}</p>
+        <p><strong>Content Preview:</strong> ${lesson.content.substring(0, 60)}...</p>
+      </div>
+      <div class="lesson-actions">
+        <button class="btn-edit" onclick="editLesson(${index})">Edit</button>
+        <button class="btn-delete" onclick="deleteLesson(${index})">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Edit lesson
+function editLesson(index) {
+  const lessons = loadLessons();
+  const lesson = lessons[index];
+
+  document.getElementById('lessonNumber').value = lesson.number;
+  document.getElementById('lessonIcon').value = lesson.icon;
+  document.getElementById('lessonTitle').value = lesson.title;
+  document.getElementById('lessonDifficulty').value = lesson.difficulty;
+  document.getElementById('lessonContent').value = lesson.content;
+
+  document.getElementById('lessonForm').dataset.editIndex = index;
+  document.querySelector('.form-section h2').textContent = 'Edit Lesson';
+  document.querySelector('.btn-primary').textContent = 'Update Lesson';
+
+  window.scrollIntoView();
+}
+
+// Delete lesson
+function deleteLesson(index) {
+  if (confirm('Are you sure you want to delete this lesson?')) {
+    const lessons = loadLessons();
+    lessons.splice(index, 1);
+    saveLessons(lessons);
+    displayLessons();
+    showMessage('Lesson deleted successfully!', 'success');
+  }
+}
+
+// Show message
+function showMessage(text, type) {
+  const messageDiv = document.getElementById('message');
+  messageDiv.innerHTML = `<div class="msg msg-${type}">${text}</div>`;
+  setTimeout(() => {
+    messageDiv.innerHTML = '';
+  }, 3000);
+}
+
+// Handle form submission
+document.getElementById('lessonForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const lessonNumber = document.getElementById('lessonNumber').value;
+  const lessonIcon = document.getElementById('lessonIcon').value || '💻';
+  const lessonTitle = document.getElementById('lessonTitle').value;
+  const lessonDifficulty = document.getElementById('lessonDifficulty').value;
+  const lessonContent = document.getElementById('lessonContent').value;
+
+  const newLesson = {
+    number: parseInt(lessonNumber),
+    icon: lessonIcon,
+    title: lessonTitle,
+    difficulty: lessonDifficulty,
+    content: lessonContent,
+    createdAt: new Date().toLocaleString()
+  };
+
+  let lessons = loadLessons();
+  const editIndex = this.dataset.editIndex;
+
+  if (editIndex !== undefined) {
+    lessons[editIndex] = newLesson;
+    showMessage('Lesson updated successfully!', 'success');
+    delete this.dataset.editIndex;
+    document.querySelector('.form-section h2').textContent = 'Add New Lesson';
+    document.querySelector('.btn-primary').textContent = 'Add Lesson';
+  } else {
+    lessons.push(newLesson);
+    showMessage('Lesson added successfully!', 'success');
+  }
+
+  saveLessons(lessons);
+  this.reset();
+  document.getElementById('lessonIcon').value = '💻';
+  displayLessons();
+});
+
+// Load on page load
+window.addEventListener('load', displayLessons);
+
+function logout() {
+  alert('Logging out...');
+  window.location.href = 'login.html';
+}
+</script>
+
+</body>
+</html>

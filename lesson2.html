@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lesson 2</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="backend-config.js"></script>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header>
+  <div class="logo">⚡ JavaLearn Hub</div>
+  <nav>
+    <a href="index.html#">Home</a>
+    <a href="lessons.html">Lessons</a>
+    <a href="dashboard.html">Dashboard</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="lesson-hero">
+  <div class="hero-content">
+    <div class="icon">🧩</div>
+    <div>
+      <h1>Lesson 2: Variables & Data Types</h1>
+      <p class="breadcrumb">Home > Lessons > Lesson 2</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<section class="lesson-content">
+
+  <div class="card intro">
+    Variables are used to store data in Java. Each variable must have a data type that defines what kind of value it can hold.
+  </div>
+
+  <div class="card">
+    <h2>Why This Lesson Matters</h2>
+    <p>Every Java lesson builds a stronger foundation for writing real applications. These concepts are used every day in desktop, web, and mobile development.</p>
+    <ul>
+      <li>Understand how Java works behind the scenes</li>
+      <li>Learn the syntax and structure clearly</li>
+      <li>Practice examples that translate directly into real projects</li>
+      <li>See how the lesson connects to larger programming concepts</li>
+    </ul>
+  </div>
+
+  <!-- TYPES -->
+  <div class="card">
+    <h3>Common Data Types</h3>
+    <ul>
+      <li><b>int</b> – stores whole numbers (e.g., 10)</li>
+      <li><b>double</b> – stores decimal numbers (e.g., 3.14)</li>
+      <li><b>char</b> – stores a single character (e.g., 'A')</li>
+      <li><b>boolean</b> – stores true or false</li>
+      <li><b>String</b> – stores text (e.g., "Hello")</li>
+    </ul>
+  </div>
+
+  <!-- CODE EXAMPLE -->
+  <div class="card code-section">
+    <div class="code-header">
+      <span>Example Code</span>
+    </div>
+
+<pre>
+public class Main {
+  public static void main(String[] args) {
+
+    int age = 18;
+    double height = 5.9;
+    char grade = 'A';
+    boolean isStudent = true;
+    String name = "John";
+
+    System.out.println("Name: " + name);
+    System.out.println("Age: " + age);
+    System.out.println("Height: " + height);
+    System.out.println("Grade: " + grade);
+    System.out.println("Student: " + isStudent);
+  }
+}
+</pre>
+  </div>
+
+  <!-- TAKEAWAY -->
+  <div class="takeaway">
+    <div class="icon">✨</div>
+    <div>
+      <h3>Key Takeaway</h3>
+      <p>
+        Variables store data, and data types define what kind of values those variables can hold.
+      </p>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <div class="lesson-nav">
+   
+    <a href="lesson1.html"><button class="btn-outline">← Previous Lesson</button></a>
+    <a href="lesson3.html"><button class="btn-primary">Next Lesson →</button></a>
+  
+  </div>
+
+</section>
+
+<!-- COMPILER -->
+<div class="card exercise">
+  <h2>Try It Yourself</h2>
+
+  <textarea id="code">public class Main {
+  public static void main(String[] args) {
+
+    int number = 10;
+    double price = 19.99;
+    String message = "Hello Java";
+
+    System.out.println(number);
+    System.out.println(price);
+    System.out.println(message);
+
+  }
+}</textarea>
+
+  <button onclick="runCode()">Run</button>
+  <button onclick="resetCode()">Reset Code</button>
+
+  <div id="status" class="status"></div>
+  <pre id="output"></pre>
+</div>
+
+<script>
+function resetCode() {
+  document.getElementById("code").value = `public class Main {
+  public static void main(String[] args) {
+
+    int number = 10;
+    double price = 19.99;
+    String message = "Hello Java";
+
+    System.out.println(number);
+    System.out.println(price);
+    System.out.println(message);
+
+  }
+}`;
+}
+
+async function runCode() {
+  const code = document.getElementById("code").value;
+  const output = document.getElementById("output");
+  const status = document.getElementById("status");
+
+  try {
+    const runUrl = getRunUrl();
+    const response = await fetch(runUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ code }),
+    });
+
+        let result;
+    const contentType = response.headers.get("content-type") || "";
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(text || `Server returned ${response.status}`);
+    }
+    if (contentType.includes("application/json")) {
+      result = await response.json();
+    } else {
+      const text = await response.text();
+      throw new Error(text || "Server returned non-JSON response");
+    }
+
+    if (!result.success) {
+      status.textContent = "❌ Error";
+      status.className = "status error";
+      output.innerText = result.error;
+      return;
+    }
+
+    status.textContent = "✅ Success!";
+    status.className = "status success";
+    output.innerText = result.output;
+
+  } catch (err) {
+    status.textContent = "❌ Server error";
+    status.className = "status error";
+    output.innerText = err.message;
+  }
+}
+</script>
+
+<!-- FOOTER -->
+<footer>
+  © 2025 JavaLearn Hub. All rights reserved.
+</footer>
+</body>
+</html>
+
