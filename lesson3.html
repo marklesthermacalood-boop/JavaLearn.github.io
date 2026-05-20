@@ -1,16 +1,21 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Lesson 3 - Operators</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="backend-config.js"></script>
+    <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="firebase-auth.js"></script>
 </head>
 <body>
 
 <!-- NAVBAR -->
 <header>
-  <div class="logo">⚡ JavaLearn Hub</div>
+  <div class="logo">? JavaLearn Hub</div>
   <nav>
     <a href="index.html#">Home</a>
     <a href="lessons.html">Lessons</a>
@@ -21,7 +26,7 @@
 <!-- HERO -->
 <section class="lesson-hero">
   <div class="hero-content">
-    <div class="icon">🎯</div>
+    <div class="icon">??</div>
     <div>
       <h1>Lesson 3: Operators</h1>
       <p class="breadcrumb">Home > Lessons > Lesson 3</p>
@@ -105,7 +110,7 @@ public class Main {
 
   <!-- TAKEAWAY -->
   <div class="takeaway">
-    <div class="icon">✨</div>
+    <div class="icon">?</div>
     <div>
       <h3>Key Takeaway</h3>
       <p>
@@ -116,8 +121,8 @@ public class Main {
 
   <!-- NAV -->
   <div class="lesson-nav">
-    <a href="lesson2.html"><button class="btn-outline">← Previous Lesson</button></a>
-    <a href="lesson4.html"><button class="btn-primary">Next Lesson →</button></a>
+    <a href="lesson2.html"><button class="btn-outline">? Previous Lesson</button></a>
+    <a href="lesson4.html"><button class="btn-primary">Next Lesson ?</button></a>
   </div>
 
 </section>
@@ -191,18 +196,18 @@ async function runCode() {
     }
 
     if (!result.success) {
-      status.textContent = "❌ Error";
+      status.textContent = "? Error";
       status.className = "status error";
       output.innerText = result.error;
       return;
     }
 
-    status.textContent = "✅ Success!";
+    status.textContent = "? Success!";
     status.className = "status success";
     output.innerText = result.output;
 
   } catch (err) {
-    status.textContent = "❌ Server error";
+    status.textContent = "? Server error";
     status.className = "status error";
     output.innerText = err.message;
   }
@@ -211,7 +216,7 @@ async function runCode() {
 
 <!-- FOOTER -->
 <footer>
-  © 2025 JavaLearn Hub. All rights reserved.
+  � 2025 JavaLearn Hub. All rights reserved.
 </footer>
 </body>
 </html>

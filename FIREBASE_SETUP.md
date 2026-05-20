@@ -55,7 +55,7 @@ Stores user information:
 ```
 {
   uid: "unique_user_id",
-  email: "user@example.com",
+  email:    ,
   username: "john_doe",
   role: "student",
   createdAt: timestamp,
