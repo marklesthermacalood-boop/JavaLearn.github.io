@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
+const path = require("path");
 const { exec } = require("child_process");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -242,6 +243,196 @@ app.post("/run", (req, res) => {
       return res.json({ success: true, output: stdout2?.trim() || "No output" });
     });
   });
+});
+
+function loadLessonFiles() {
+  const files = fs.readdirSync(__dirname)
+    .filter((name) => /^lesson\d+\.html$/.test(name))
+    .sort((a, b) => {
+      const aNum = parseInt(a.match(/lesson(\d+)\.html/)[1], 10);
+      const bNum = parseInt(b.match(/lesson(\d+)\.html/)[1], 10);
+      return aNum - bNum;
+    });
+  return files;
+}
+
+function buildLessonPage({ lessonNumber, title, intro, points, codeExample, takeaway, icon = '💻', difficulty = 'Beginner' }) {
+  const previousLesson = lessonNumber > 1 ? `lesson${lessonNumber - 1}.html` : 'lessons.html';
+  const nextLesson = `lesson${lessonNumber + 1}.html`;
+  const pointItems = points
+    .split(/\r?\n/)
+    .filter((line) => line.trim())
+    .map((line) => `      <li>${line.trim()}</li>`)
+    .join('\n');
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lesson ${lessonNumber} - ${title}</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="backend-config.js"></script>
+</head>
+<body>
+<header>
+  <div class="logo">⚡ JavaLearn Hub</div>
+  <nav>
+    <a href="index.html#">Home</a>
+    <a href="lessons.html">Lessons</a>
+    <a href="dashboard.html">Dashboard</a>
+  </nav>
+</header>
+
+<section class="lesson-hero">
+  <div class="hero-content">
+    <div class="icon">${icon}</div>
+    <div>
+      <h1>Lesson ${lessonNumber}: ${title}</h1>
+      <p class="breadcrumb">Home > Lessons > Lesson ${lessonNumber}</p>
+    </div>
+  </div>
+</section>
+
+<section class="lesson-content">
+  <div class="card intro">
+    <h2>Lesson ${lessonNumber}: ${title}</h2>
+    <p>${intro}</p>
+  </div>
+  <div class="card">
+    <h3>What you will learn</h3>
+    <ul>
+${pointItems}
+    </ul>
+  </div>
+  <div class="card code-section">
+    <div class="code-header"><span>Example Code</span></div>
+    <pre>
+${codeExample}
+    </pre>
+  </div>
+  <div class="takeaway">
+    <div class="icon">?</div>
+    <div>
+      <h3>Key Takeaway</h3>
+      <p>${takeaway}</p>
+    </div>
+  </div>
+  <div class="lesson-nav">
+    <a href="${previousLesson}"><button class="btn-outline">← Previous Lesson</button></a>
+    <a href="${nextLesson}"><button class="btn-primary">Next Lesson →</button></a>
+  </div>
+</section>
+
+<div class="card exercise">
+  <h2>Java Compiler</h2>
+  <textarea id="code">${codeExample}</textarea>
+  <button onclick="runCode()" class="btn-primary">Run Code</button>
+  <button onclick="resetCode()" class="btn-primary">Reset Code</button>
+  <div id="status" class="status"></div>
+  <pre id="output"></pre>
+</div>
+
+<script>
+function getRunUrlSafe() {
+  return typeof getRunUrl === 'function' ? getRunUrl() : '/run';
+}
+
+async function runCode() {
+  const code = document.getElementById('code').value;
+  const output = document.getElementById('output');
+  const status = document.getElementById('status');
+
+  try {
+    const runUrl = getRunUrlSafe();
+    const response = await fetch(runUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code }),
+    });
+
+    let result;
+    const contentType = response.headers.get('content-type') || '';
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(text || \`Server returned ${response.status}\`);
+    }
+    if (contentType.includes('application/json')) {
+      result = await response.json();
+    } else {
+      const text = await response.text();
+      throw new Error(text || 'Server returned non-JSON response');
+    }
+
+    if (!result.success) {
+      status.textContent = '❌ Code failed to compile or run.';
+      status.className = 'status error';
+      output.innerText = result.error;
+      return;
+    }
+
+    status.textContent = '✅ Success!';
+    status.className = 'status success';
+    output.innerText = result.output;
+  } catch (err) {
+    status.textContent = '❌ Server error.';
+    status.className = 'status error';
+    output.innerText = err.message;
+  }
+}
+
+function resetCode() {
+  document.getElementById('code').value = \`${codeExample}\`;
+  document.getElementById('output').innerText = '';
+  document.getElementById('status').textContent = '';
+  document.getElementById('status').className = 'status';
+}
+</script>
+
+<footer>
+  © 2025 JavaLearn Hub. All rights reserved.
+</footer>
+</body>
+</html>`;
+}
+
+app.get("/api/admin/lessons", (req, res) => {
+  try {
+    const files = loadLessonFiles();
+    const lessons = files.map((file) => {
+      const content = fs.readFileSync(path.join(__dirname, file), 'utf8');
+      const titleMatch = content.match(/<h1>([^<]+)<\/h1>/);
+      const title = titleMatch ? titleMatch[1] : file;
+      const introMatch = content.match(/<div class="card intro">[\s\S]*?<p>([\s\S]*?)<\/p>/);
+      const intro = introMatch ? introMatch[1].trim() : '';
+      const codeMatch = content.match(/<div class="card code-section">[\s\S]*?<pre>\n([\s\S]*?)\n    <\/pre>/);
+      const codeExample = codeMatch ? codeMatch[1].trim() : '';
+      const takeawayMatch = content.match(/<div class="takeaway">[\s\S]*?<p>([\s\S]*?)<\/p>/);
+      const takeaway = takeawayMatch ? takeawayMatch[1].trim() : '';
+      const pointsMatch = content.match(/<h3>What you will learn<\/h3>[\s\S]*?<ul>([\s\S]*?)<\/ul>/);
+      const points = pointsMatch ? pointsMatch[1].replace(/<li>|<\/li>/g, '').split(/\r?\n/).map((line) => line.trim()).filter(Boolean).join('\n') : '';
+      const number = parseInt(file.match(/lesson(\d+)\.html/)[1], 10);
+      return { file, lessonNumber: number, title, intro, points, codeExample, takeaway };
+    });
+    res.json({ success: true, lessons });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.post("/api/admin/lessons/:lessonNumber", (req, res) => {
+  try {
+    const lessonNumber = parseInt(req.params.lessonNumber, 10);
+    const { title, intro, points, codeExample, takeaway } = req.body;
+    if (!title || !intro || !points || !codeExample || !takeaway) {
+      return res.status(400).json({ success: false, error: 'Missing required lesson fields.' });
+    }
+    const lessonHtml = buildLessonPage({ lessonNumber, title, intro, points, codeExample, takeaway });
+    const filePath = path.join(__dirname, `lesson${lessonNumber}.html`);
+    fs.writeFileSync(filePath, lessonHtml, 'utf8');
+    res.json({ success: true, file: `lesson${lessonNumber}.html` });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
 app.use(express.static(__dirname));

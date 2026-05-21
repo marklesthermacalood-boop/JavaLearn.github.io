@@ -23,32 +23,43 @@
 </header>
 
 <section class="lesson-hero">
-<h1>Lesson 10: Polymorphism</h1>
+  <div class="hero-content">
+    <div class="icon">🔄</div>
+    <div>
+      <h1>Lesson 10: Polymorphism</h1>
+      <p class="breadcrumb">Home > Lessons > Lesson 10</p>
+    </div>
+  </div>
 </section>
 
 <section class="lesson-content">
     <div class="card intro">
       <h2>Lesson 10: Polymorphism</h2>
-      <p>Polymorphism allows the same method call to behave differently depending on the object. It makes Java code more flexible and easier to expand.</p>
+      <p>Polymorphism allows the same code to work with different kinds of objects. It makes Java programs more flexible because objects can share a common type and still behave differently.</p>
     </div>
 
     <div class="card">
       <h3>What you will learn</h3>
       <ul>
-        <li>See how one interface can support many object types.</li>
-        <li>Understand method overriding and dynamic behavior.</li>
-        <li>Write code that works with general types instead of specific ones.</li>
+        <li>Use a superclass type to refer to different subclass objects.</li>
+        <li>Override methods in subclasses to change behavior.</li>
+        <li>See how Java chooses the right method at runtime.</li>
       </ul>
+    </div>
+
+    <div class="card">
+      <h3>Why this matters</h3>
+      <p>Polymorphism helps you write code that works with many object types and is easier to extend when new classes are added.</p>
     </div>
 
     <div class="card">
       <h3>Important concepts</h3>
       <ul>
         <li><strong>Polymorphism</strong> — One action, many forms.</li>
-        <li><strong>Inheritance</strong> — A subclass reuses a parent class.</li>
-        <li><strong>Override</strong> — A subclass changes a method.</li>
-        <li><strong>Superclass</strong> — The parent class.</li>
-        <li><strong>Dynamic binding</strong> — Java chooses which method to run at runtime.</li>
+        <li><strong>Inheritance</strong> — A subclass reuses and extends a parent class.</li>
+        <li><strong>Override</strong> — A subclass changes how a method works.</li>
+        <li><strong>Superclass</strong> — The parent class shared by subclasses.</li>
+        <li><strong>Dynamic binding</strong> — Java chooses the correct method at runtime.</li>
       </ul>
     </div>
 
@@ -61,22 +72,34 @@ public class Main {
     animal.speak();
     animal = new Cat();
     animal.speak();
+    animal = new Bird();
+    animal.speak();
   }
+
   static class Animal {
     void speak() {
       System.out.println("Animal sound");
     }
   }
+
   static class Dog extends Animal {
     @Override
     void speak() {
       System.out.println("Dog says woof");
     }
   }
+
   static class Cat extends Animal {
     @Override
     void speak() {
       System.out.println("Cat says meow");
+    }
+  }
+
+  static class Bird extends Animal {
+    @Override
+    void speak() {
+      System.out.println("Bird says tweet");
     }
   }
 }
@@ -84,10 +107,10 @@ public class Main {
     </div>
 
     <div class="takeaway">
-      <div class="icon">?</div>
+      <div class="icon">💡</div>
       <div>
         <h3>Key Takeaway</h3>
-        <p>Polymorphism helps your program work with many kinds of objects through a common interface.</p>
+        <p>Polymorphism lets you write general code that works with many object types through shared behavior.</p>
       </div>
     </div>
 

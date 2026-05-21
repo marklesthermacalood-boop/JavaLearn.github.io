@@ -27,7 +27,7 @@
 <!-- HERO / TITLE -->
 <section class="lesson-hero">
   <div class="hero-content">
-    <div class="icon">??</div>
+    <div class="icon">☕</div>
     <div>
       <h1>Lesson 1: What is Java?</h1>
       <p class="breadcrumb">Home > Lessons > Lesson 1</p>
@@ -39,26 +39,31 @@
 <section class="lesson-content">
     <div class="card intro">
       <h2>Lesson 1: What is Java?</h2>
-      <p>Java is a popular programming language that is easy to learn and used in many places, including websites, mobile apps, and enterprise systems. It is designed to run on many different computers without changing the code. This is possible because Java programs are compiled into bytecode and run by the Java Virtual Machine (JVM).</p>
+      <p>Java is a powerful, platform-independent programming language used for desktop apps, mobile apps, servers, and more. It is designed to run anywhere through the Java Virtual Machine (JVM), which executes compiled Java bytecode on any supported platform.</p>
     </div>
 
     <div class="card">
       <h3>What you will learn</h3>
       <ul>
-        <li>Learn how Java programs are structured before writing code.</li>
-        <li>Understand the compile-and-run process that makes Java portable.</li>
-        <li>See the difference between source code, bytecode, and the JVM.</li>
+        <li>Understand what makes Java portable and widely used.</li>
+        <li>Learn how Java source code becomes bytecode and runs on the JVM.</li>
+        <li>See the structure of a simple Java program and where execution begins.</li>
       </ul>
+    </div>
+
+    <div class="card">
+      <h3>Why this matters</h3>
+      <p>Java is used in many real-world systems from Android apps to enterprise servers. Learning Java gives you a strong foundation in programming and helps you understand how many big applications work.</p>
     </div>
 
     <div class="card">
       <h3>Important concepts</h3>
       <ul>
-        <li><strong>Java Program</strong> — A set of instructions written in Java language.</li>
-        <li><strong>Compilation</strong> — Turning Java code into bytecode using javac.</li>
-        <li><strong>JVM</strong> — Runs the compiled code on any platform.</li>
-        <li><strong>Class</strong> — The basic building block of Java programs.</li>
-        <li><strong>main method</strong> — The starting point where the program begins.</li>
+        <li><strong>Java source code</strong> — Human-readable code written by a developer in a .java file.</li>
+        <li><strong>Compilation</strong> — The process that turns Java code into JVM bytecode using javac.</li>
+        <li><strong>Bytecode</strong> — Platform-independent instructions executed by the JVM.</li>
+        <li><strong>JVM</strong> — Java Virtual Machine that runs bytecode on different operating systems.</li>
+        <li><strong>main method</strong> — The starting point of a Java program: public static void main(String[] args).</li>
       </ul>
     </div>
 
@@ -74,10 +79,10 @@ public class Main {
     </div>
 
     <div class="takeaway">
-      <div class="icon">?</div>
+      <div class="icon">💡</div>
       <div>
         <h3>Key Takeaway</h3>
-        <p>Java programs start inside the main method and are portable because they run on the JVM instead of directly on the computer hardware.</p>
+        <p>Java programs run inside the JVM and are portable across platforms because Java code is compiled into bytecode instead of machine-specific instructions.</p>
       </div>
     </div>
 
@@ -90,6 +95,8 @@ public class Main {
 
 <div class="card exercise">
   <h2>Java Compiler</h2>
+  <p>Change the text inside System.out.println and run the code to see how the program prints a message. Then try replacing the message with another short sentence.</p>
+
  
 
   <textarea id="code">public class Main {

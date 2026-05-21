@@ -23,22 +23,33 @@
 </header>
 
 <section class="lesson-hero">
-<h1>Lesson 9: Classes & Objects</h1>
+  <div class="hero-content">
+    <div class="icon">🏗️</div>
+    <div>
+      <h1>Lesson 9: Classes & Objects</h1>
+      <p class="breadcrumb">Home > Lessons > Lesson 9</p>
+    </div>
+  </div>
 </section>
 
 <section class="lesson-content">
     <div class="card intro">
       <h2>Lesson 9: Classes & Objects</h2>
-      <p>Classes define the structure of objects, and objects are the things your program works with. This is the heart of object-oriented programming in Java.</p>
+      <p>Classes are blueprints for objects, and objects are the values your Java program works with. Object-oriented programming helps you model real things and behaviors in code.</p>
     </div>
 
     <div class="card">
       <h3>What you will learn</h3>
       <ul>
-        <li>Learn the relationship between classes and objects.</li>
-        <li>See how fields store object data.</li>
-        <li>Use methods to make objects perform actions.</li>
+        <li>Create classes with fields and constructors.</li>
+        <li>Build objects with new and use methods to perform actions.</li>
+        <li>Understand the relationship between classes and objects.</li>
       </ul>
+    </div>
+
+    <div class="card">
+      <h3>Why this matters</h3>
+      <p>Classes and objects help organize code into logical pieces, making larger programs easier to understand and extend.</p>
     </div>
 
     <div class="card">
@@ -46,9 +57,9 @@
       <ul>
         <li><strong>Class</strong> — A blueprint that defines data and behavior.</li>
         <li><strong>Object</strong> — A specific instance created from a class.</li>
-        <li><strong>Field</strong> — A value stored inside an object.</li>
-        <li><strong>Constructor</strong> — Sets up a new object when it is created.</li>
-        <li><strong>Method</strong> — A behavior the object can perform.</li>
+        <li><strong>Field</strong> — Data stored inside an object.</li>
+        <li><strong>Constructor</strong> — Initializes a new object when it is created.</li>
+        <li><strong>Method</strong> — An action the object can perform.</li>
       </ul>
     </div>
 
@@ -59,16 +70,24 @@ public class Main {
   public static void main(String[] args) {
     Car car = new Car("Red", 2024);
     car.showInfo();
+    car.honk();
   }
+
   static class Car {
     String color;
     int year;
+
     Car(String color, int year) {
       this.color = color;
       this.year = year;
     }
+
     void showInfo() {
       System.out.println("Car: " + color + " " + year);
+    }
+
+    void honk() {
+      System.out.println("Beep beep!");
     }
   }
 }
@@ -76,10 +95,10 @@ public class Main {
     </div>
 
     <div class="takeaway">
-      <div class="icon">?</div>
+      <div class="icon">💡</div>
       <div>
         <h3>Key Takeaway</h3>
-        <p>Classes and objects help you organize code around real-world ideas, making it easier to build bigger programs.</p>
+        <p>A class defines a type of object, and objects are created from that class so your program can work with real values and actions.</p>
       </div>
     </div>
 

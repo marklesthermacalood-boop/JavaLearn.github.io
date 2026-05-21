@@ -429,31 +429,32 @@
         </div>
 
         <div class="form-group">
-          <label for="lessonIcon">Icon Emoji</label>
-          <input type="text" id="lessonIcon" placeholder="e.g., 💻, 🔧, 📝..." maxlength="5" value="💻">
-        </div>
-
-        <div class="form-group">
           <label for="lessonTitle">Lesson Title</label>
           <input type="text" id="lessonTitle" placeholder="e.g., What is Java?" required>
         </div>
 
         <div class="form-group">
-          <label for="lessonDifficulty">Difficulty Level</label>
-          <select id="lessonDifficulty">
-            <option value="Beginner">Beginner</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Advanced">Advanced</option>
-          </select>
+          <label for="lessonIntro">Lesson Intro</label>
+          <textarea id="lessonIntro" placeholder="Write the lesson introduction..." rows="3" required></textarea>
         </div>
 
         <div class="form-group">
-          <label for="lessonContent">Content Preview (HTML)</label>
-          <textarea id="lessonContent" placeholder="Enter lesson content or HTML template..." required></textarea>
+          <label for="lessonPoints">Key Points (one per line)</label>
+          <textarea id="lessonPoints" placeholder="Add one key point per line..." rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="lessonCode">Example Code</label>
+          <textarea id="lessonCode" placeholder="Add Java example code here..." rows="6" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="lessonTakeaway">Key Takeaway</label>
+          <textarea id="lessonTakeaway" placeholder="Add a short takeaway or summary..." rows="3" required></textarea>
         </div>
 
         <div class="button-group">
-          <button type="submit" class="btn-primary">Add Lesson</button>
+          <button type="submit" class="btn-primary">Save Lesson</button>
           <button type="reset" class="btn-secondary">Clear Form</button>
         </div>
       </form>
@@ -470,125 +471,130 @@
 </div>
 
 <script>
-// Load lessons from localStorage
-function loadLessons() {
-  const lessons = JSON.parse(localStorage.getItem('adminLessons')) || [];
-  return lessons;
+let adminLessons = [];
+
+async function fetchLessons() {
+  try {
+    const response = await fetch('/api/admin/lessons');
+    const data = await response.json();
+    if (!data.success) {
+      showMessage('Failed to load lessons.', 'error');
+      return [];
+    }
+    adminLessons = data.lessons;
+    return adminLessons;
+  } catch (err) {
+    showMessage('Unable to reach server.', 'error');
+    return [];
+  }
 }
 
-// Save lessons to localStorage
-function saveLessons(lessons) {
-  localStorage.setItem('adminLessons', JSON.stringify(lessons));
-}
-
-// Display all lessons
 function displayLessons() {
-  const lessons = loadLessons();
   const lessonsList = document.getElementById('lessonsList');
-
-  if (lessons.length === 0) {
-    lessonsList.innerHTML = '<div class="empty-state"><p>No lessons added yet. Create your first lesson!</p></div>';
+  if (adminLessons.length === 0) {
+    lessonsList.innerHTML = '<div class="empty-state"><p>No lessons found. Use the form to create or edit lesson pages.</p></div>';
     return;
   }
 
-  lessonsList.innerHTML = lessons.map((lesson, index) => `
+  lessonsList.innerHTML = adminLessons.map((lesson, index) => `
     <div class="lesson-card">
-      <span class="lesson-icon">${lesson.icon}</span>
+      <span class="lesson-icon">💻</span>
       <div class="lesson-info">
-        <h3>${lesson.icon} Lesson ${lesson.number}: ${lesson.title}</h3>
-        <p><strong>Difficulty:</strong> ${lesson.difficulty}</p>
-        <p><strong>Content Preview:</strong> ${lesson.content.substring(0, 60)}...</p>
+        <h3>Lesson ${lesson.lessonNumber}: ${lesson.title}</h3>
+        <p><strong>Preview:</strong> ${lesson.intro.substring(0, 100)}...</p>
+        <p><strong>File:</strong> ${lesson.file}</p>
       </div>
       <div class="lesson-actions">
         <button class="btn-edit" onclick="editLesson(${index})">Edit</button>
-        <button class="btn-delete" onclick="deleteLesson(${index})">Delete</button>
       </div>
     </div>
   `).join('');
 }
 
-// Edit lesson
-function editLesson(index) {
-  const lessons = loadLessons();
-  const lesson = lessons[index];
-
-  document.getElementById('lessonNumber').value = lesson.number;
-  document.getElementById('lessonIcon').value = lesson.icon;
+function populateForm(lesson) {
+  document.getElementById('lessonNumber').value = lesson.lessonNumber;
   document.getElementById('lessonTitle').value = lesson.title;
-  document.getElementById('lessonDifficulty').value = lesson.difficulty;
-  document.getElementById('lessonContent').value = lesson.content;
-
-  document.getElementById('lessonForm').dataset.editIndex = index;
+  document.getElementById('lessonIntro').value = lesson.intro;
+  document.getElementById('lessonPoints').value = lesson.points;
+  document.getElementById('lessonCode').value = lesson.codeExample;
+  document.getElementById('lessonTakeaway').value = lesson.takeaway;
   document.querySelector('.form-section h2').textContent = 'Edit Lesson';
   document.querySelector('.btn-primary').textContent = 'Update Lesson';
-
-  window.scrollIntoView();
+  document.getElementById('lessonForm').dataset.editIndex = lesson.lessonNumber;
+  window.scrollIntoView({ behavior: 'smooth' });
 }
 
-// Delete lesson
-function deleteLesson(index) {
-  if (confirm('Are you sure you want to delete this lesson?')) {
-    const lessons = loadLessons();
-    lessons.splice(index, 1);
-    saveLessons(lessons);
-    displayLessons();
-    showMessage('Lesson deleted successfully!', 'success');
-  }
+function editLesson(index) {
+  const lesson = adminLessons[index];
+  populateForm(lesson);
 }
 
-// Show message
 function showMessage(text, type) {
   const messageDiv = document.getElementById('message');
   messageDiv.innerHTML = `<div class="msg msg-${type}">${text}</div>`;
   setTimeout(() => {
     messageDiv.innerHTML = '';
-  }, 3000);
+  }, 4000);
 }
 
-// Handle form submission
-document.getElementById('lessonForm').addEventListener('submit', function(e) {
-  e.preventDefault();
+async function saveLesson(formData) {
+  try {
+    const response = await fetch(`/api/admin/lessons/${formData.lessonNumber}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+    const result = await response.json();
+    if (!result.success) {
+      showMessage(result.error || 'Failed to save lesson.', 'error');
+      return false;
+    }
+    showMessage(`Lesson ${formData.lessonNumber} saved to ${result.file}`, 'success');
+    return true;
+  } catch (err) {
+    showMessage('Server error while saving lesson.', 'error');
+    return false;
+  }
+}
 
-  const lessonNumber = document.getElementById('lessonNumber').value;
-  const lessonIcon = document.getElementById('lessonIcon').value || '💻';
-  const lessonTitle = document.getElementById('lessonTitle').value;
-  const lessonDifficulty = document.getElementById('lessonDifficulty').value;
-  const lessonContent = document.getElementById('lessonContent').value;
-
-  const newLesson = {
-    number: parseInt(lessonNumber),
-    icon: lessonIcon,
-    title: lessonTitle,
-    difficulty: lessonDifficulty,
-    content: lessonContent,
-    createdAt: new Date().toLocaleString()
+async function handleFormSubmit(event) {
+  event.preventDefault();
+  const lessonNumber = parseInt(document.getElementById('lessonNumber').value, 10);
+  const formData = {
+    lessonNumber,
+    title: document.getElementById('lessonTitle').value.trim(),
+    intro: document.getElementById('lessonIntro').value.trim(),
+    points: document.getElementById('lessonPoints').value.trim(),
+    codeExample: document.getElementById('lessonCode').value.trim(),
+    takeaway: document.getElementById('lessonTakeaway').value.trim(),
   };
 
-  let lessons = loadLessons();
-  const editIndex = this.dataset.editIndex;
-
-  if (editIndex !== undefined) {
-    lessons[editIndex] = newLesson;
-    showMessage('Lesson updated successfully!', 'success');
-    delete this.dataset.editIndex;
-    document.querySelector('.form-section h2').textContent = 'Add New Lesson';
-    document.querySelector('.btn-primary').textContent = 'Add Lesson';
-  } else {
-    lessons.push(newLesson);
-    showMessage('Lesson added successfully!', 'success');
+  if (!formData.title || !formData.intro || !formData.points || !formData.codeExample || !formData.takeaway) {
+    showMessage('Please fill in every field before saving.', 'error');
+    return;
   }
 
-  saveLessons(lessons);
-  this.reset();
-  document.getElementById('lessonIcon').value = '💻';
-  displayLessons();
-});
+  const success = await saveLesson(formData);
+  if (!success) {
+    return;
+  }
 
-// Load on page load
-window.addEventListener('load', displayLessons);
+  event.target.reset();
+  document.querySelector('.form-section h2').textContent = 'Add New Lesson';
+  document.querySelector('.btn-primary').textContent = 'Save Lesson';
+  delete event.target.dataset.editIndex;
+  await loadLessons();
+}
+
+async function loadLessons() {
+  await fetchLessons();
+  displayLessons();
+}
+
+document.getElementById('lessonForm').addEventListener('submit', handleFormSubmit);
+window.addEventListener('load', loadLessons);
 
 function logout() {
-  alert('Logging out...');
   window.location.href = 'login.html';
 }
 </script>

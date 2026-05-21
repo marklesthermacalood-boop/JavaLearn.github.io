@@ -22,32 +22,43 @@
 </header>
 
 <section class="lesson-hero">
-  <h1>Lesson 6: Methods</h1>
+  <div class="hero-content">
+    <div class="icon">🧩</div>
+    <div>
+      <h1>Lesson 6: Methods</h1>
+      <p class="breadcrumb">Home > Lessons > Lesson 6</p>
+    </div>
+  </div>
 </section>
 
 <section class="lesson-content">
     <div class="card intro">
       <h2>Lesson 6: Methods</h2>
-      <p>Methods organize code into reusable pieces. Each method performs one task, which makes your program easier to read and easier to fix.</p>
+      <p>Methods organize code into named blocks that perform specific tasks. They make programs easier to read, test, and reuse by moving repeated logic into one place.</p>
     </div>
 
     <div class="card">
       <h3>What you will learn</h3>
       <ul>
-        <li>Learn how to break programs into smaller parts.</li>
-        <li>See how methods make code reusable.</li>
-        <li>Understand parameters and return values.</li>
+        <li>Define methods with parameters and return values.</li>
+        <li>Call methods from main and other methods.</li>
+        <li>Use methods to keep code clean and reusable.</li>
       </ul>
+    </div>
+
+    <div class="card">
+      <h3>Why this matters</h3>
+      <p>Methods help you avoid duplicate code and make it easier to change one part of the program without breaking everything else.</p>
     </div>
 
     <div class="card">
       <h3>Important concepts</h3>
       <ul>
         <li><strong>Method</strong> — A named block of code that performs a task.</li>
-        <li><strong>Parameter</strong> — A value given to a method.</li>
+        <li><strong>Parameter</strong> — A value passed into a method.</li>
         <li><strong>Return type</strong> — The kind of value a method gives back.</li>
         <li><strong>Call</strong> — Running a method from another part of code.</li>
-        <li><strong>Static</strong> — A method that belongs to the class itself.</li>
+        <li><strong>Static</strong> — A method that belongs to the class rather than to an object.</li>
       </ul>
     </div>
 
@@ -59,22 +70,29 @@ public class Main {
     greet();
     int sum = add(4, 6);
     System.out.println("Sum: " + sum);
+    System.out.println("Is 7 even? " + isEven(7));
   }
+
   public static void greet() {
     System.out.println("Hello from a method!");
   }
+
   public static int add(int x, int y) {
     return x + y;
+  }
+
+  public static boolean isEven(int value) {
+    return value % 2 == 0;
   }
 }
       </pre>
     </div>
 
     <div class="takeaway">
-      <div class="icon">?</div>
+      <div class="icon">💡</div>
       <div>
         <h3>Key Takeaway</h3>
-        <p>Methods let you reuse logic and keep each part of your program focused on a single job.</p>
+        <p>Methods break your program into reusable parts, making it easier to read and maintain.</p>
       </div>
     </div>
 

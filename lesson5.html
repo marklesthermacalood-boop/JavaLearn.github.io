@@ -22,32 +22,43 @@
 </header>
 
 <section class="lesson-hero">
-  <h1>Lesson 5: Loops</h1>
+  <div class="hero-content">
+    <div class="icon">🔁</div>
+    <div>
+      <h1>Lesson 5: Loops</h1>
+      <p class="breadcrumb">Home > Lessons > Lesson 5</p>
+    </div>
+  </div>
 </section>
 
 <section class="lesson-content">
     <div class="card intro">
       <h2>Lesson 5: Loops</h2>
-      <p>Loops let Java repeat actions many times without writing the same code over and over. They are perfect for counting, processing lists, and repeating tasks.</p>
+      <p>Loops let Java repeat actions automatically. They are useful for counting, processing lists, and running the same code many times without writing duplicate instructions.</p>
     </div>
 
     <div class="card">
       <h3>What you will learn</h3>
       <ul>
-        <li>Practice repeating code efficiently.</li>
-        <li>Learn the three main loop types in Java.</li>
-        <li>Avoid duplicate code with loop logic.</li>
+        <li>Use for, while, and do-while loops appropriately.</li>
+        <li>Process repeating tasks with fewer lines of code.</li>
+        <li>Understand when to stop a loop and how to avoid infinite repetition.</li>
       </ul>
+    </div>
+
+    <div class="card">
+      <h3>Why this matters</h3>
+      <p>Loops are essential for programs that repeat work, like processing a list of values, reading input until a condition stops, or generating repeated output.</p>
     </div>
 
     <div class="card">
       <h3>Important concepts</h3>
       <ul>
-        <li><strong>for loop</strong> — Repeat a fixed number of times.</li>
-        <li><strong>while loop</strong> — Repeat while a condition remains true.</li>
-        <li><strong>do-while loop</strong> — Run at least once, then repeat while true.</li>
-        <li><strong>break</strong> — Stop the loop immediately.</li>
-        <li><strong>continue</strong> — Skip to the next loop iteration.</li>
+        <li><strong>for loop</strong> — Repeats a fixed number of times with an index.</li>
+        <li><strong>while loop</strong> — Repeats while a condition stays true.</li>
+        <li><strong>do-while loop</strong> — Runs once, then repeats while a condition is true.</li>
+        <li><strong>break</strong> — Stops the loop immediately.</li>
+        <li><strong>continue</strong> — Skips the rest of the current loop iteration.</li>
       </ul>
     </div>
 
@@ -59,16 +70,28 @@ public class Main {
     for (int i = 1; i <= 5; i++) {
       System.out.println("Count: " + i);
     }
+
+    int i = 1;
+    while (i <= 3) {
+      System.out.println("While loop: " + i);
+      i++;
+    }
+
+    int j = 1;
+    do {
+      System.out.println("Do-while loop: " + j);
+      j++;
+    } while (j <= 2);
   }
 }
       </pre>
     </div>
 
     <div class="takeaway">
-      <div class="icon">?</div>
+      <div class="icon">💡</div>
       <div>
         <h3>Key Takeaway</h3>
-        <p>Loops are a powerful tool for repeating code and working through multiple values quickly and clearly.</p>
+        <p>Loops let your program repeat work efficiently and control repetition until a condition changes.</p>
       </div>
     </div>
 

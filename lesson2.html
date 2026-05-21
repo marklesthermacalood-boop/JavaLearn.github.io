@@ -26,7 +26,7 @@
 <!-- HERO -->
 <section class="lesson-hero">
   <div class="hero-content">
-    <div class="icon">??</div>
+    <div class="icon">🔢</div>
     <div>
       <h1>Lesson 2: Variables & Data Types</h1>
       <p class="breadcrumb">Home > Lessons > Lesson 2</p>
@@ -38,26 +38,31 @@
 <section class="lesson-content">
     <div class="card intro">
       <h2>Lesson 2: Variables & Data Types</h2>
-      <p>Variables store information inside a Java program. Every variable uses a data type, which tells Java what kind of information it holds. This helps the computer use memory efficiently and avoid mistakes when the program runs.</p>
+      <p>Variables store values that your program can use and change. Every variable has a data type, which tells Java what kind of information it holds and how much memory to reserve.</p>
     </div>
 
     <div class="card">
       <h3>What you will learn</h3>
       <ul>
-        <li>See how data is stored and named in a program.</li>
-        <li>Learn the most common data types used in Java.</li>
-        <li>Understand why Java requires a type for each variable.</li>
+        <li>Learn how to declare variables and give them names.</li>
+        <li>Understand Java primitive types and common reference types like String.</li>
+        <li>Avoid common mistakes when using variable types and names.</li>
       </ul>
+    </div>
+
+    <div class="card">
+      <h3>Why this matters</h3>
+      <p>Using the right data types helps Java catch errors early and makes your program faster and easier to maintain.</p>
     </div>
 
     <div class="card">
       <h3>Important concepts</h3>
       <ul>
-        <li><strong>int</strong> — Whole numbers such as 10 or -5.</li>
-        <li><strong>double</strong> — Decimal numbers such as 3.14.</li>
-        <li><strong>boolean</strong> — A value that is true or false.</li>
-        <li><strong>char</strong> — A single character, like "A".</li>
-        <li><strong>String</strong> — Text stored inside quotation marks.</li>
+        <li><strong>int</strong> — Stores whole numbers like 42 or -10.</li>
+        <li><strong>double</strong> — Stores decimal numbers like 9.99.</li>
+        <li><strong>boolean</strong> — Stores true or false values.</li>
+        <li><strong>char</strong> — Stores a single character, such as "A".</li>
+        <li><strong>String</strong> — Stores text. Strings are objects in Java.</li>
       </ul>
     </div>
 
@@ -70,19 +75,22 @@ public class Main {
     int age = 20;
     double score = 95.5;
     boolean passed = true;
+    char grade = 'A';
+
     System.out.println(name + " is " + age + " years old.");
     System.out.println("Score: " + score);
     System.out.println("Passed: " + passed);
+    System.out.println("Grade: " + grade);
   }
 }
       </pre>
     </div>
 
     <div class="takeaway">
-      <div class="icon">?</div>
+      <div class="icon">💡</div>
       <div>
         <h3>Key Takeaway</h3>
-        <p>Variables hold values and each one must use the correct data type so Java can understand and process it properly.</p>
+        <p>Every variable in Java has a type, and choosing the right type makes your code safer and easier to understand.</p>
       </div>
     </div>
 
@@ -97,6 +105,8 @@ public class Main {
 <!-- COMPILER -->
 <div class="card exercise">
   <h2>Try It Yourself</h2>
+  <p>Add a new variable for your favorite hobby and print a sentence that includes the hobby and one of your other variables.</p>
+
 
   <textarea id="code">public class Main {
   public static void main(String[] args) {

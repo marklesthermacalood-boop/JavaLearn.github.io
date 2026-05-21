@@ -23,32 +23,43 @@
 </header>
 
 <section class="lesson-hero">
-  <h1>Lesson 7: Arrays</h1>
+  <div class="hero-content">
+    <div class="icon">📚</div>
+    <div>
+      <h1>Lesson 7: Arrays</h1>
+      <p class="breadcrumb">Home > Lessons > Lesson 7</p>
+    </div>
+  </div>
 </section>
 
 <section class="lesson-content">
     <div class="card intro">
       <h2>Lesson 7: Arrays</h2>
-      <p>Arrays store multiple values under one name. Instead of separate variables for each item, arrays let you keep a whole list together and use loops to process it.</p>
+      <p>Arrays store multiple values under one name. They let you keep ordered lists of data and process each item with loops.</p>
     </div>
 
     <div class="card">
       <h3>What you will learn</h3>
       <ul>
-        <li>Keep lists of values in one place.</li>
-        <li>Access items by their position in the array.</li>
-        <li>Use loops to handle many values at once.</li>
+        <li>Create arrays to store lists of values together.</li>
+        <li>Access array items by index and iterate with a loop.</li>
+        <li>Avoid common array mistakes like using the wrong index.</li>
       </ul>
+    </div>
+
+    <div class="card">
+      <h3>Why this matters</h3>
+      <p>Arrays are the simplest way to work with groups of values, and they are the foundation for more advanced data structures.</p>
     </div>
 
     <div class="card">
       <h3>Important concepts</h3>
       <ul>
-        <li><strong>Array</strong> — A collection of values stored in order.</li>
-        <li><strong>Index</strong> — The position of an item, starting from 0.</li>
-        <li><strong>length</strong> — The number of items in the array.</li>
-        <li><strong>Element</strong> — One value inside the array.</li>
-        <li><strong>Traversal</strong> — Visiting each item with a loop.</li>
+        <li><strong>Array</strong> — A fixed-size collection of values in order.</li>
+        <li><strong>Index</strong> — The position of an item in the array, starting at 0.</li>
+        <li><strong>length</strong> — The number of items stored in the array.</li>
+        <li><strong>Element</strong> — A single value inside the array.</li>
+        <li><strong>Traversal</strong> — Visiting each item in the array with a loop.</li>
       </ul>
     </div>
 
@@ -61,16 +72,20 @@ public class Main {
     for (int i = 0; i < fruits.length; i++) {
       System.out.println("Fruit " + (i + 1) + ": " + fruits[i]);
     }
+
+    for (String fruit : fruits) {
+      System.out.println("Enjoy this fruit: " + fruit);
+    }
   }
 }
       </pre>
     </div>
 
     <div class="takeaway">
-      <div class="icon">?</div>
+      <div class="icon">💡</div>
       <div>
         <h3>Key Takeaway</h3>
-        <p>Arrays let you store and process multiple values in a simple, ordered way.</p>
+        <p>Arrays let your program store and work with several values together, using indexes to find each one.</p>
       </div>
     </div>
 

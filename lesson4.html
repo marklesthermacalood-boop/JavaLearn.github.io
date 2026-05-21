@@ -23,32 +23,43 @@
 </header>
 
 <section class="lesson-hero">
-  <h1>Lesson 4: If Statements</h1>
+  <div class="hero-content">
+    <div class="icon">⚡</div>
+    <div>
+      <h1>Lesson 4: If Statements</h1>
+      <p class="breadcrumb">Home > Lessons > Lesson 4</p>
+    </div>
+  </div>
 </section>
 
 <section class="lesson-content">
     <div class="card intro">
       <h2>Lesson 4: If Statements</h2>
-      <p>If statements teach Java how to make decisions. Your program can choose one path when something is true, and a different path when it is false.</p>
+      <p>If statements let your program make choices. Java can run one set of instructions when a condition is true, and another set when it is false.</p>
     </div>
 
     <div class="card">
       <h3>What you will learn</h3>
       <ul>
-        <li>See how Java uses conditions to control the flow of a program.</li>
-        <li>Use if, else if, and else to handle multiple outcomes.</li>
-        <li>Avoid common mistakes when writing boolean expressions.</li>
+        <li>Use if, else if, and else to handle different conditions.</li>
+        <li>Write boolean expressions that compare values.</li>
+        <li>Avoid common mistakes like missing braces or wrong comparisons.</li>
       </ul>
+    </div>
+
+    <div class="card">
+      <h3>Why this matters</h3>
+      <p>Decision-making is essential for programs that respond to data, such as checking scores, validating input, or selecting options.</p>
     </div>
 
     <div class="card">
       <h3>Important concepts</h3>
       <ul>
-        <li><strong>if</strong> — Run code only when a condition is true.</li>
-        <li><strong>else if</strong> — Check another condition when the first is false.</li>
-        <li><strong>else</strong> — Run code when no conditions are true.</li>
-        <li><strong>Condition</strong> — A true/false expression that decides what happens.</li>
-        <li><strong>Boolean</strong> — A value that is true or false.</li>
+        <li><strong>if</strong> — Runs code only when a condition is true.</li>
+        <li><strong>else if</strong> — Checks another condition when the first one is false.</li>
+        <li><strong>else</strong> — Runs code when no earlier conditions are true.</li>
+        <li><strong>Condition</strong> — A true/false test that controls which code runs.</li>
+        <li><strong>Boolean</strong> — A value that is either true or false.</li>
       </ul>
     </div>
 
@@ -65,16 +76,23 @@ public class Main {
     } else {
       System.out.println("Keep practicing");
     }
+
+    int temperature = 80;
+    if (temperature > 85) {
+      System.out.println("It is very hot today.");
+    } else {
+      System.out.println("The weather is moderate.");
+    }
   }
 }
       </pre>
     </div>
 
     <div class="takeaway">
-      <div class="icon">?</div>
+      <div class="icon">💡</div>
       <div>
         <h3>Key Takeaway</h3>
-        <p>If statements make your program smart by choosing what to do next based on true/false conditions.</p>
+        <p>If statements make your Java programs smart by selecting the right action based on the data.</p>
       </div>
     </div>
 

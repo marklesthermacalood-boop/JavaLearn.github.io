@@ -23,32 +23,43 @@
 </header>
 
 <section class="lesson-hero">
-  <h1>Lesson 8: Strings</h1>
+  <div class="hero-content">
+    <div class="icon">📝</div>
+    <div>
+      <h1>Lesson 8: Strings</h1>
+      <p class="breadcrumb">Home > Lessons > Lesson 8</p>
+    </div>
+  </div>
 </section>
 
 <section class="lesson-content">
     <div class="card intro">
       <h2>Lesson 8: Strings</h2>
-      <p>Strings hold text, like names or messages. Java treats strings as objects with helpful tools for joining, measuring, and changing text.</p>
+      <p>Strings hold text such as names, messages, and labels. Java treats strings as objects with useful methods for changing, comparing, and measuring text.</p>
     </div>
 
     <div class="card">
       <h3>What you will learn</h3>
       <ul>
-        <li>Work with text in your programs.</li>
-        <li>Use string methods to inspect and combine text.</li>
-        <li>Know the difference between String and characters.</li>
+        <li>Create and combine strings with concatenation.</li>
+        <li>Use common String methods like length(), charAt(), and equals().</li>
+        <li>Avoid mistakes when comparing strings in Java.</li>
       </ul>
+    </div>
+
+    <div class="card">
+      <h3>Why this matters</h3>
+      <p>Text is everywhere in programs, from user messages to file names. Strings give you the tools to work with that text safely.</p>
     </div>
 
     <div class="card">
       <h3>Important concepts</h3>
       <ul>
-        <li><strong>String</strong> — Text inside quotes like "Hello".</li>
-        <li><strong>Concatenation</strong> — Joining text with +.</li>
-        <li><strong>length()</strong> — Find how many characters are in a string.</li>
-        <li><strong>charAt()</strong> — Get one character by position.</li>
-        <li><strong>equals()</strong> — Compare strings correctly.</li>
+        <li><strong>String</strong> — Text enclosed in double quotes.</li>
+        <li><strong>Concatenation</strong> — Joining text using the + operator.</li>
+        <li><strong>length()</strong> — Returns the number of characters in a string.</li>
+        <li><strong>charAt()</strong> — Gets the character at a specific position.</li>
+        <li><strong>equals()</strong> — Compares text correctly instead of using ==.</li>
       </ul>
     </div>
 
@@ -63,16 +74,18 @@ public class Main {
     System.out.println(message);
     System.out.println("Length: " + message.length());
     System.out.println("First char: " + message.charAt(0));
+    System.out.println("Same text? " + message.equals("Java Basics"));
+    System.out.println("Upper case: " + message.toUpperCase());
   }
 }
       </pre>
     </div>
 
     <div class="takeaway">
-      <div class="icon">?</div>
+      <div class="icon">💡</div>
       <div>
         <h3>Key Takeaway</h3>
-        <p>Strings let you work with written text and Java gives you methods to manipulate that text safely.</p>
+        <p>Strings represent text, and Java provides methods to read, compare, and transform that text.</p>
       </div>
     </div>
 

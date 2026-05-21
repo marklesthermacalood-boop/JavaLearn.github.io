@@ -26,7 +26,7 @@
 <!-- HERO -->
 <section class="lesson-hero">
   <div class="hero-content">
-    <div class="icon">??</div>
+    <div class="icon">➗</div>
     <div>
       <h1>Lesson 3: Operators</h1>
       <p class="breadcrumb">Home > Lessons > Lesson 3</p>
@@ -38,26 +38,31 @@
 <section class="lesson-content">
     <div class="card intro">
       <h2>Lesson 3: Operators</h2>
-      <p>Operators are symbols that perform actions on values, such as adding numbers or comparing two values. They are the tools Java uses to calculate, compare, and decide what happens next.</p>
+      <p>Operators are the tools Java uses to work with values. You can add numbers, compare values, and combine conditions to make your program solve problems.</p>
     </div>
 
     <div class="card">
       <h3>What you will learn</h3>
       <ul>
-        <li>Learn how to perform math and build expressions.</li>
-        <li>Use operators to compare values and make decisions.</li>
-        <li>Understand how expressions are evaluated in Java.</li>
+        <li>Use arithmetic and comparison operators to build expressions.</li>
+        <li>Combine conditions with logical operators like && and ||.</li>
+        <li>See how operator order affects the result of a calculation.</li>
       </ul>
+    </div>
+
+    <div class="card">
+      <h3>Why this matters</h3>
+      <p>Operators let your code solve math problems, compare values, and decide what to do next in a program.</p>
     </div>
 
     <div class="card">
       <h3>Important concepts</h3>
       <ul>
-        <li><strong>Arithmetic</strong> — Addition, subtraction, multiplication, division.</li>
-        <li><strong>Comparison</strong> — Compare values using ==, !=, >, <, etc.</li>
-        <li><strong>Logical</strong> — Combine true/false conditions with && and ||.</li>
-        <li><strong>Assignment</strong> — Store the result of an operation into a variable.</li>
-        <li><strong>Concatenation</strong> — Join strings using +.</li>
+        <li><strong>Arithmetic</strong> — Operators like +, -, *, and / for math.</li>
+        <li><strong>Comparison</strong> — Operators like ==, !=, >, and < to compare values.</li>
+        <li><strong>Logical</strong> — Operators like && and || to combine true/false conditions.</li>
+        <li><strong>Assignment</strong> — The = operator stores a value into a variable.</li>
+        <li><strong>Concatenation</strong> — Using + to join text strings.</li>
       </ul>
     </div>
 
@@ -72,17 +77,18 @@ public class Main {
     System.out.println("Subtract: " + (a - b));
     System.out.println("Multiply: " + (a * b));
     System.out.println("Divide: " + (a / b));
-    System.out.println("Compare: " + (a > b));
+    System.out.println("Is a bigger than b? " + (a > b));
+    System.out.println("Both true? " + (a > b && b > 0));
   }
 }
       </pre>
     </div>
 
     <div class="takeaway">
-      <div class="icon">?</div>
+      <div class="icon">💡</div>
       <div>
         <h3>Key Takeaway</h3>
-        <p>Operators let you change values, compare data, and build conditions that control how your program behaves.</p>
+        <p>Operators are the building blocks for calculations, comparisons, and logic in Java programs.</p>
       </div>
     </div>
 
@@ -97,6 +103,8 @@ public class Main {
 <!-- COMPILER -->
 <div class="card exercise">
   <h2>Try It Yourself</h2>
+  <p>Create two number variables and print whether the first is greater than the second, then print the result of a combined comparison using && or ||.</p>
+
 
   <textarea id="code">public class Main {
   public static void main(String[] args) {
