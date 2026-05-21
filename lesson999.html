@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lesson 999 - Test Lesson</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="backend-config.js"></script>
+</head>
+<body>
+<header>
+  <div class="logo">⚡ JavaLearn Hub</div>
+  <nav>
+    <a href="index.html#">Home</a>
+    <a href="lessons.html">Lessons</a>
+    <a href="dashboard.html">Dashboard</a>
+  </nav>
+</header>
+
+<section class="lesson-hero">
+  <div class="hero-content">
+    <div class="icon">💻</div>
+    <div>
+      <h1>Lesson 999: Test Lesson</h1>
+      <p class="breadcrumb">Home > Lessons > Lesson 999</p>
+    </div>
+  </div>
+</section>
+
+<section class="lesson-content">
+  <div class="card intro">
+    <h2>Lesson 999: Test Lesson</h2>
+    <p>This is a test intro.</p>
+  </div>
+  <div class="card">
+    <h3>What you will learn</h3>
+    <ul>
+      <li>Point A</li>
+      <li>Point B</li>
+    </ul>
+  </div>
+  <div class="card code-section">
+    <div class="code-header"><span>Example Code</span></div>
+    <pre>
+System.out.println(Hello);
+    </pre>
+  </div>
+  <div class="takeaway">
+    <div class="icon">?</div>
+    <div>
+      <h3>Key Takeaway</h3>
+      <p>Test takeaway.</p>
+    </div>
+  </div>
+  <div class="lesson-nav">
+    <a href="lesson998.html"><button class="btn-outline">← Previous Lesson</button></a>
+    <a href="lesson1000.html"><button class="btn-primary">Next Lesson →</button></a>
+  </div>
+</section>
+
+<div class="card exercise">
+  <h2>Java Compiler</h2>
+  <textarea id="code">System.out.println(Hello);</textarea>
+  <button onclick="runCode()" class="btn-primary">Run Code</button>
+  <button onclick="resetCode()" class="btn-primary">Reset Code</button>
+  <div id="status" class="status"></div>
+  <pre id="output"></pre>
+</div>
+
+<script>
+function getRunUrlSafe() {
+  return typeof getRunUrl === 'function' ? getRunUrl() : '/run';
+}
+
+async function runCode() {
+  const code = document.getElementById('code').value;
+  const output = document.getElementById('output');
+  const status = document.getElementById('status');
+
+  try {
+    const runUrl = getRunUrlSafe();
+    const response = await fetch(runUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code }),
+    });
+
+    let result;
+    const contentType = response.headers.get('content-type') || '';
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(text || ('Server returned ' + response.status));
+    }
+    if (contentType.includes('application/json')) {
+      result = await response.json();
+    } else {
+      const text = await response.text();
+      throw new Error(text || 'Server returned non-JSON response');
+    }
+
+    if (!result.success) {
+      status.textContent = '❌ Code failed to compile or run.';
+      status.className = 'status error';
+      output.innerText = result.error;
+      return;
+    }
+
+    status.textContent = '✅ Success!';
+    status.className = 'status success';
+    output.innerText = result.output;
+  } catch (err) {
+    status.textContent = '❌ Server error.';
+    status.className = 'status error';
+    output.innerText = err.message;
+  }
+}
+
+function resetCode() {
+  document.getElementById('code').value = `System.out.println(Hello);`;
+  document.getElementById('output').innerText = '';
+  document.getElementById('status').textContent = '';
+  document.getElementById('status').className = 'status';
+}
+</script>
+
+<footer>
+  © 2025 JavaLearn Hub. All rights reserved.
+</footer>
+</body>
+</html>

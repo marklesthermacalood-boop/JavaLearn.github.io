@@ -170,90 +170,331 @@ button:hover {
 
 <div class="container">
 
-<!-- SCORE -->
-<div class="score-box">
-  <h2>Your Score</h2>
-  <h1 id="score">0 / 3</h1>
-</div>
+  <div class="score-box">
+    <h2>Your Score</h2>
+    <h1 id="score">0 / 20</h1>
+    <p id="difficultyLabel" style="margin-top: 12px; color: #d8cbff;">Difficulty: Easy</p>
+  </div>
 
-<!-- EXERCISE 1 -->
-<div class="card">
-  <h2>Exercise 1</h2>
-  <p>What is the output of this code?</p>
+  <div class="card" style="display: flex; flex-wrap: wrap; gap: 18px; align-items: center; justify-content: space-between;">
+    <div>
+      <h2 style="margin-bottom: 12px; color: #fff;">Exercise Difficulty</h2>
+      <p style="color: #d8cbff; line-height: 1.6; max-width: 680px;">Select easy, medium, or hard to load a full 20-question exercise set. Your progress is saved to the dashboard after completion.</p>
+    </div>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+      <select id="exerciseDifficulty" style="padding: 14px 18px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.06); color: #fff; min-width: 160px;">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+      <button id="loadExercisesBtn" type="button" style="padding: 14px 18px; border-radius: 18px;">Load Exercises</button>
+    </div>
+  </div>
 
-  <pre>
-int x = 5;
-System.out.println(x + 3);
-  </pre>
+  <div id="exercisesContainer"></div>
 
-  <textarea id="ex1" placeholder="Type answer..."></textarea>
-  <button onclick="check(1,'8')">Check Answer</button>
+  <div class="card" style="text-align: center;">
+    <button onclick="submitExercises()" style="width: 100%; max-width: 260px;">Submit All Exercises</button>
+  </div>
 
-  <div class="output" id="out1"></div>
-</div>
+  <div class="card">
+    <h2>Try It Yourself Code Playground</h2>
+    <p style="color: #d8cbff; line-height: 1.6;">Switch between easy, medium, and hard code challenges. Modify the starter code, then run it through the backend compiler.</p>
 
-<!-- EXERCISE 2 -->
-<div class="card">
-  <h2>Exercise 2</h2>
-  <p>What keyword is used to create a class?</p>
+    <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 18px;">
+      <select id="codeDifficulty" style="padding: 14px 18px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.06); color: #fff; min-width: 160px;">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+      <button id="loadCodeBtn" type="button" style="padding: 14px 18px; border-radius: 18px;">Load Code Task</button>
+    </div>
 
-  <pre>
-Example: class Main { }
-  </pre>
+    <textarea id="code" placeholder="Write your Java code here..."></textarea>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px;">
+      <button onclick="runCode()">Run Code</button>
+      <button onclick="resetCode()">Reset Code</button>
+    </div>
 
-  <textarea id="ex2" placeholder="Type answer..."></textarea>
-  <button onclick="check(2,'class')">Check Answer</button>
-
-  <div class="output" id="out2"></div>
-</div>
-
-<!-- EXERCISE 3 -->
-<div class="card">
-  <h2>Exercise 3</h2>
-  <p>How many times does this loop run?</p>
-
-  <pre>
-for(int i = 1; i <= 5; i++)
-  </pre>
-
-  <textarea id="ex3" placeholder="Type answer..."></textarea>
-  <button onclick="check(3,'5')">Check Answer</button>
-
-  <div class="output" id="out3"></div>
-</div>
+    <div id="status" class="output" style="margin-top: 18px;"></div>
+    <pre id="output"></pre>
+  </div>
 
 </div>
 
 <script>
+const exerciseBank = {
+  easy: [
+    { question: "What is the output of this code?", code: "int x = 2; System.out.println(x + 4);", answer: "6" },
+    { question: "Which keyword declares a class?", code: "class Example {}", answer: "class" },
+    { question: "What will print?", code: "System.out.println(3 + 2);", answer: "5" },
+    { question: "What type stores text?", code: "String text = \"Java\";", answer: "String" },
+    { question: "What is the result of 10 - 3?", code: "System.out.println(10 - 3);", answer: "7" },
+    { question: "What does this print?", code: "boolean active = true; System.out.println(active);", answer: "true" },
+    { question: "What is the output?", code: "char c = 'A'; System.out.println(c);", answer: "A" },
+    { question: "What is the printed value?", code: "int a = 4; int b = 3; System.out.println(a * b);", answer: "12" },
+    { question: "Which method is the entry point?", code: "public static void main(String[] args) {}", answer: "main" },
+    { question: "What type is 5.5?", code: "double number = 5.5;", answer: "double" },
+    { question: "What is the output?", code: "System.out.println(15 / 3);", answer: "5" },
+    { question: "Which keyword is used to create an object?", code: "String s = new String(\"hi\");", answer: "new" },
+    { question: "What value prints?", code: "System.out.println(2 * 2);", answer: "4" },
+    { question: "Which data type stores true/false?", code: "boolean ok = false;", answer: "boolean" },
+    { question: "What output appears?", code: "int x = 3; x += 2; System.out.println(x);", answer: "5" },
+    { question: "Which symbol ends a Java statement?", code: "int x = 3;", answer: ";" },
+    { question: "What prints here?", code: "System.out.println(7 % 2);", answer: "1" },
+    { question: "What type would store a single letter?", code: "char letter = 'J';", answer: "char" },
+    { question: "What is the result?", code: "System.out.println(8 / 4);", answer: "2" },
+    { question: "Which word is used to indicate a class?", code: "public class App {}", answer: "class" }
+  ],
+  medium: [
+    { question: "What does this code print?", code: "int x = 5; int y = 2; System.out.println(x / y);", answer: "2" },
+    { question: "Which statement is true?", code: "if (x > 5) { } else { }", answer: "else" },
+    { question: "What type does this return?", code: "double value = 4.0 / 3;", answer: "double" },
+    { question: "How many times does this loop run?", code: "for (int i = 0; i < 3; i++) {}", answer: "3" },
+    { question: "What does this print?", code: "String name = \"Alex\"; System.out.println(name.length());", answer: "4" },
+    { question: "Is this true?", code: "System.out.println(5 > 3);", answer: "true" },
+    { question: "Which operator compares equality?", code: "if (a == b) {}", answer: "==" },
+    { question: "What does this output?", code: "System.out.println((5 + 3) * 2);", answer: "16" },
+    { question: "What is the boolean result?", code: "System.out.println(4 <= 4);", answer: "true" },
+    { question: "What value is printed?", code: "int x = 2; x = x + 3; System.out.println(x);", answer: "5" },
+    { question: "Which keyword declares a constant?", code: "final int MAX = 10;", answer: "final" },
+    { question: "What is the output?", code: "System.out.println(3 * (2 + 1));", answer: "9" },
+    { question: "Which type stores text?", code: "String title = \"Java\";", answer: "String" },
+    { question: "What does this code print?", code: "int x = 10; x -= 4; System.out.println(x);", answer: "6" },
+    { question: "What is the output of this?", code: "System.out.println(10 % 3);", answer: "1" },
+    { question: "Which flow controls alternate paths?", code: "if (a > b) {} else {}", answer: "if" },
+    { question: "What is printed?", code: "System.out.println(2 + 2 * 3);", answer: "8" },
+    { question: "Which type holds true or false?", code: "boolean passed = true;", answer: "boolean" },
+    { question: "What does this print?", code: "System.out.println(9 - 4);", answer: "5" },
+    { question: "How many iterations?", code: "for (int i = 1; i <= 4; i++) {}", answer: "4" }
+  ],
+  hard: [
+    { question: "What does this code print?", code: "int x = 7; if (x % 2 == 0) System.out.println(\"even\"); else System.out.println(\"odd\");", answer: "odd" },
+    { question: "What is the result?", code: "int a = 5; int b = 2; System.out.println(a / b);", answer: "2" },
+    { question: "Which line is true?", code: "String text = \"Java\"; System.out.println(text.equals(\"java\"));", answer: "false" },
+    { question: "What is printed?", code: "int x = 0; while (x < 3) { x++; } System.out.println(x);", answer: "3" },
+    { question: "What does this output?", code: "int x = 4; x *= 2; System.out.println(x);", answer: "8" },
+    { question: "What is the result?", code: "String s = \"Hi\"; System.out.println(s.charAt(0));", answer: "H" },
+    { question: "Which prints?", code: "int x = 1; if (x == 1) System.out.println(\"yes\");", answer: "yes" },
+    { question: "What value prints?", code: "int x = 10; int y = 3; System.out.println(x % y);", answer: "1" },
+    { question: "Which output?", code: "System.out.println(2 > 3 || 4 > 1);", answer: "true" },
+    { question: "What does this print?", code: "String word = \"code\"; System.out.println(word.toUpperCase());", answer: "CODE" },
+    { question: "What is displayed?", code: "int x = 2; int y = 3; System.out.println(x + y * 2);", answer: "8" },
+    { question: "Which keyword reserves a class from inheritance?", code: "final class App {}", answer: "final" },
+    { question: "What prints?", code: "boolean result = (5 > 3) && (2 < 4); System.out.println(result);", answer: "true" },
+    { question: "What is the output?", code: "int x = 4; if (x <= 4) System.out.println(\"ok\");", answer: "ok" },
+    { question: "Which statement is correct?", code: "String s = null; System.out.println(s == null);", answer: "true" },
+    { question: "What is printed?", code: "int[] nums = {1,2,3}; System.out.println(nums[1]);", answer: "2" },
+    { question: "Which output?", code: "System.out.println((3 + 2) * 2);", answer: "10" },
+    { question: "What is result of this expression?", code: "System.out.println(6 / 4.0);", answer: "1.5" },
+    { question: "What does this print?", code: "System.out.println(5 != 3);", answer: "true" },
+    { question: "Which outputs?", code: "int x = 3; int y = x++; System.out.println(y);", answer: "3" }
+  ]
+};
 
-let score = 0;
-let done = {1:false,2:false,3:false};
-
-function check(num, correct){
-
-  let answer = document.getElementById("ex"+num).value.toLowerCase().trim();
-  let out = document.getElementById("out"+num);
-
-  if(answer.includes(correct)){
-
-    out.innerText = "? Correct!";
-    out.style.color = "green";
-
-    if(!done[num]){
-      score++;
-      done[num] = true;
-    }
-
-  } else {
-    out.innerText = "? Wrong Answer";
-    out.style.color = "red";
+const codeBank = {
+  easy: {
+    prompt: "Modify the program to print your favorite Java topic.",
+    template: `public class Main {
+  public static void main(String[] args) {
+    String topic = "Java basics";
+    System.out.println("My favorite topic is " + topic);
   }
+}`
+  },
+  medium: {
+    prompt: "Change the program so it computes and prints the area of a rectangle.",
+    template: `public class Main {
+  public static void main(String[] args) {
+    int width = 5;
+    int height = 3;
+    int area = width * height;
+    System.out.println("Area = " + area);
+  }
+}`
+  },
+  hard: {
+    prompt: "Update the program to use a loop and print the first five even numbers.",
+    template: `public class Main {
+  public static void main(String[] args) {
+    for (int i = 1; i <= 5; i++) {
+      System.out.println(i * 2);
+    }
+  }
+}`
+  }
+};
 
-  document.getElementById("score").innerText = score + " / 3";
+const difficultyLabels = { easy: "Easy", medium: "Medium", hard: "Hard" };
+let currentDifficulty = "easy";
+let currentExerciseSet = [];
+let currentCodeDifficulty = "easy";
+
+function renderExercises(difficulty) {
+  currentDifficulty = difficulty;
+  document.getElementById("exerciseDifficulty").value = difficulty;
+  document.getElementById("difficultyLabel").textContent = `Difficulty: ${difficultyLabels[difficulty]}`;
+  currentExerciseSet = exerciseBank[difficulty];
+  document.getElementById("score").innerText = `0 / ${currentExerciseSet.length}`;
+
+  const container = document.getElementById("exercisesContainer");
+  container.innerHTML = currentExerciseSet.map((item, index) => `
+    <div class="card">
+      <h2>Exercise ${index + 1}</h2>
+      <p>${item.question}</p>
+      <pre>${item.code}</pre>
+      <textarea id="ex${index + 1}" placeholder="Type answer..."></textarea>
+      <button type="button" onclick="checkExercise(${index + 1})">Check Answer</button>
+      <div class="output" id="out${index + 1}"></div>
+    </div>
+  `).join("");
 }
 
-</script>
+function getExercisesAnswers() {
+  return currentExerciseSet.map(item => item.answer.toLowerCase());
+}
 
+function checkExercise(num) {
+  const answerEl = document.getElementById(`ex${num}`);
+  const outEl = document.getElementById(`out${num}`);
+  const userAnswer = answerEl.value.toLowerCase().trim();
+  const correctAnswer = currentExerciseSet[num - 1].answer.toLowerCase();
+
+  if (!userAnswer) {
+    outEl.innerText = "✖ Please enter an answer.";
+    outEl.style.color = "#fda4af";
+    return;
+  }
+
+  if (userAnswer.includes(correctAnswer)) {
+    outEl.innerText = "✔ Correct!";
+    outEl.style.color = "#86efac";
+  } else {
+    outEl.innerText = `✖ Wrong. Try again.`;
+    outEl.style.color = "#fca5a5";
+  }
+}
+
+function calculateExerciseScore() {
+  const total = currentExerciseSet.length;
+  let correct = 0;
+
+  currentExerciseSet.forEach((item, index) => {
+    const answer = document.getElementById(`ex${index + 1}`).value.toLowerCase().trim();
+    if (answer && answer.includes(item.answer.toLowerCase())) {
+      correct++;
+    }
+  });
+
+  document.getElementById("score").innerText = `${correct} / ${total}`;
+  return { correct, total };
+}
+
+function submitExercises() {
+  const { correct, total } = calculateExerciseScore();
+  const percentage = Math.round((correct / total) * 100);
+
+  if (total === 0) {
+    alert("Load a set of exercises first.");
+    return;
+  }
+
+  if (correct < total * 0.5) {
+    alert(`You've completed the exercises. Score: ${percentage}% (${correct}/${total}). Keep practicing!`);
+  } else {
+    alert(`Great work! Score: ${percentage}% (${correct}/${total}).`);
+  }
+
+  saveScore(null, null, percentage, correct, total, currentDifficulty, "exercise");
+}
+
+function loadCodeTask(difficulty) {
+  currentCodeDifficulty = difficulty;
+  document.getElementById("codeDifficulty").value = difficulty;
+  const task = codeBank[difficulty];
+  document.getElementById("code").value = task.template;
+  document.getElementById("status").innerText = task.prompt;
+  document.getElementById("status").style.color = "#d8cbff";
+  document.getElementById("output").innerText = "";
+}
+
+function resetCode() {
+  loadCodeTask(currentCodeDifficulty);
+}
+
+async function runCode() {
+  const code = document.getElementById("code").value;
+  const status = document.getElementById("status");
+  const output = document.getElementById("output");
+
+  status.innerText = "Running code...";
+  status.style.color = "#facc15";
+  output.innerText = "";
+
+  try {
+    const response = await fetch("/run", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code }),
+    });
+
+    const contentType = response.headers.get("content-type") || "";
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(text || `Server returned ${response.status}`);
+    }
+
+    let result;
+    if (contentType.includes("application/json")) {
+      result = await response.json();
+    } else {
+      result = { success: false, error: "Unexpected response" };
+    }
+
+    if (!result.success) {
+      status.innerText = "Error running code.";
+      status.style.color = "#f87171";
+      output.innerText = result.error || "Unknown error";
+      return;
+    }
+
+    status.innerText = "Code executed successfully.";
+    status.style.color = "#86efac";
+    output.innerText = result.output || "(no output)";
+  } catch (err) {
+    status.innerText = "Run failed.";
+    status.style.color = "#f87171";
+    output.innerText = err.message;
+  }
+}
+
+firebase.auth().onAuthStateChanged((user) => {
+  if (!user) {
+    alert("Please login to access the exercises and code playground.");
+    window.location.href = "login.html";
+  }
+});
+
+document.getElementById("exerciseDifficulty").addEventListener("change", (event) => {
+  renderExercises(event.target.value);
+});
+
+document.getElementById("loadExercisesBtn").addEventListener("click", () => {
+  renderExercises(document.getElementById("exerciseDifficulty").value);
+});
+
+document.getElementById("codeDifficulty").addEventListener("change", (event) => {
+  loadCodeTask(event.target.value);
+});
+
+document.getElementById("loadCodeBtn").addEventListener("click", () => {
+  loadCodeTask(document.getElementById("codeDifficulty").value);
+});
+
+renderExercises(currentDifficulty);
+loadCodeTask(currentCodeDifficulty);
+
+</script>
 </body>
 </html>
 

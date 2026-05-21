@@ -130,60 +130,7 @@
   </div>
 
   <script>
-    const API_BASE = 'http://localhost:3000';
-
-    async function loginAdmin() {
-      const email = document.getElementById('adminEmail').value.trim();
-      const password = document.getElementById('adminPassword').value.trim();
-      const messageEl = document.getElementById('adminMessage');
-
-      messageEl.style.display = 'none';
-
-      if (!email || !password) {
-        messageEl.textContent = 'Please enter both email and password.';
-        messageEl.className = 'message error';
-        messageEl.style.display = 'block';
-        return;
-      }
-
-      try {
-        const response = await fetch(`${API_BASE}/api/auth/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: email, password }),
-        });
-
-        let result;
-        const contentType = response.headers.get('content-type') || '';
-        if (contentType.includes('application/json')) {
-          result = await response.json();
-        } else {
-          const text = await response.text();
-          throw new Error(text || `Unexpected server response (${response.status})`);
-        }
-
-        if (!result.success) {
-          messageEl.textContent = result.error || 'Login failed. Check your credentials.';
-          messageEl.className = 'message error';
-          messageEl.style.display = 'block';
-          return;
-        }
-
-        if (result.user?.role !== 'admin') {
-          messageEl.textContent = 'Only admin accounts may sign in here.';
-          messageEl.className = 'message error';
-          messageEl.style.display = 'block';
-          return;
-        }
-
-        localStorage.setItem('adminToken', result.token);
-        window.location.href = `${API_BASE}/admin.html`;
-      } catch (err) {
-        messageEl.textContent = 'Server error: ' + err.message + '. Make sure the backend server is running and reachable at http://localhost:3000.';
-        messageEl.className = 'message error';
-        messageEl.style.display = 'block';
-      }
-    }
+    window.location.href = 'admin.html';
   </script>
 </body>
 </html>

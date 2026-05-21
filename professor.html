@@ -477,6 +477,7 @@
         <div class="tabs">
           <button class="tab active" onclick="switchTab(event, 'addStudentTab')">➕ Add Student</button>
           <button class="tab" onclick="switchTab(event, 'credentialsTab')">🔐 Manage Credentials</button>
+          <button class="tab" onclick="switchTab(event, 'recordsTab')">📊 Student Records</button>
         </div>
 
         <!-- ADD STUDENT TAB -->
@@ -552,27 +553,29 @@
             <p>No students added to this class yet.</p>
           </div>
         </div>
-      </div>
-    </div>
 
-  </div>
-
-</div>
-
-<script>
-// Load data from localStorage
-function loadClasses() {
-  return JSON.parse(localStorage.getItem('professorClasses')) || [];
-}
-
-function saveClasses(classes) {
-  localStorage.setItem('professorClasses', JSON.stringify(classes));
-}
-
-let currentClassId = null;
-
-// Display classes in sidebar
-function displayClasses() {
+        <div id="recordsTab" class="tab-content">
+          <div id="recordsTableContainer" style="display: none; margin-top: 24px;">
+            <h3 style="margin-bottom: 15px;">Student Records</h3>
+            <table class="students-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Attempts</th>
+                  <th>Average Score</th>
+                  <th>Total Score</th>
+                  <th>Last Activity</th>
+                </tr>
+              </thead>
+              <tbody id="recordsTableBody"></tbody>
+            </table>
+          </div>
+          <div id="noRecordsMessage" class="empty-state">
+            <p>No student records available yet.</p>
+            <p style="font-size: 13px;">Records are loaded from student score activity stored in Firebase.</p>
+          </div>
+        </div>
   const classes = loadClasses();
   const classList = document.getElementById('classList');
 
@@ -653,6 +656,10 @@ function displayClassContent() {
 
   displayStudentsTable();
   displayCredentialsTable();
+
+  if (document.getElementById('recordsTab').classList.contains('active')) {
+    loadStudentRecords();
+  }
 }
 
 // Add student to class
@@ -761,6 +768,98 @@ function displayCredentialsTable() {
   `).join('');
 }
 
+async function loadStudentRecords() {
+  const classes = loadClasses();
+  const currentClass = classes.find(cls => cls.id === currentClassId);
+  const studentFilters = currentClass ? currentClass.students.map(s => ({ email: s.email.toLowerCase(), username: s.username.toLowerCase() })) : [];
+
+  try {
+    const usersSnapshot = await db.collection('users').where('role', '==', 'student').get();
+    const students = [];
+
+    usersSnapshot.forEach(doc => {
+      const data = doc.data();
+      const email = (data.email || '').toLowerCase();
+      const username = (data.username || '').toLowerCase();
+      const matchesClass = studentFilters.length === 0 || studentFilters.some(filter => filter.email === email || filter.username === username);
+
+      if (matchesClass) {
+        students.push({ uid: data.uid, name: data.username || data.email, email: data.email, username: data.username });
+      }
+    });
+
+    if (students.length === 0) {
+      displayStudentRecords([]);
+      return;
+    }
+
+    const scoresSnapshot = await db.collection('scores').get();
+    const scoresByStudent = {};
+
+    scoresSnapshot.forEach(doc => {
+      const score = doc.data();
+      if (!score || !score.userId) return;
+      if (!scoresByStudent[score.userId]) {
+        scoresByStudent[score.userId] = [];
+      }
+      scoresByStudent[score.userId].push(score);
+    });
+
+    const records = students.map(student => {
+      const studentScores = scoresByStudent[student.uid] || [];
+      const attempts = studentScores.length;
+      const totalScore = studentScores.reduce((sum, item) => sum + (item.score || 0), 0);
+      const avgScore = attempts ? Math.round(totalScore / attempts) : 0;
+      const lastActivity = studentScores.reduce((latest, item) => {
+        const ts = item.timestamp;
+        if (!ts) return latest;
+        const time = ts.seconds ? ts.seconds * 1000 : ts.toDate ? ts.toDate().getTime() : (ts instanceof Date ? ts.getTime() : 0);
+        return time > latest ? time : latest;
+      }, 0);
+
+      return {
+        ...student,
+        attempts,
+        avgScore,
+        totalScore,
+        lastActivity: lastActivity ? new Date(lastActivity).toLocaleDateString() : 'No activity'
+      };
+    });
+
+    displayStudentRecords(records);
+  } catch (error) {
+    console.error('Error loading student records:', error);
+    displayStudentRecords([]);
+  }
+}
+
+function displayStudentRecords(records) {
+  const container = document.getElementById('recordsTableContainer');
+  const noMessage = document.getElementById('noRecordsMessage');
+  const tableBody = document.getElementById('recordsTableBody');
+
+  if (!records || records.length === 0) {
+    tableBody.innerHTML = '';
+    container.style.display = 'none';
+    noMessage.style.display = 'block';
+    return;
+  }
+
+  container.style.display = 'block';
+  noMessage.style.display = 'none';
+
+  tableBody.innerHTML = records.map(record => `
+    <tr>
+      <td>${record.name}</td>
+      <td>${record.email}</td>
+      <td>${record.attempts}</td>
+      <td>${record.attempts ? record.avgScore + '%' : '-'}</td>
+      <td>${record.totalScore}</td>
+      <td>${record.lastActivity}</td>
+    </tr>
+  `).join('');
+}
+
 // Delete student
 function deleteStudent(studentId) {
   if (confirm('Are you sure you want to remove this student?')) {
@@ -802,8 +901,20 @@ function switchTab(event, tabName) {
   tabs.forEach(tab => tab.classList.remove('active'));
   contents.forEach(content => content.classList.remove('active'));
 
-  event.target.classList.add('active');
+  let tabButton = event.target;
+  if (!tabButton || !tabButton.classList) {
+    tabButton = document.querySelector(`.tab[onclick*="${tabName}"]`);
+  }
+
+  if (tabButton && tabButton.classList) {
+    tabButton.classList.add('active');
+  }
+
   document.getElementById(tabName).classList.add('active');
+
+  if (tabName === 'recordsTab') {
+    loadStudentRecords();
+  }
 }
 
 // Show message
@@ -818,11 +929,35 @@ function showMessage(text, type) {
 // Logout
 function logout() {
   alert('Logging out...');
-  window.location.href = 'login.html';
+  firebase.auth().signOut().finally(() => {
+    window.location.href = 'login.html';
+  });
 }
 
-// Load classes on page load
-window.addEventListener('load', displayClasses);
+// Load classes on page load with professor auth check
+firebase.auth().onAuthStateChanged(async (user) => {
+  if (!user) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  try {
+    const doc = await db.collection('users').doc(user.uid).get();
+    const data = doc.exists ? doc.data() : null;
+
+    if (!data || data.role !== 'professor') {
+      alert('Access denied. Professor account required.');
+      await firebase.auth().signOut();
+      window.location.href = 'login.html';
+      return;
+    }
+
+    displayClasses();
+  } catch (error) {
+    console.error('Error checking professor role:', error);
+    window.location.href = 'login.html';
+  }
+});
 </script>
 
 </body>
