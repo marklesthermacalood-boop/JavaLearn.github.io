@@ -16,8 +16,10 @@ firebase.auth().onAuthStateChanged((user) => {
 });
 
 // ===== REGISTRATION =====
-async function handleSignUp(email, password, username) {
+async function handleSignUp(email, password, username, role = "student") {
   try {
+    const assignedRole = role === "professor" ? "professor" : "student";
+
     // Create user account
     const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
     const user = userCredential.user;
@@ -32,7 +34,7 @@ async function handleSignUp(email, password, username) {
       uid: user.uid,
       email: email,
       username: username,
-      role: "student",
+      role: assignedRole,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       scores: []
     });
@@ -81,7 +83,7 @@ function isUserAuthenticated() {
 }
 
 // ===== SAVE SCORE =====
-async function saveScore(lessonId, challengeId, score, correct, total) {
+async function saveScore(lessonId, challengeId, score, correct, total, quizDifficulty = null, quizType = null) {
   try {
     const user = firebase.auth().currentUser;
     if (!user) {
@@ -95,6 +97,8 @@ async function saveScore(lessonId, challengeId, score, correct, total) {
       score: score,
       correct: correct,
       total: total,
+      quizDifficulty: quizDifficulty || null,
+      quizType: quizType || null,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       userEmail: user.email,
       username: user.displayName || user.email.split('@')[0]

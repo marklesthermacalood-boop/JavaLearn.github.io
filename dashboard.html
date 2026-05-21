@@ -201,6 +201,10 @@
         <div class="value" id="completedLessons">0</div>
       </div>
       <div class="stat-box">
+        <h3>Quiz Attempts</h3>
+        <div class="value" id="quizAttempts">0</div>
+      </div>
+      <div class="stat-box">
         <h3>Total Score</h3>
         <div class="value" id="totalScore">0</div>
       </div>
@@ -270,13 +274,17 @@ async function loadUserScores(userId) {
 
     // Display scores
     const scoresHtml = scores.slice(0, 10).map(score => {
-      const type = score.lessonId ? `📘 Lesson ${score.lessonId}` : `⚔️ Challenge ${score.challengeId}`;
-      
-      // Handle both server timestamp object and Date
+      const type = score.quizType === "quiz"
+        ? `🧠 ${score.quizDifficulty ? score.quizDifficulty.charAt(0).toUpperCase() + score.quizDifficulty.slice(1) : "Quiz"} Quiz`
+        : score.lessonId ? `📘 Lesson ${score.lessonId}` : `⚔️ Challenge ${score.challengeId}`;
+      const detail = score.correct != null && score.total ? `${score.correct}/${score.total} correct` : "";
+
       let dateStr = "N/A";
       if (score.timestamp) {
         if (score.timestamp.seconds) {
           dateStr = new Date(score.timestamp.seconds * 1000).toLocaleDateString();
+        } else if (score.timestamp.toDate) {
+          dateStr = score.timestamp.toDate().toLocaleDateString();
         } else if (score.timestamp instanceof Date) {
           dateStr = score.timestamp.toLocaleDateString();
         }
@@ -286,7 +294,7 @@ async function loadUserScores(userId) {
         <div class="score-item">
           <div class="score-info">
             <h4>${type}</h4>
-            <p>Completed: ${dateStr}</p>
+            <p>Completed: ${dateStr}${detail ? ` · ${detail}` : ""}</p>
           </div>
           <div class="score-value">${score.score}%</div>
         </div>
@@ -304,16 +312,19 @@ async function loadUserScores(userId) {
 function updateStats(scores, userId) {
   if (scores.length === 0) {
     document.getElementById("completedLessons").textContent = "0";
+    document.getElementById("quizAttempts").textContent = "0";
     document.getElementById("totalScore").textContent = "0";
     document.getElementById("avgScore").textContent = "0%";
     return;
   }
 
   const lessons = new Set(scores.map(s => s.lessonId).filter(l => l !== null));
+  const quizAttempts = scores.filter(s => s.quizType === "quiz").length;
   const avgScore = Math.round(scores.reduce((sum, s) => sum + s.score, 0) / scores.length);
   const totalScore = scores.reduce((sum, s) => sum + s.score, 0);
 
   document.getElementById("completedLessons").textContent = lessons.size;
+  document.getElementById("quizAttempts").textContent = quizAttempts;
   document.getElementById("totalScore").textContent = totalScore;
   document.getElementById("avgScore").textContent = avgScore + "%";
 }

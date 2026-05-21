@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login - JavaLearn Hub</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, rgba(255, 138, 0, 0.22), transparent 20%),
+        radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.24), transparent 20%),
+        linear-gradient(180deg, #100817 0%, #1a0d23 55%, #100817 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      color: #f8f7ff;
+    }
+
+    .container {
+      width: min(460px, 100%);
+      border-radius: 28px;
+      padding: 36px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 18px;
+      color: #fff;
+    }
+
+    p {
+      color: #d8cbff;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .input-box {
+      margin-bottom: 18px;
+    }
+
+    .input-box input {
+      width: 100%;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ff8a00, #d97706);
+      color: #111;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 36px rgba(255, 138, 0, 0.24);
+    }
+
+    .message {
+      margin-top: 18px;
+      padding: 14px 18px;
+      border-radius: 18px;
+      display: none;
+      text-align: center;
+    }
+
+    .message.error {
+      background: rgba(239, 68, 68, 0.12);
+      color: #fecaca;
+    }
+
+    .message.success {
+      background: rgba(16, 185, 129, 0.12);
+      color: #a7f3d0;
+    }
+
+    .link-row {
+      margin-top: 20px;
+      text-align: center;
+      color: #d8cbff;
+    }
+
+    .link-row a {
+      color: #ff8a00;
+      text-decoration: none;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Admin Login</h1>
+    <p>Only authorized admin accounts can access the lesson management console.</p>
+
+    <div class="input-box">
+      <input type="email" id="adminEmail" placeholder="Admin email" autocomplete="username" />
+    </div>
+
+    <div class="input-box">
+      <input type="password" id="adminPassword" placeholder="Password" autocomplete="current-password" />
+    </div>
+
+    <button onclick="loginAdmin()">Sign In as Admin</button>
+
+    <div id="adminMessage" class="message"></div>
+
+    <div class="link-row">
+      <p>Not an admin? <a href="login.html">Go to regular login</a></p>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = 'http://localhost:3000';
+
+    async function loginAdmin() {
+      const email = document.getElementById('adminEmail').value.trim();
+      const password = document.getElementById('adminPassword').value.trim();
+      const messageEl = document.getElementById('adminMessage');
+
+      messageEl.style.display = 'none';
+
+      if (!email || !password) {
+        messageEl.textContent = 'Please enter both email and password.';
+        messageEl.className = 'message error';
+        messageEl.style.display = 'block';
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: email, password }),
+        });
+
+        let result;
+        const contentType = response.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          result = await response.json();
+        } else {
+          const text = await response.text();
+          throw new Error(text || `Unexpected server response (${response.status})`);
+        }
+
+        if (!result.success) {
+          messageEl.textContent = result.error || 'Login failed. Check your credentials.';
+          messageEl.className = 'message error';
+          messageEl.style.display = 'block';
+          return;
+        }
+
+        if (result.user?.role !== 'admin') {
+          messageEl.textContent = 'Only admin accounts may sign in here.';
+          messageEl.className = 'message error';
+          messageEl.style.display = 'block';
+          return;
+        }
+
+        localStorage.setItem('adminToken', result.token);
+        window.location.href = `${API_BASE}/admin.html`;
+      } catch (err) {
+        messageEl.textContent = 'Server error: ' + err.message + '. Make sure the backend server is running and reachable at http://localhost:3000.';
+        messageEl.className = 'message error';
+        messageEl.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>

@@ -146,74 +146,199 @@ button:hover {
 
 <div class="container">
 
-<div class="score-box">
-  <h2>Your Score</h2>
-  <h1 id="score">0 / 20</h1>
-</div>
+  <div class="score-box">
+    <h2>Your Score</h2>
+    <h1 id="score">0 / 20</h1>
+    <p id="difficultyLabel" style="margin-top: 12px; color: #d8cbff;">Difficulty: Easy</p>
+  </div>
 
-<form id="quizForm"> <!-- 1 --> <div class="card"> <h3>1. Java is a?</h3> <label><input type="radio" name="q1" value="a"> Operating System</label> <label><input type="radio" name="q1" value="b"> Programming Language</label> <label><input type="radio" name="q1" value="c"> Hardware</label> </div> <!-- 2 --> <div class="card"> <h3>2. Which symbol ends a statement?</h3> <label><input type="radio" name="q2" value="a"> :</label> <label><input type="radio" name="q2" value="b"> ;</label> <label><input type="radio" name="q2" value="c"> .</label> </div> <!-- 3 --> <div class="card"> <h3>3. Keyword to create class?</h3> <label><input type="radio" name="q3" value="a"> class</label> <label><input type="radio" name="q3" value="b"> define</label> <label><input type="radio" name="q3" value="c"> function</label> </div> <!-- 4 --> <div class="card"> <h3>4. Output of 2 + 3?</h3> <label><input type="radio" name="q4" value="a"> 23</label> <label><input type="radio" name="q4" value="b"> 5</label> <label><input type="radio" name="q4" value="c"> 6</label> </div> <!-- 5 --> <div class="card"> <h3>5. Java runs on?</h3> <label><input type="radio" name="q5" value="a"> JVM</label> <label><input type="radio" name="q5" value="b"> BIOS</label> <label><input type="radio" name="q5" value="c"> CPU only</label> </div> <!-- 6�20 (Java basics mixed MCQ) --> <div class="card"><h3>6. int stores?</h3> <label><input type="radio" name="q6" value="a"> text</label> <label><input type="radio" name="q6" value="b"> numbers</label> <label><input type="radio" name="q6" value="c"> images</label> </div> <div class="card"><h3>7. String is used for?</h3> <label><input type="radio" name="q7" value="a"> decimals</label> <label><input type="radio" name="q7" value="b"> text</label> <label><input type="radio" name="q7" value="c"> loops</label> </div> <div class="card"><h3>8. System.out.println prints?</h3> <label><input type="radio" name="q8" value="a"> input</label> <label><input type="radio" name="q8" value="b"> output</label> <label><input type="radio" name="q8" value="c"> files</label> </div> <div class="card"><h3>9. Java is object-oriented?</h3> <label><input type="radio" name="q9" value="a"> true</label> <label><input type="radio" name="q9" value="b"> false</label> </div> <div class="card"><h3>10. Loop keyword?</h3> <label><input type="radio" name="q10" value="a"> for</label> <label><input type="radio" name="q10" value="b"> loop</label> <label><input type="radio" name="q10" value="c"> repeat</label> </div> <div class="card"><h3>11. Array starts at index?</h3> <label><input type="radio" name="q11" value="a"> 0</label> <label><input type="radio" name="q11" value="b"> 1</label> <label><input type="radio" name="q11" value="c"> 10</label> </div> <div class="card"><h3>12. Method keyword?</h3> <label><input type="radio" name="q12" value="a"> function</label> <label><input type="radio" name="q12" value="b"> void</label> <label><input type="radio" name="q12" value="c"> method</label> </div> <div class="card"><h3>13. Boolean values?</h3> <label><input type="radio" name="q13" value="a"> true/false</label> <label><input type="radio" name="q13" value="b"> yes/no</label> <label><input type="radio" name="q13" value="c"> 1/2</label> </div> <div class="card"><h3>14. Java file ends with?</h3> <label><input type="radio" name="q14" value="a"> .java</label> <label><input type="radio" name="q14" value="b"> .js</label> <label><input type="radio" name="q14" value="c"> .html</label> </div> <div class="card"><h3>15. Compiler converts?</h3> <label><input type="radio" name="q15" value="a"> code to bytecode</label> <label><input type="radio" name="q15" value="b"> images</label> <label><input type="radio" name="q15" value="c"> files</label> </div> <div class="card"><h3>16. Java is platform?</h3> <label><input type="radio" name="q16" value="a"> independent</label> <label><input type="radio" name="q16" value="b"> dependent</label> </div> <div class="card"><h3>17. main method is?</h3> <label><input type="radio" name="q17" value="a"> entry point</label> <label><input type="radio" name="q17" value="b"> loop</label> </div> <div class="card"><h3>18. OOP stands for?</h3> <label><input type="radio" name="q18" value="a"> Object Oriented Programming</label> <label><input type="radio" name="q18" value="b"> Online Open Program</label> </div> <div class="card"><h3>19. Java created by?</h3> <label><input type="radio" name="q19" value="a"> Sun Microsystems</label> <label><input type="radio" name="q19" value="b"> Microsoft</label> </div> <div class="card"><h3>20. Java uses memory?</h3> <label><input type="radio" name="q20" value="a"> automatic garbage collection</label> <label><input type="radio" name="q20" value="b"> manual only</label> </div> </form> <button id="submitBtn">Submit Quiz</button> </div>
+  <div class="card" style="display: flex; flex-wrap: wrap; align-items: center; gap: 18px; justify-content: space-between;">
+    <div>
+      <h2 style="margin-bottom: 12px; color: #fff;">Choose Quiz Difficulty</h2>
+      <p style="color: #d8cbff; max-width: 680px; line-height: 1.6;">Select easy, medium, or hard and take a full 20-question Java quiz. Each difficulty has its own question bank and score is saved to your progress dashboard.</p>
+    </div>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+      <select id="difficultySelect" style="padding: 14px 18px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.06); color: #fff; min-width: 160px;">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+      <button id="loadQuizBtn" type="button" style="padding: 14px 18px; border-radius: 18px;">Load Quiz</button>
+    </div>
+  </div>
 
+  <form id="quizForm"></form>
 
-
+  <button id="submitBtn">Submit Quiz</button>
 </div>
 
 <script>
-// Check if user is logged in
+const quizBank = {
+  easy: [
+    { question: "Java is a?", options: { a: "Operating System", b: "Programming Language", c: "Hardware" }, answer: "b" },
+    { question: "Which symbol ends a statement?", options: { a: ":", b: ";", c: "." }, answer: "b" },
+    { question: "Keyword to create a class?", options: { a: "class", b: "define", c: "function" }, answer: "a" },
+    { question: "What does JVM stand for?", options: { a: "Java Virtual Machine", b: "Java Visual Model", c: "Just Virtual Memory" }, answer: "a" },
+    { question: "Which type holds whole numbers?", options: { a: "String", b: "int", c: "boolean" }, answer: "b" },
+    { question: "Which keyword prints text to the console?", options: { a: "print", b: "System.out.println", c: "console.log" }, answer: "b" },
+    { question: "Java source files end with?", options: { a: ".java", b: ".js", c: ".class" }, answer: "a" },
+    { question: "The main method begins with?", options: { a: "public static void main", b: "main(String[] args)", c: "void start()" }, answer: "a" },
+    { question: "Which loop will execute at least once?", options: { a: "while", b: "for", c: "do-while" }, answer: "c" },
+    { question: "Which keyword declares a constant?", options: { a: "const", b: "final", c: "static" }, answer: "b" },
+    { question: "What is a boolean?", options: { a: "true or false", b: "a letter", c: "a number" }, answer: "a" },
+    { question: "What does API stand for?", options: { a: "Application Programming Interface", b: "Automatic Program Input", c: "Active Process Index" }, answer: "a" },
+    { question: "Which collection stores key/value pairs?", options: { a: "Array", b: "Map", c: "List" }, answer: "b" },
+    { question: "Which keyword is used to inherit a class?", options: { a: "extends", b: "implements", c: "imports" }, answer: "a" },
+    { question: "Which type stores text?", options: { a: "float", b: "String", c: "char" }, answer: "b" },
+    { question: "What is the default value of a boolean?", options: { a: "true", b: "false", c: "null" }, answer: "b" },
+    { question: "Which statement stops a loop?", options: { a: "continue", b: "break", c: "return" }, answer: "b" },
+    { question: "Which access modifier is most permissive?", options: { a: "private", b: "protected", c: "public" }, answer: "c" },
+    { question: "What is a constructor used for?", options: { a: "delete objects", b: "build objects", c: "run loops" }, answer: "b" },
+    { question: "Which keyword is used for equality check of objects?", options: { a: "==", b: "equals", c: "equalsIgnoreCase" }, answer: "b" }
+  ],
+  medium: [
+    { question: "Which statement is true about interfaces?", options: { a: "Interfaces can contain method bodies only", b: "Interfaces can contain abstract methods", c: "Interfaces can be instantiated" }, answer: "b" },
+    { question: "Which collection maintains insertion order?", options: { a: "HashSet", b: "LinkedHashSet", c: "TreeSet" }, answer: "b" },
+    { question: "What does JVM do with bytecode?", options: { a: "Compiles it to C++", b: "Interprets or JITs it", c: "Deletes it" }, answer: "b" },
+    { question: "What is method overloading?", options: { a: "Same method name, different parameters", b: "Same parameters, different names", c: "Using methods inside loops" }, answer: "a" },
+    { question: "Which keyword declares a checked exception?", options: { a: "throw", b: "throws", c: "try" }, answer: "b" },
+    { question: "What is polymorphism?", options: { a: "Multiple methods with same name", b: "Objects behaving differently based on type", c: "A kind of variable" }, answer: "b" },
+    { question: "Which type is used for a sequence of characters?", options: { a: "int", b: "String", c: "double" }, answer: "b" },
+    { question: "Which keyword makes a class unable to be subclassed?", options: { a: "final", b: "static", c: "abstract" }, answer: "a" },
+    { question: "Which statement creates a new object?", options: { a: "Object obj;", b: "new Object()", c: "Object = new" }, answer: "b" },
+    { question: "Which operator tests reference equality?", options: { a: "equals", b: "==", c: "instanceof" }, answer: "b" },
+    { question: "How do you declare an array of integers?", options: { a: "int[] arr;", b: "array<int> arr;", c: "List<int> arr;" }, answer: "a" },
+    { question: "Which loop is best when number of repetitions is known?", options: { a: "while", b: "for", c: "do-while" }, answer: "b" },
+    { question: "What is a checked exception?", options: { a: "Handled at compile time", b: "Handled at runtime only", c: "Ignored by compiler" }, answer: "a" },
+    { question: "Which modifier means method cannot be overridden?", options: { a: "static", b: "final", c: "private" }, answer: "b" },
+    { question: "What does ‘static’ mean?", options: { a: "Belongs to the class", b: "Belongs to the object", c: "Runs only once" }, answer: "a" },
+    { question: "Which method starts a thread?", options: { a: "run()", b: "start()", c: "execute()" }, answer: "b" },
+    { question: "What is the size of a char?", options: { a: "8 bits", b: "16 bits", c: "32 bits" }, answer: "b" },
+    { question: "Which structure is LIFO?", options: { a: "Queue", b: "Stack", c: "Map" }, answer: "b" },
+    { question: "What does ‘final’ on a variable mean?", options: { a: "Value can change", b: "Value cannot change", c: "Value is hidden" }, answer: "b" },
+    { question: "What is the result of 10 / 3 with integer division?", options: { a: "3", b: "3.33", c: "4" }, answer: "a" }
+  ],
+  hard: [
+    { question: "Which is a functional interface?", options: { a: "Runnable", b: "ArrayList", c: "String" }, answer: "a" },
+    { question: "What is the default value of a local variable?", options: { a: "null", b: "0", c: "No default value" }, answer: "c" },
+    { question: "Which keyword creates an anonymous inner class?", options: { a: "new", b: "this", c: "super" }, answer: "a" },
+    { question: "Which type can hold object references and primitives?", options: { a: "List", b: "Object", c: "String" }, answer: "b" },
+    { question: "What does ‘volatile’ guarantee?", options: { a: "Thread-safe mutability", b: "Visibility across threads", c: "Automatic serialization" }, answer: "b" },
+    { question: "Which statement is true about abstract classes?", options: { a: "They can be instantiated", b: "They may contain abstract methods", c: "They cannot have constructors" }, answer: "b" },
+    { question: "What is autoboxing?", options: { a: "Converting primitives to wrapper classes", b: "Converting classes to primitives", c: "Automatic garbage collection" }, answer: "a" },
+    { question: "Which collection is sorted by natural order?", options: { a: "HashMap", b: "TreeMap", c: "LinkedList" }, answer: "b" },
+    { question: "What does ‘super’ refer to?", options: { a: "Current object", b: "Parent class", c: "Static member" }, answer: "b" },
+    { question: "Which exception is unchecked?", options: { a: "IOException", b: "RuntimeException", c: "ClassNotFoundException" }, answer: "b" },
+    { question: "What is covariance in Java?", options: { a: "Wider return types in overrides", b: "Changing method names", c: "Using varargs" }, answer: "a" },
+    { question: "Which method compares strings ignoring case?", options: { a: "equals", b: "equalsIgnoreCase", c: "compareTo" }, answer: "b" },
+    { question: "How does HashMap find a key?", options: { a: "By index", b: "By hashCode then equals", c: "By order" }, answer: "b" },
+    { question: "What is the correct signature for main?", options: { a: "public static void main(String args)", b: "public static void main(String[] args)", c: "public void main(String[] args)" }, answer: "b" },
+    { question: "Which keyword prevents method overriding?", options: { a: "private", b: "final", c: "static" }, answer: "b" },
+    { question: "What does ‘transient’ do?", options: { a: "Prevents serialization", b: "Locks a variable", c: "Marks thread-local storage" }, answer: "a" },
+    { question: "Which interface supports lambda expressions?", options: { a: "Serializable", b: "Runnable", c: "Collection" }, answer: "b" },
+    { question: "What is a checked exception example?", options: { a: "NullPointerException", b: "FileNotFoundException", c: "IllegalArgumentException" }, answer: "b" },
+    { question: "Which statement describes encapsulation?", options: { a: "Exposing all fields", b: "Hiding implementation details", c: "Using static methods" }, answer: "b" },
+    { question: "What is the result of 5 % 2?", options: { a: "1", b: "2", c: "0" }, answer: "a" }
+  ]
+};
+
+const difficultyLabels = {
+  easy: "Easy",
+  medium: "Medium",
+  hard: "Hard"
+};
+let currentDifficulty = "easy";
+let currentQuestions = [];
+
+function createQuestionCard(item, index) {
+  return `
+    <div class="card">
+      <h3>${index + 1}. ${item.question}</h3>
+      ${Object.entries(item.options).map(([key, label]) => `
+        <label><input type="radio" name="q${index + 1}" value="${key}"> ${label}</label>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderQuiz(difficulty) {
+  currentDifficulty = difficulty;
+  document.getElementById("difficultySelect").value = difficulty;
+  document.getElementById("difficultyLabel").textContent = `Difficulty: ${difficultyLabels[difficulty]}`;
+  currentQuestions = quizBank[difficulty];
+  document.getElementById("score").innerText = `0 / ${currentQuestions.length}`;
+
+  const quizForm = document.getElementById("quizForm");
+  quizForm.innerHTML = currentQuestions.map(createQuestionCard).join("");
+  document.getElementById("submitBtn").disabled = false;
+  document.getElementById("submitBtn").textContent = "Submit Quiz";
+}
+
+function getAnswerKey() {
+  return currentQuestions.reduce((answers, item, idx) => {
+    answers[`q${idx + 1}`] = item.answer;
+    return answers;
+  }, {});
+}
+
+function countAnswered(form) {
+  return currentQuestions.reduce((count, _, idx) => {
+    return count + (form.querySelector(`input[name="q${idx + 1}"]:checked`) ? 1 : 0);
+  }, 0);
+}
+
 firebase.auth().onAuthStateChanged((user) => {
   if (!user) {
     alert("Please login to take the quiz!");
     window.location.href = "login.html";
-    return;
   }
 });
 
-// Quiz answer key
-const correctAnswers = {
-  q1: "b", q2: "b", q3: "a", q4: "b", q5: "a",
-  q6: "b", q7: "b", q8: "b", q9: "a", q10: "a",
-  q11: "a", q12: "b", q13: "a", q14: "a", q15: "a",
-  q16: "a", q17: "a", q18: "a", q19: "a", q20: "a"
-};
+document.getElementById("difficultySelect").addEventListener("change", (event) => {
+  renderQuiz(event.target.value);
+});
 
-// Submit Quiz
-document.getElementById("submitBtn").addEventListener("click", async function() {
+document.getElementById("loadQuizBtn").addEventListener("click", () => {
+  renderQuiz(document.getElementById("difficultySelect").value);
+});
+
+renderQuiz(currentDifficulty);
+
+const submitBtn = document.getElementById("submitBtn");
+submitBtn.addEventListener("click", async () => {
   if (!isUserAuthenticated()) {
     alert("Please login first!");
     window.location.href = "login.html";
     return;
   }
 
-  // Calculate score
-  let correct = 0;
   const form = document.getElementById("quizForm");
-  
-  for (let question in correctAnswers) {
+  const answerKey = getAnswerKey();
+  const total = currentQuestions.length;
+  const answered = countAnswered(form);
+
+  if (answered < total) {
+    alert(`Please answer all ${total} questions before submitting.`);
+    return;
+  }
+
+  let correct = 0;
+  for (const question in answerKey) {
     const selected = form.querySelector(`input[name="${question}"]:checked`);
-    if (selected && selected.value === correctAnswers[question]) {
+    if (selected && selected.value === answerKey[question]) {
       correct++;
     }
   }
 
-  const total = Object.keys(correctAnswers).length;
   const percentage = Math.round((correct / total) * 100);
+  document.getElementById("score").innerText = `${correct} / ${total}`;
 
-  // Display score
-  document.getElementById("score").innerText = correct + " / " + total;
-
-  // Save to Firebase
-  console.log("Saving quiz score:", { lessonId: 1, percentage, correct, total });
-  const result = await saveScore(1, null, percentage, correct, total);
-  
-  console.log("Save result:", result);
-
+  const result = await saveScore(null, null, percentage, correct, total, currentDifficulty, "quiz");
   if (result.success) {
-    document.getElementById("submitBtn").textContent = "✓ Score Saved!";
-    document.getElementById("submitBtn").disabled = true;
-    alert(`Quiz Complete! Score: ${percentage}%\nCorrect: ${correct}/${total}`);
-    
-    setTimeout(() => {
-      window.location.href = "dashboard.html";
-    }, 2000);
+    submitBtn.textContent = "✓ Score Saved!";
+    submitBtn.disabled = true;
+    alert(`Quiz Complete! ${difficultyLabels[currentDifficulty]} score: ${percentage}% (${correct}/${total})`);
+    setTimeout(() => window.location.href = "dashboard.html", 2000);
   } else {
     alert("Error saving score: " + result.error);
   }

@@ -387,12 +387,6 @@
       }
     }
   </style>
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
-  <script src="firebase-config.js"></script>
-  <script src="firebase-auth.js"></script>
 </head>
 
 <body>
@@ -471,20 +465,35 @@
 </div>
 
 <script>
+const API_BASE = 'http://localhost:3000';
 let adminLessons = [];
 
 async function fetchLessons() {
+  const token = localStorage.getItem('adminToken');
+  if (!token) {
+    window.location.href = 'admin-login.html';
+    return [];
+  }
+
   try {
-    const response = await fetch('/api/admin/lessons');
+    const response = await fetch(`${API_BASE}/api/admin/lessons`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
     const data = await response.json();
     if (!data.success) {
-      showMessage('Failed to load lessons.', 'error');
+      showMessage(data.error || 'Failed to load lessons.', 'error');
+      if (response.status === 401 || response.status === 403) {
+        localStorage.removeItem('adminToken');
+        window.location.href = 'admin-login.html';
+      }
       return [];
     }
     adminLessons = data.lessons;
     return adminLessons;
   } catch (err) {
-    showMessage('Unable to reach server.', 'error');
+    showMessage('Unable to reach server. Make sure the backend server is running at http://localhost:3000.', 'error');
     return [];
   }
 }
@@ -538,15 +547,28 @@ function showMessage(text, type) {
 }
 
 async function saveLesson(formData) {
+  const token = localStorage.getItem('adminToken');
+  if (!token) {
+    window.location.href = 'admin-login.html';
+    return false;
+  }
+
   try {
-    const response = await fetch(`/api/admin/lessons/${formData.lessonNumber}`, {
+    const response = await fetch(`${API_BASE}/api/admin/lessons/${formData.lessonNumber}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
       body: JSON.stringify(formData),
     });
     const result = await response.json();
     if (!result.success) {
       showMessage(result.error || 'Failed to save lesson.', 'error');
+      if (response.status === 401 || response.status === 403) {
+        localStorage.removeItem('adminToken');
+        window.location.href = 'admin-login.html';
+      }
       return false;
     }
     showMessage(`Lesson ${formData.lessonNumber} saved to ${result.file}`, 'success');
@@ -586,16 +608,49 @@ async function handleFormSubmit(event) {
   await loadLessons();
 }
 
+async function checkAdminAccess() {
+  const token = localStorage.getItem('adminToken');
+  if (!token) {
+    window.location.href = 'admin-login.html';
+    return false;
+  }
+
+  try {
+    const response = await fetch(`${API_BASE}/api/user/profile`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok || !data.success || data.user.role !== 'admin') {
+      localStorage.removeItem('adminToken');
+      window.location.href = 'admin-login.html';
+      return false;
+    }
+    return true;
+  } catch (err) {
+    localStorage.removeItem('adminToken');
+    window.location.href = 'admin-login.html';
+    return false;
+  }
+}
+
 async function loadLessons() {
   await fetchLessons();
   displayLessons();
 }
 
 document.getElementById('lessonForm').addEventListener('submit', handleFormSubmit);
-window.addEventListener('load', loadLessons);
+window.addEventListener('DOMContentLoaded', async () => {
+  const authorized = await checkAdminAccess();
+  if (authorized) {
+    await loadLessons();
+  }
+});
 
 function logout() {
-  window.location.href = 'login.html';
+  localStorage.removeItem('adminToken');
+  window.location.href = 'admin-login.html';
 }
 </script>
 

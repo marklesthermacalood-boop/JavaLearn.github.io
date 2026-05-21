@@ -15,6 +15,20 @@ app.use(express.json());
 const users = [];
 const scores = [];
 
+const ALLOWED_ADMIN_EMAILS = ["admin@javalearn.com"];
+const DEFAULT_ADMIN = {
+  id: 1,
+  username: "admin",
+  email: "admin@javalearn.com",
+  password: bcrypt.hashSync("AdminPass123!", 10),
+  role: "admin",
+  created_at: new Date().toISOString(),
+};
+
+if (!users.some((user) => user.email === DEFAULT_ADMIN.email)) {
+  users.push(DEFAULT_ADMIN);
+}
+
 function authenticateToken(req, res, next) {
   const token = req.headers["authorization"]?.split(" ")[1];
 
@@ -29,6 +43,15 @@ function authenticateToken(req, res, next) {
   } catch (err) {
     res.status(403).json({ success: false, error: "Invalid token" });
   }
+}
+
+function authenticateAdmin(req, res, next) {
+  authenticateToken(req, res, () => {
+    if (!req.user || req.user.role !== "admin") {
+      return res.status(403).json({ success: false, error: "Admin access required" });
+    }
+    next();
+  });
 }
 
 function checkExistingScore(user_id, lesson_id, challenge_id) {
@@ -53,6 +76,17 @@ app.post("/api/auth/register", async (req, res) => {
     return res.status(409).json({ success: false, error: "User already exists" });
   }
 
+  let assignedRole = "student";
+  if (role === "professor") {
+    assignedRole = "professor";
+  } else if (role === "admin") {
+    if (ALLOWED_ADMIN_EMAILS.includes(email.toLowerCase())) {
+      assignedRole = "admin";
+    } else {
+      return res.status(403).json({ success: false, error: "Admin role can only be created for a trusted account." });
+    }
+  }
+
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = {
@@ -60,7 +94,7 @@ app.post("/api/auth/register", async (req, res) => {
       username,
       email,
       password: hashedPassword,
-      role,
+      role: assignedRole,
       created_at: new Date().toISOString(),
     };
 
@@ -81,7 +115,7 @@ app.post("/api/auth/login", async (req, res) => {
   }
 
   try {
-    const user = users.find((item) => item.username === username);
+    const user = users.find((item) => item.username === username || item.email === username);
 
     if (!user) {
       return res.status(401).json({ success: false, error: "Invalid credentials" });
@@ -395,7 +429,7 @@ function resetCode() {
 </html>`;
 }
 
-app.get("/api/admin/lessons", (req, res) => {
+app.get("/api/admin/lessons", authenticateAdmin, (req, res) => {
   try {
     const files = loadLessonFiles();
     const lessons = files.map((file) => {
@@ -419,7 +453,7 @@ app.get("/api/admin/lessons", (req, res) => {
   }
 });
 
-app.post("/api/admin/lessons/:lessonNumber", (req, res) => {
+app.post("/api/admin/lessons/:lessonNumber", authenticateAdmin, (req, res) => {
   try {
     const lessonNumber = parseInt(req.params.lessonNumber, 10);
     const { title, intro, points, codeExample, takeaway } = req.body;
