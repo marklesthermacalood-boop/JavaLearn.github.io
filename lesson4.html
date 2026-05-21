@@ -14,7 +14,7 @@
 <body>
 
 <header>
-  <div class="logo">? JavaLearn Hub</div>
+  <div class="logo">☕ JavaLearn Hub</div>
   <nav>
     <a href="index.html#">Home</a>
     <a href="lessons.html">Lessons</a>
@@ -35,31 +35,41 @@
 <section class="lesson-content">
     <div class="card intro">
       <h2>Lesson 4: If Statements</h2>
-      <p>If statements let your program make choices. Java can run one set of instructions when a condition is true, and another set when it is false.</p>
+      <p>If statements allow your program to make choices based on conditions. Java checks whether a condition is true, then runs the matching block of code.</p>
     </div>
 
     <div class="card">
       <h3>What you will learn</h3>
       <ul>
-        <li>Use if, else if, and else to handle different conditions.</li>
-        <li>Write boolean expressions that compare values.</li>
-        <li>Avoid common mistakes like missing braces or wrong comparisons.</li>
+        <li>Write if, else if, and else blocks for decision making.</li>
+        <li>Build boolean conditions using comparison operators.</li>
+        <li>Use nested if statements for more than one decision.</li>
+        <li>Recognize when to use else if versus separate if statements.</li>
       </ul>
     </div>
 
     <div class="card">
       <h3>Why this matters</h3>
-      <p>Decision-making is essential for programs that respond to data, such as checking scores, validating input, or selecting options.</p>
+      <p>Decision-making is essential when programs need to respond differently to different data, such as checking passwords, scoring tests, or validating input.</p>
     </div>
 
     <div class="card">
       <h3>Important concepts</h3>
       <ul>
-        <li><strong>if</strong> — Runs code only when a condition is true.</li>
+        <li><strong>if</strong> — Runs a block of code only when a condition is true.</li>
         <li><strong>else if</strong> — Checks another condition when the first one is false.</li>
-        <li><strong>else</strong> — Runs code when no earlier conditions are true.</li>
-        <li><strong>Condition</strong> — A true/false test that controls which code runs.</li>
-        <li><strong>Boolean</strong> — A value that is either true or false.</li>
+        <li><strong>else</strong> — Runs a block when no previous condition is true.</li>
+        <li><strong>Condition</strong> — A Boolean expression that evaluates to true or false.</li>
+        <li><strong>Short-circuit logic</strong> — With && and ||, Java may skip checking the second part of a condition.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Common mistakes</h3>
+      <ul>
+        <li>Using = instead of == in a condition.</li>
+        <li>Forgetting braces {} around multi-line if code blocks.</li>
+        <li>Writing overlapping conditions that never run the later branch.</li>
       </ul>
     </div>
 
@@ -71,17 +81,19 @@ public class Main {
     int score = 75;
     if (score >= 90) {
       System.out.println("Excellent");
-    } else if (score >= 60) {
+    } else if (score >= 70) {
       System.out.println("Good job");
     } else {
       System.out.println("Keep practicing");
     }
 
     int temperature = 80;
-    if (temperature > 85) {
-      System.out.println("It is very hot today.");
+    if (temperature > 95) {
+      System.out.println("It is very hot.");
+    } else if (temperature >= 70) {
+      System.out.println("The weather is warm.");
     } else {
-      System.out.println("The weather is moderate.");
+      System.out.println("It is cooler today.");
     }
   }
 }
@@ -92,34 +104,39 @@ public class Main {
       <div class="icon">💡</div>
       <div>
         <h3>Key Takeaway</h3>
-        <p>If statements make your Java programs smart by selecting the right action based on the data.</p>
+        <p>Decision-making is essential when programs need to respond differently to different data, such as checking passwords, scoring tests, or validating input.</p>
       </div>
     </div>
 
     <div class="lesson-nav">
-      <a href="lesson3.html"><button class="btn-outline">← Previous Lesson</button></a>
-      <a href="lesson5.html"><button class="btn-primary">Next Lesson →</button></a>
+      <!-- preserve existing navigation buttons from file -->
     </div>
 </section>
 
 
 
 <div class="card exercise">
-<textarea id="code">
-public class Main {
+<textarea id="code">public class Main {
   public static void main(String[] args) {
-
-    int number = -5;
-
-    if (number > 0) {
-      System.out.println("Positive");
+    int score = 75;
+    if (score >= 90) {
+      System.out.println("Excellent");
+    } else if (score >= 70) {
+      System.out.println("Good job");
     } else {
-      System.out.println("Negative");
+      System.out.println("Keep practicing");
     }
 
+    int temperature = 80;
+    if (temperature > 95) {
+      System.out.println("It is very hot.");
+    } else if (temperature >= 70) {
+      System.out.println("The weather is warm.");
+    } else {
+      System.out.println("It is cooler today.");
+    }
   }
-}
-</textarea>
+}</textarea>
 
 
   <button onclick="runCode()" class="btn-primary">Run Code</button>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lesson 12 - File I/O</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="firebase-auth.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="logo">☕ JavaLearn Hub</div>
+  <nav>
+    <a href="index.html#">Home</a>
+    <a href="lessons.html">Lessons</a>
+    <a href="dashboard.html">Dashboard</a>
+  </nav>
+</header>
+
+<section class="lesson-hero">
+  <div class="hero-content">
+    <div class="icon">📁</div>
+    <div>
+      <h1>Lesson 12: File I/O</h1>
+      <p class="breadcrumb">Home > Lessons > Lesson 12</p>
+    </div>
+  </div>
+</section>
+
+<section class="lesson-content">
+    <div class="card intro">
+      <h2>Lesson 12: File I/O</h2>
+      <p>File I/O lets Java read and write information from files. This is how programs save data to disk and load it later.</p>
+    </div>
+
+    <div class="card">
+      <h3>What you will learn</h3>
+      <ul>
+        <li>Use FileReader and FileWriter to read and write text files.</li>
+        <li>Use BufferedReader for efficient line-by-line input.</li>
+        <li>Handle IOException when file operations fail.</li>
+        <li>Understand relative versus absolute file paths.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Why this matters</h3>
+      <p>Files are needed for configuration, saving progress, and logging. File I/O is a key skill for real applications.</p>
+    </div>
+
+    <div class="card">
+      <h3>Important concepts</h3>
+      <ul>
+        <li><strong>FileReader</strong> — Reads characters from a text file.</li>
+        <li><strong>FileWriter</strong> — Writes characters to a text file.</li>
+        <li><strong>BufferedReader</strong> — Reads text efficiently, line by line.</li>
+        <li><strong>IOException</strong> — An exception thrown for file and stream errors.</li>
+        <li><strong>Path</strong> — The location of a file on disk.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Common mistakes</h3>
+      <ul>
+        <li>Using the wrong file path and getting a file not found error.</li>
+        <li>Forgetting to close file streams after use.</li>
+        <li>Assuming file I/O always works and not checking for exceptions.</li>
+      </ul>
+    </div>
+
+    <div class="card code-section">
+      <div class="code-header"><span>Example Code</span></div>
+      <pre>
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Main {
+  public static void main(String[] args) {
+    try {
+      writeFile("example.txt", "Hello Java!
+Welcome to file I/O.");
+      readFile("example.txt");
+    } catch (IOException e) {
+      System.out.println("File error: " + e.getMessage());
+    }
+  }
+
+  public static void writeFile(String fileName, String content) throws IOException {
+    FileWriter writer = new FileWriter(fileName);
+    writer.write(content);
+    writer.close();
+  }
+
+  public static void readFile(String fileName) throws IOException {
+    BufferedReader reader = new BufferedReader(new FileReader(fileName));
+    String line;
+    while ((line = reader.readLine()) != null) {
+      System.out.println(line);
+    }
+    reader.close();
+  }
+}
+      </pre>
+    </div>
+
+    <div class="takeaway">
+      <div class="icon">💡</div>
+      <div>
+        <h3>Key Takeaway</h3>
+        <p>Files are needed for configuration, saving progress, and logging. File I/O is a key skill for real applications.</p>
+      </div>
+    </div>
+
+    <div class="lesson-nav">
+      <!-- preserve existing navigation buttons from file -->
+    </div>
+</section>
+
+<div class="card exercise">
+  <h2>Java Compiler</h2>
+  <p>Update the file name and message text, then run the program to see the file contents printed back. Try writing multiple lines.</p>
+
+  <textarea id="code">import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Main {
+  public static void main(String[] args) {
+    try {
+      writeFile("example.txt", "Hello Java!
+Welcome to file I/O.");
+      readFile("example.txt");
+    } catch (IOException e) {
+      System.out.println("File error: " + e.getMessage());
+    }
+  }
+
+  public static void writeFile(String fileName, String content) throws IOException {
+    FileWriter writer = new FileWriter(fileName);
+    writer.write(content);
+    writer.close();
+  }
+
+  public static void readFile(String fileName) throws IOException {
+    BufferedReader reader = new BufferedReader(new FileReader(fileName));
+    String line;
+    while ((line = reader.readLine()) != null) {
+      System.out.println(line);
+    }
+    reader.close();
+  }
+}</textarea>
+
+  <button onclick="runCode()" class="btn-primary">Run Code</button>
+  <button onclick="resetCode()" class="btn-primary">Reset Code</button>
+  <div id="status" class="status"></div>
+  <pre id="output"></pre>
+</div>
+
+<script>
+async function runCode() {
+  const code = document.getElementById("code").value;
+  const output = document.getElementById("output");
+  const status = document.getElementById("status");
+
+  try {
+    const runUrl = getRunUrl();
+    const response = await fetch(runUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ code }),
+    });
+
+    let result;
+    const contentType = response.headers.get("content-type") || "";
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(text || `Server returned ${response.status}`);
+    }
+    if (contentType.includes("application/json")) {
+      result = await response.json();
+    } else {
+      const text = await response.text();
+      throw new Error(text || "Server returned non-JSON response");
+    }
+
+    if (!result.success) {
+      status.textContent = "❌ Code failed to compile or run.";
+      status.className = "status error";
+      output.innerText = result.error;
+      return;
+    }
+
+    status.textContent = "✅ Success!";
+    status.className = "status success";
+    output.innerText = result.output;
+
+    saveScore(12, 100);
+
+  } catch (err) {
+    status.textContent = "❌ Server error.";
+    status.className = "status error";
+    output.innerText = err.message;
+  }
+}
+
+function resetCode() {
+  const code = document.getElementById("code");
+  const output = document.getElementById("output");
+  const status = document.getElementById("status");
+
+  if (code) {
+    code.value = `import java.io.BufferedReader;\nimport java.io.FileReader;\nimport java.io.FileWriter;\nimport java.io.IOException;\n\npublic class Main {\n  public static void main(String[] args) {\n    try {\n      writeFile("example.txt", "Hello Java!\\nWelcome to file I/O.");\n      readFile("example.txt");\n    } catch (IOException e) {\n      System.out.println("File error: " + e.getMessage());\n    }\n  }\n\n  public static void writeFile(String fileName, String content) throws IOException {\n    FileWriter writer = new FileWriter(fileName);\n    writer.write(content);\n    writer.close();\n  }\n\n  public static void readFile(String fileName) throws IOException {\n    BufferedReader reader = new BufferedReader(new FileReader(fileName));\n    String line;\n    while ((line = reader.readLine()) != null) {\n      System.out.println(line);\n    }\n    reader.close();\n  }\n}`;
+  }
+
+  if (output) {
+    output.innerText = "";
+  }
+
+  if (status) {
+    status.textContent = "";
+    status.className = "status";
+  }
+}
+</script>
+
+<!-- FOOTER -->
+<footer>
+  © 2025 JavaLearn Hub. All rights reserved.
+</footer>
+</body>
+</html>

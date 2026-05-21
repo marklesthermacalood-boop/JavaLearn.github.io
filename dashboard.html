@@ -164,7 +164,7 @@
 <body>
 
 <header>
-  <div class="logo">? JavaLearn Hub</div>
+  <div class="logo">☕ JavaLearn Hub</div>
   <nav>
     <a href="index.html">Home</a>
     <a href="lessons.html">Lessons</a>
@@ -175,7 +175,7 @@
 
 <section class="lesson-hero">
   <div class="hero-content">
-    <div class="icon">??</div>
+    <div class="icon">📊</div>
     <div>
       <h1>Your Dashboard</h1>
       <p class="breadcrumb">Track your learning progress and scores</p>
@@ -212,7 +212,7 @@
   </div>
 
   <div class="scores-section">
-    <h2>?? Recent Scores</h2>
+    <h2>🏆 Recent Scores</h2>
     <div id="scoresContainer">
       <div class="empty-state">Loading your scores...</div>
     </div>
@@ -270,7 +270,7 @@ async function loadUserScores(userId) {
 
     // Display scores
     const scoresHtml = scores.slice(0, 10).map(score => {
-      const type = score.lessonId ? `?? Lesson ${score.lessonId}` : `?? Challenge ${score.challengeId}`;
+      const type = score.lessonId ? `📘 Lesson ${score.lessonId}` : `⚔️ Challenge ${score.challengeId}`;
       
       // Handle both server timestamp object and Date
       let dateStr = "N/A";

@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Lesson 1</title>
+  <title>Lesson 11 - Exception Handling</title>
   <link rel="stylesheet" href="styles.css">
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
@@ -11,10 +11,8 @@
   <script src="firebase-config.js"></script>
   <script src="firebase-auth.js"></script>
 </head>
-
 <body>
 
-<!-- NAVBAR -->
 <header>
   <div class="logo">☕ JavaLearn Hub</div>
   <nav>
@@ -24,56 +22,54 @@
   </nav>
 </header>
 
-<!-- HERO / TITLE -->
 <section class="lesson-hero">
   <div class="hero-content">
-    <div class="icon">☕</div>
+    <div class="icon">🛡️</div>
     <div>
-      <h1>Lesson 1: What is Java?</h1>
-      <p class="breadcrumb">Home > Lessons > Lesson 1</p>
+      <h1>Lesson 11: Exception Handling</h1>
+      <p class="breadcrumb">Home > Lessons > Lesson 11</p>
     </div>
   </div>
 </section>
 
-<!-- CONTENT -->
 <section class="lesson-content">
     <div class="card intro">
-      <h2>Lesson 1: What is Java?</h2>
-      <p>Java is a popular programming language with strong support for portability, reliability, and performance. It runs on many platforms because Java programs are compiled to bytecode that can execute inside the Java Virtual Machine (JVM).</p>
+      <h2>Lesson 11: Exception Handling</h2>
+      <p>Exception handling helps Java programs deal with unexpected errors without crashing. It lets you separate normal code from error handling and keep programs running safely.</p>
     </div>
 
     <div class="card">
       <h3>What you will learn</h3>
       <ul>
-        <li>How Java code is written, compiled, and executed.</li>
-        <li>What makes Java platform-independent, and why that matters.</li>
-        <li>The role of the JVM, JRE, and JDK in Java development.</li>
-        <li>How Java differs from languages that compile directly to machine code.</li>
+        <li>Use try, catch, and finally to handle runtime errors.</li>
+        <li>Differentiate checked and unchecked exceptions.</li>
+        <li>Throw exceptions from methods when errors occur.</li>
+        <li>Use custom exception messages for clearer debugging.</li>
       </ul>
     </div>
 
     <div class="card">
       <h3>Why this matters</h3>
-      <p>Java is used in web applications, Android apps, enterprise systems, and desktop tools. Learning Java gives you a foundation for writing robust applications and understanding many software systems.</p>
+      <p>Errors can happen when files are missing, input is wrong, or data is invalid. Handling exceptions makes programs more stable and easier to fix.</p>
     </div>
 
     <div class="card">
       <h3>Important concepts</h3>
       <ul>
-        <li><strong>Java source code</strong> — Lines of code saved in .java files, written by developers.</li>
-        <li><strong>Compilation</strong> — Translating source code into bytecode using the Java compiler.</li>
-        <li><strong>Bytecode</strong> — Platform-neutral Java instructions that run on the JVM.</li>
-        <li><strong>JVM</strong> — Java Virtual Machine that executes bytecode on different platforms.</li>
-        <li><strong>main method</strong> — The entry point of most Java programs: public static void main(String[] args).</li>
+        <li><strong>Exception</strong> — An object that represents an error event.</li>
+        <li><strong>try</strong> — A block of code that may cause an exception.</li>
+        <li><strong>catch</strong> — Handles the specific exception type when it occurs.</li>
+        <li><strong>finally</strong> — Runs cleanup code even if an error happened.</li>
+        <li><strong>throws</strong> — Indicates that a method may pass an exception to its caller.</li>
       </ul>
     </div>
 
     <div class="card">
       <h3>Common mistakes</h3>
       <ul>
-        <li>Confusing Java source code with bytecode; Java programs must be compiled first.</li>
-        <li>Thinking Java runs directly on hardware instead of inside the JVM.</li>
-        <li>Assuming all Java files are executable without compiling them.</li>
+        <li>Catching very broad exceptions and hiding useful error details.</li>
+        <li>Not closing resources after an exception occurs.</li>
+        <li>Using exception handling for normal control flow instead of real errors.</li>
       </ul>
     </div>
 
@@ -82,7 +78,18 @@
       <pre>
 public class Main {
   public static void main(String[] args) {
-    System.out.println("Java is running!");
+    try {
+      int result = divide(10, 0);
+      System.out.println("Result: " + result);
+    } catch (ArithmeticException ex) {
+      System.out.println("Cannot divide by zero.");
+    } finally {
+      System.out.println("Cleanup is always done.");
+    }
+  }
+
+  public static int divide(int a, int b) {
+    return a / b;
   }
 }
       </pre>
@@ -92,7 +99,7 @@ public class Main {
       <div class="icon">💡</div>
       <div>
         <h3>Key Takeaway</h3>
-        <p>Java is used in web applications, Android apps, enterprise systems, and desktop tools. Learning Java gives you a foundation for writing robust applications and understanding many software systems.</p>
+        <p>Errors can happen when files are missing, input is wrong, or data is invalid. Handling exceptions makes programs more stable and easier to fix.</p>
       </div>
     </div>
 
@@ -101,17 +108,24 @@ public class Main {
     </div>
 </section>
 
-
-
 <div class="card exercise">
   <h2>Java Compiler</h2>
-  <p>Update the message in System.out.println to describe your favorite programming topic. Then run the program to see the output change.</p>
-
- 
+  <p>Change the divisor in divide() to a valid number, then run the code and compare the output with the error case.</p>
 
   <textarea id="code">public class Main {
   public static void main(String[] args) {
-    System.out.println("Java is running!");
+    try {
+      int result = divide(10, 0);
+      System.out.println("Result: " + result);
+    } catch (ArithmeticException ex) {
+      System.out.println("Cannot divide by zero.");
+    } finally {
+      System.out.println("Cleanup is always done.");
+    }
+  }
+
+  public static int divide(int a, int b) {
+    return a / b;
   }
 }</textarea>
 
@@ -137,7 +151,7 @@ async function runCode() {
       body: JSON.stringify({ code }),
     });
 
-        let result;
+    let result;
     const contentType = response.headers.get("content-type") || "";
     if (!response.ok) {
       const text = await response.text();
@@ -150,24 +164,21 @@ async function runCode() {
       throw new Error(text || "Server returned non-JSON response");
     }
 
-    console.log(result);
-
     if (!result.success) {
-      status.textContent = "? Code failed to compile or run.";
+      status.textContent = "❌ Code failed to compile or run.";
       status.className = "status error";
       output.innerText = result.error;
       return;
     }
 
-    status.textContent = "? Success!";
+    status.textContent = "✅ Success!";
     status.className = "status success";
     output.innerText = result.output;
 
-    // Save score to database
-    saveScore(1, 100);
+    saveScore(11, 100);
 
   } catch (err) {
-    status.textContent = "? Server error.";
+    status.textContent = "❌ Server error.";
     status.className = "status error";
     output.innerText = err.message;
   }
@@ -179,7 +190,7 @@ function resetCode() {
   const status = document.getElementById("status");
 
   if (code) {
-    code.value = `public class Main {\n  public static void main(String[] args) {\n    System.out.println("Hello, Java!");\n  }\n}`;
+    code.value = `public class Main {\n  public static void main(String[] args) {\n    try {\n      int result = divide(10, 0);\n      System.out.println("Result: " + result);\n    } catch (ArithmeticException ex) {\n      System.out.println("Cannot divide by zero.");\n    } finally {\n      System.out.println("Cleanup is always done.");\n    }\n  }\n\n  public static int divide(int a, int b) {\n    return a / b;\n  }\n}`;
   }
 
   if (output) {
@@ -191,21 +202,11 @@ function resetCode() {
     status.className = "status";
   }
 }
-
-// Score saving now handled by Firebase (firestore)
-// Use saveScore() from firebase-auth.js when needed
-// Example: await saveScore(1, null, 85, 85, 100);
-
 </script>
 
 <!-- FOOTER -->
 <footer>
-  � 2025 JavaLearn Hub. All rights reserved.
+  © 2025 JavaLearn Hub. All rights reserved.
 </footer>
 </body>
 </html>
-
-
-
-
-

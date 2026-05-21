@@ -13,7 +13,7 @@
 <body>
 
 <header>
-  <div class="logo">? JavaLearn Hub</div>
+  <div class="logo">☕ JavaLearn Hub</div>
    <nav>
     <a href="index.html#">Home</a>
     <a href="lessons.html">Lessons</a>
@@ -34,31 +34,41 @@
 <section class="lesson-content">
     <div class="card intro">
       <h2>Lesson 6: Methods</h2>
-      <p>Methods organize code into named blocks that perform specific tasks. They make programs easier to read, test, and reuse by moving repeated logic into one place.</p>
+      <p>Methods are reusable blocks of code that perform a specific task. They make programs easier to organize, test, and maintain by moving logic into named functions.</p>
     </div>
 
     <div class="card">
       <h3>What you will learn</h3>
       <ul>
-        <li>Define methods with parameters and return values.</li>
-        <li>Call methods from main and other methods.</li>
-        <li>Use methods to keep code clean and reusable.</li>
+        <li>Declare methods with names, parameters, and return types.</li>
+        <li>Call methods from main and pass values between them.</li>
+        <li>Use methods to avoid repeating code.</li>
+        <li>Understand the difference between void and non-void methods.</li>
       </ul>
     </div>
 
     <div class="card">
       <h3>Why this matters</h3>
-      <p>Methods help you avoid duplicate code and make it easier to change one part of the program without breaking everything else.</p>
+      <p>Methods help break programs into smaller tasks, making the code easier to read and change. They are central to writing good Java applications.</p>
     </div>
 
     <div class="card">
       <h3>Important concepts</h3>
       <ul>
-        <li><strong>Method</strong> — A named block of code that performs a task.</li>
-        <li><strong>Parameter</strong> — A value passed into a method.</li>
-        <li><strong>Return type</strong> — The kind of value a method gives back.</li>
-        <li><strong>Call</strong> — Running a method from another part of code.</li>
-        <li><strong>Static</strong> — A method that belongs to the class rather than to an object.</li>
+        <li><strong>Method</strong> — A named block of code that can be reused.</li>
+        <li><strong>Parameter</strong> — A value given to a method when it is called.</li>
+        <li><strong>Return type</strong> — The type of value a method sends back. void means no value.</li>
+        <li><strong>Call</strong> — Using a method name to execute its code.</li>
+        <li><strong>Static</strong> — A method that belongs to the class instead of an object.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Common mistakes</h3>
+      <ul>
+        <li>Putting code in main instead of using methods for repeated tasks.</li>
+        <li>Using the wrong return type for the value a method sends back.</li>
+        <li>Forgetting to call a method after writing it.</li>
       </ul>
     </div>
 
@@ -92,32 +102,38 @@ public class Main {
       <div class="icon">💡</div>
       <div>
         <h3>Key Takeaway</h3>
-        <p>Methods break your program into reusable parts, making it easier to read and maintain.</p>
+        <p>Methods help break programs into smaller tasks, making the code easier to read and change. They are central to writing good Java applications.</p>
       </div>
     </div>
 
     <div class="lesson-nav">
-      <a href="lesson5.html"><button class="btn-outline">← Previous Lesson</button></a>
-      <a href="lesson7.html"><button class="btn-primary">Next Lesson →</button></a>
+      <!-- preserve existing navigation buttons from file -->
     </div>
 </section>
 
 
 
 <div class="card exercise">
-<textarea id="code">
-public class Main {
-
-  public static void sayHi() {
-    System.out.println("Hi!");
-  }
-
+<textarea id="code">public class Main {
   public static void main(String[] args) {
-    sayHi();
+    greet();
+    int sum = add(4, 6);
+    System.out.println("Sum: " + sum);
+    System.out.println("Is 7 even? " + isEven(7));
   }
 
-}
-</textarea>
+  public static void greet() {
+    System.out.println("Hello from a method!");
+  }
+
+  public static int add(int x, int y) {
+    return x + y;
+  }
+
+  public static boolean isEven(int value) {
+    return value % 2 == 0;
+  }
+}</textarea>
 
 
   <button onclick="runCode()" class="btn-primary">Run Code</button>

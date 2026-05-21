@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Lesson 1</title>
+  <title>Lesson 15 - Debugging & Testing</title>
   <link rel="stylesheet" href="styles.css">
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
@@ -11,10 +11,8 @@
   <script src="firebase-config.js"></script>
   <script src="firebase-auth.js"></script>
 </head>
-
 <body>
 
-<!-- NAVBAR -->
 <header>
   <div class="logo">☕ JavaLearn Hub</div>
   <nav>
@@ -24,56 +22,54 @@
   </nav>
 </header>
 
-<!-- HERO / TITLE -->
 <section class="lesson-hero">
   <div class="hero-content">
-    <div class="icon">☕</div>
+    <div class="icon">🧪</div>
     <div>
-      <h1>Lesson 1: What is Java?</h1>
-      <p class="breadcrumb">Home > Lessons > Lesson 1</p>
+      <h1>Lesson 15: Debugging & Testing</h1>
+      <p class="breadcrumb">Home > Lessons > Lesson 15</p>
     </div>
   </div>
 </section>
 
-<!-- CONTENT -->
 <section class="lesson-content">
     <div class="card intro">
-      <h2>Lesson 1: What is Java?</h2>
-      <p>Java is a popular programming language with strong support for portability, reliability, and performance. It runs on many platforms because Java programs are compiled to bytecode that can execute inside the Java Virtual Machine (JVM).</p>
+      <h2>Lesson 15: Debugging & Testing</h2>
+      <p>Debugging and testing help you find and fix problems before your program is used. They are essential skills for writing reliable Java code.</p>
     </div>
 
     <div class="card">
       <h3>What you will learn</h3>
       <ul>
-        <li>How Java code is written, compiled, and executed.</li>
-        <li>What makes Java platform-independent, and why that matters.</li>
-        <li>The role of the JVM, JRE, and JDK in Java development.</li>
-        <li>How Java differs from languages that compile directly to machine code.</li>
+        <li>Use print statements to inspect variables and program flow.</li>
+        <li>Check output against expected results.</li>
+        <li>Use simple assertions or test cases.</li>
+        <li>Find and fix bugs by reading error messages carefully.</li>
       </ul>
     </div>
 
     <div class="card">
       <h3>Why this matters</h3>
-      <p>Java is used in web applications, Android apps, enterprise systems, and desktop tools. Learning Java gives you a foundation for writing robust applications and understanding many software systems.</p>
+      <p>All developers make mistakes. Debugging and testing turn those mistakes into learning opportunities and make your code dependable.</p>
     </div>
 
     <div class="card">
       <h3>Important concepts</h3>
       <ul>
-        <li><strong>Java source code</strong> — Lines of code saved in .java files, written by developers.</li>
-        <li><strong>Compilation</strong> — Translating source code into bytecode using the Java compiler.</li>
-        <li><strong>Bytecode</strong> — Platform-neutral Java instructions that run on the JVM.</li>
-        <li><strong>JVM</strong> — Java Virtual Machine that executes bytecode on different platforms.</li>
-        <li><strong>main method</strong> — The entry point of most Java programs: public static void main(String[] args).</li>
+        <li><strong>Debugging</strong> — Finding and fixing errors in code.</li>
+        <li><strong>Testing</strong> — Verifying the code works as expected.</li>
+        <li><strong>Assertion</strong> — A check that confirms a condition is true.</li>
+        <li><strong>Error messages</strong> — Clues from Java when something goes wrong.</li>
+        <li><strong>Edge case</strong> — A special input that can break your code if not handled.</li>
       </ul>
     </div>
 
     <div class="card">
       <h3>Common mistakes</h3>
       <ul>
-        <li>Confusing Java source code with bytecode; Java programs must be compiled first.</li>
-        <li>Thinking Java runs directly on hardware instead of inside the JVM.</li>
-        <li>Assuming all Java files are executable without compiling them.</li>
+        <li>Ignoring error messages instead of reading them carefully.</li>
+        <li>Not testing unusual or boundary values.</li>
+        <li>Fixing symptoms instead of the root cause of a bug.</li>
       </ul>
     </div>
 
@@ -82,7 +78,14 @@
       <pre>
 public class Main {
   public static void main(String[] args) {
-    System.out.println("Java is running!");
+    int result = add(3, 4);
+    System.out.println("Result: " + result);
+    System.out.println("Expected: 7");
+    System.out.println("Pass: " + (result == 7));
+  }
+
+  public static int add(int a, int b) {
+    return a + b;
   }
 }
       </pre>
@@ -92,7 +95,7 @@ public class Main {
       <div class="icon">💡</div>
       <div>
         <h3>Key Takeaway</h3>
-        <p>Java is used in web applications, Android apps, enterprise systems, and desktop tools. Learning Java gives you a foundation for writing robust applications and understanding many software systems.</p>
+        <p>All developers make mistakes. Debugging and testing turn those mistakes into learning opportunities and make your code dependable.</p>
       </div>
     </div>
 
@@ -101,17 +104,20 @@ public class Main {
     </div>
 </section>
 
-
-
 <div class="card exercise">
   <h2>Java Compiler</h2>
-  <p>Update the message in System.out.println to describe your favorite programming topic. Then run the program to see the output change.</p>
-
- 
+  <p>Change the numbers passed to add() and update the expected result. Run the code and see whether the test passes.</p>
 
   <textarea id="code">public class Main {
   public static void main(String[] args) {
-    System.out.println("Java is running!");
+    int result = add(3, 4);
+    System.out.println("Result: " + result);
+    System.out.println("Expected: 7");
+    System.out.println("Pass: " + (result == 7));
+  }
+
+  public static int add(int a, int b) {
+    return a + b;
   }
 }</textarea>
 
@@ -137,7 +143,7 @@ async function runCode() {
       body: JSON.stringify({ code }),
     });
 
-        let result;
+    let result;
     const contentType = response.headers.get("content-type") || "";
     if (!response.ok) {
       const text = await response.text();
@@ -150,24 +156,21 @@ async function runCode() {
       throw new Error(text || "Server returned non-JSON response");
     }
 
-    console.log(result);
-
     if (!result.success) {
-      status.textContent = "? Code failed to compile or run.";
+      status.textContent = "❌ Code failed to compile or run.";
       status.className = "status error";
       output.innerText = result.error;
       return;
     }
 
-    status.textContent = "? Success!";
+    status.textContent = "✅ Success!";
     status.className = "status success";
     output.innerText = result.output;
 
-    // Save score to database
-    saveScore(1, 100);
+    saveScore(15, 100);
 
   } catch (err) {
-    status.textContent = "? Server error.";
+    status.textContent = "❌ Server error.";
     status.className = "status error";
     output.innerText = err.message;
   }
@@ -179,7 +182,7 @@ function resetCode() {
   const status = document.getElementById("status");
 
   if (code) {
-    code.value = `public class Main {\n  public static void main(String[] args) {\n    System.out.println("Hello, Java!");\n  }\n}`;
+    code.value = `public class Main {\n  public static void main(String[] args) {\n    int result = add(3, 4);\n    System.out.println("Result: " + result);\n    System.out.println("Expected: 7");\n    System.out.println("Pass: " + (result == 7));\n  }\n\n  public static int add(int a, int b) {\n    return a + b;\n  }\n}`;
   }
 
   if (output) {
@@ -191,21 +194,11 @@ function resetCode() {
     status.className = "status";
   }
 }
-
-// Score saving now handled by Firebase (firestore)
-// Use saveScore() from firebase-auth.js when needed
-// Example: await saveScore(1, null, 85, 85, 100);
-
 </script>
 
 <!-- FOOTER -->
 <footer>
-  � 2025 JavaLearn Hub. All rights reserved.
+  © 2025 JavaLearn Hub. All rights reserved.
 </footer>
 </body>
 </html>
-
-
-
-
-

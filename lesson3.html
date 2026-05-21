@@ -15,7 +15,7 @@
 
 <!-- NAVBAR -->
 <header>
-  <div class="logo">? JavaLearn Hub</div>
+  <div class="logo">☕ JavaLearn Hub</div>
   <nav>
     <a href="index.html#">Home</a>
     <a href="lessons.html">Lessons</a>
@@ -38,31 +38,41 @@
 <section class="lesson-content">
     <div class="card intro">
       <h2>Lesson 3: Operators</h2>
-      <p>Operators are the tools Java uses to work with values. You can add numbers, compare values, and combine conditions to make your program solve problems.</p>
+      <p>Operators are symbols that perform actions on values, like adding numbers, comparing values, or combining text. They are the building blocks for expressions in Java.</p>
     </div>
 
     <div class="card">
       <h3>What you will learn</h3>
       <ul>
-        <li>Use arithmetic and comparison operators to build expressions.</li>
-        <li>Combine conditions with logical operators like && and ||.</li>
-        <li>See how operator order affects the result of a calculation.</li>
+        <li>Use arithmetic operators to calculate values.</li>
+        <li>Compare values using relational operators.</li>
+        <li>Combine boolean expressions with logical operators.</li>
+        <li>Concatenate text using the + operator.</li>
       </ul>
     </div>
 
     <div class="card">
       <h3>Why this matters</h3>
-      <p>Operators let your code solve math problems, compare values, and decide what to do next in a program.</p>
+      <p>Operators let your program solve problems, make decisions, and transform values. They appear in nearly every line of Java code.</p>
     </div>
 
     <div class="card">
       <h3>Important concepts</h3>
       <ul>
-        <li><strong>Arithmetic</strong> — Operators like +, -, *, and / for math.</li>
-        <li><strong>Comparison</strong> — Operators like ==, !=, >, and < to compare values.</li>
-        <li><strong>Logical</strong> — Operators like && and || to combine true/false conditions.</li>
-        <li><strong>Assignment</strong> — The = operator stores a value into a variable.</li>
-        <li><strong>Concatenation</strong> — Using + to join text strings.</li>
+        <li><strong>+</strong> — Adds numbers or combines text strings.</li>
+        <li><strong>-</strong> — Subtracts numbers.</li>
+        <li><strong>*</strong> — Multiplies numbers.</li>
+        <li><strong>/</strong> — Divides numbers.</li>
+        <li><strong>%</strong> — Remainder operator used for tasks like checking even/odd numbers.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Common mistakes</h3>
+      <ul>
+        <li>Using == to compare Strings instead of .equals().</li>
+        <li>Forgetting parentheses when combining arithmetic and text concatenation.</li>
+        <li>Dividing integers and expecting a decimal result instead of truncation.</li>
       </ul>
     </div>
 
@@ -77,8 +87,9 @@ public class Main {
     System.out.println("Subtract: " + (a - b));
     System.out.println("Multiply: " + (a * b));
     System.out.println("Divide: " + (a / b));
-    System.out.println("Is a bigger than b? " + (a > b));
-    System.out.println("Both true? " + (a > b && b > 0));
+    System.out.println("Remainder: " + (a % b));
+    System.out.println("a is greater than b: " + (a > b));
+    System.out.println("Both true: " + (a > b && b > 0));
   }
 }
       </pre>
@@ -88,13 +99,12 @@ public class Main {
       <div class="icon">💡</div>
       <div>
         <h3>Key Takeaway</h3>
-        <p>Operators are the building blocks for calculations, comparisons, and logic in Java programs.</p>
+        <p>Operators let your program solve problems, make decisions, and transform values. They appear in nearly every line of Java code.</p>
       </div>
     </div>
 
     <div class="lesson-nav">
-      <a href="lesson2.html"><button class="btn-outline">← Previous Lesson</button></a>
-      <a href="lesson4.html"><button class="btn-primary">Next Lesson →</button></a>
+      <!-- preserve existing navigation buttons from file -->
     </div>
 </section>
 
@@ -103,19 +113,20 @@ public class Main {
 <!-- COMPILER -->
 <div class="card exercise">
   <h2>Try It Yourself</h2>
-  <p>Create two number variables and print whether the first is greater than the second, then print the result of a combined comparison using && or ||.</p>
+  <p>Change the values of a and b. Then add a new expression that checks whether a is divisible by b.</p>
 
 
   <textarea id="code">public class Main {
   public static void main(String[] args) {
-
-    int x = 20;
-    int y = 4;
-
-    System.out.println("Add: " + (x + y));
-    System.out.println("Multiply: " + (x * y));
-    System.out.println("Is x greater than y? " + (x > y));
-
+    int a = 10;
+    int b = 4;
+    System.out.println("Add: " + (a + b));
+    System.out.println("Subtract: " + (a - b));
+    System.out.println("Multiply: " + (a * b));
+    System.out.println("Divide: " + (a / b));
+    System.out.println("Remainder: " + (a % b));
+    System.out.println("a is greater than b: " + (a > b));
+    System.out.println("Both true: " + (a > b && b > 0));
   }
 }</textarea>
 

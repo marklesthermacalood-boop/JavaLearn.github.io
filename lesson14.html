@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Lesson 1</title>
+  <title>Lesson 14 - Recursion</title>
   <link rel="stylesheet" href="styles.css">
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
@@ -11,10 +11,8 @@
   <script src="firebase-config.js"></script>
   <script src="firebase-auth.js"></script>
 </head>
-
 <body>
 
-<!-- NAVBAR -->
 <header>
   <div class="logo">☕ JavaLearn Hub</div>
   <nav>
@@ -24,56 +22,54 @@
   </nav>
 </header>
 
-<!-- HERO / TITLE -->
 <section class="lesson-hero">
   <div class="hero-content">
-    <div class="icon">☕</div>
+    <div class="icon">↪️</div>
     <div>
-      <h1>Lesson 1: What is Java?</h1>
-      <p class="breadcrumb">Home > Lessons > Lesson 1</p>
+      <h1>Lesson 14: Recursion</h1>
+      <p class="breadcrumb">Home > Lessons > Lesson 14</p>
     </div>
   </div>
 </section>
 
-<!-- CONTENT -->
 <section class="lesson-content">
     <div class="card intro">
-      <h2>Lesson 1: What is Java?</h2>
-      <p>Java is a popular programming language with strong support for portability, reliability, and performance. It runs on many platforms because Java programs are compiled to bytecode that can execute inside the Java Virtual Machine (JVM).</p>
+      <h2>Lesson 14: Recursion</h2>
+      <p>Recursion is a technique where a method calls itself. It is useful for problems like factorials, tree traversal, and breaking large problems into smaller pieces.</p>
     </div>
 
     <div class="card">
       <h3>What you will learn</h3>
       <ul>
-        <li>How Java code is written, compiled, and executed.</li>
-        <li>What makes Java platform-independent, and why that matters.</li>
-        <li>The role of the JVM, JRE, and JDK in Java development.</li>
-        <li>How Java differs from languages that compile directly to machine code.</li>
+        <li>Write recursive methods with a base case and a recursive step.</li>
+        <li>Understand how the call stack stores each recursive call.</li>
+        <li>Use recursion carefully to avoid infinite loops.</li>
+        <li>See problems that recursion solves more naturally than loops.</li>
       </ul>
     </div>
 
     <div class="card">
       <h3>Why this matters</h3>
-      <p>Java is used in web applications, Android apps, enterprise systems, and desktop tools. Learning Java gives you a foundation for writing robust applications and understanding many software systems.</p>
+      <p>Some problems are easier to express recursively than with loops. Recursion is a core concept in algorithms and data structures.</p>
     </div>
 
     <div class="card">
       <h3>Important concepts</h3>
       <ul>
-        <li><strong>Java source code</strong> — Lines of code saved in .java files, written by developers.</li>
-        <li><strong>Compilation</strong> — Translating source code into bytecode using the Java compiler.</li>
-        <li><strong>Bytecode</strong> — Platform-neutral Java instructions that run on the JVM.</li>
-        <li><strong>JVM</strong> — Java Virtual Machine that executes bytecode on different platforms.</li>
-        <li><strong>main method</strong> — The entry point of most Java programs: public static void main(String[] args).</li>
+        <li><strong>Recursive call</strong> — A method calling itself.</li>
+        <li><strong>Base case</strong> — The condition that stops recursion.</li>
+        <li><strong>Call stack</strong> — Where Java remembers each method call.</li>
+        <li><strong>Infinite recursion</strong> — When the base case never occurs.</li>
+        <li><strong>Divide and conquer</strong> — Solving a large problem by solving smaller ones.</li>
       </ul>
     </div>
 
     <div class="card">
       <h3>Common mistakes</h3>
       <ul>
-        <li>Confusing Java source code with bytecode; Java programs must be compiled first.</li>
-        <li>Thinking Java runs directly on hardware instead of inside the JVM.</li>
-        <li>Assuming all Java files are executable without compiling them.</li>
+        <li>Missing or incorrect base cases that cause infinite recursion.</li>
+        <li>Using recursion where a simple loop is clearer.</li>
+        <li>Not realizing that recursion can use more memory than loops.</li>
       </ul>
     </div>
 
@@ -82,7 +78,22 @@
       <pre>
 public class Main {
   public static void main(String[] args) {
-    System.out.println("Java is running!");
+    System.out.println("Factorial of 5: " + factorial(5));
+    System.out.println("Fibonacci of 6: " + fibonacci(6));
+  }
+
+  public static int factorial(int n) {
+    if (n <= 1) {
+      return 1;
+    }
+    return n * factorial(n - 1);
+  }
+
+  public static int fibonacci(int n) {
+    if (n <= 1) {
+      return n;
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2);
   }
 }
       </pre>
@@ -92,7 +103,7 @@ public class Main {
       <div class="icon">💡</div>
       <div>
         <h3>Key Takeaway</h3>
-        <p>Java is used in web applications, Android apps, enterprise systems, and desktop tools. Learning Java gives you a foundation for writing robust applications and understanding many software systems.</p>
+        <p>Some problems are easier to express recursively than with loops. Recursion is a core concept in algorithms and data structures.</p>
       </div>
     </div>
 
@@ -101,17 +112,28 @@ public class Main {
     </div>
 </section>
 
-
-
 <div class="card exercise">
   <h2>Java Compiler</h2>
-  <p>Update the message in System.out.println to describe your favorite programming topic. Then run the program to see the output change.</p>
-
- 
+  <p>Increase the input to factorial or fibonacci and run the code. Then add a recursive method for counting down from a number to zero.</p>
 
   <textarea id="code">public class Main {
   public static void main(String[] args) {
-    System.out.println("Java is running!");
+    System.out.println("Factorial of 5: " + factorial(5));
+    System.out.println("Fibonacci of 6: " + fibonacci(6));
+  }
+
+  public static int factorial(int n) {
+    if (n <= 1) {
+      return 1;
+    }
+    return n * factorial(n - 1);
+  }
+
+  public static int fibonacci(int n) {
+    if (n <= 1) {
+      return n;
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2);
   }
 }</textarea>
 
@@ -137,7 +159,7 @@ async function runCode() {
       body: JSON.stringify({ code }),
     });
 
-        let result;
+    let result;
     const contentType = response.headers.get("content-type") || "";
     if (!response.ok) {
       const text = await response.text();
@@ -150,24 +172,21 @@ async function runCode() {
       throw new Error(text || "Server returned non-JSON response");
     }
 
-    console.log(result);
-
     if (!result.success) {
-      status.textContent = "? Code failed to compile or run.";
+      status.textContent = "❌ Code failed to compile or run.";
       status.className = "status error";
       output.innerText = result.error;
       return;
     }
 
-    status.textContent = "? Success!";
+    status.textContent = "✅ Success!";
     status.className = "status success";
     output.innerText = result.output;
 
-    // Save score to database
-    saveScore(1, 100);
+    saveScore(14, 100);
 
   } catch (err) {
-    status.textContent = "? Server error.";
+    status.textContent = "❌ Server error.";
     status.className = "status error";
     output.innerText = err.message;
   }
@@ -179,7 +198,7 @@ function resetCode() {
   const status = document.getElementById("status");
 
   if (code) {
-    code.value = `public class Main {\n  public static void main(String[] args) {\n    System.out.println("Hello, Java!");\n  }\n}`;
+    code.value = `public class Main {\n  public static void main(String[] args) {\n    System.out.println("Factorial of 5: " + factorial(5));\n    System.out.println("Fibonacci of 6: " + fibonacci(6));\n  }\n\n  public static int factorial(int n) {\n    if (n <= 1) {\n      return 1;\n    }\n    return n * factorial(n - 1);\n  }\n\n  public static int fibonacci(int n) {\n    if (n <= 1) {\n      return n;\n    }\n    return fibonacci(n - 1) + fibonacci(n - 2);\n  }\n}`;
   }
 
   if (output) {
@@ -191,21 +210,11 @@ function resetCode() {
     status.className = "status";
   }
 }
-
-// Score saving now handled by Firebase (firestore)
-// Use saveScore() from firebase-auth.js when needed
-// Example: await saveScore(1, null, 85, 85, 100);
-
 </script>
 
 <!-- FOOTER -->
 <footer>
-  � 2025 JavaLearn Hub. All rights reserved.
+  © 2025 JavaLearn Hub. All rights reserved.
 </footer>
 </body>
 </html>
-
-
-
-
-

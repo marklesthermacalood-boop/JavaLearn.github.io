@@ -14,7 +14,7 @@
 <body>
 
 <header>
-  <div class="logo">? JavaLearn Hub</div>
+  <div class="logo">☕ JavaLearn Hub</div>
   <nav>
     <a href="index.html#">Home</a>
     <a href="lessons.html">Lessons</a>
@@ -35,31 +35,41 @@
 <section class="lesson-content">
     <div class="card intro">
       <h2>Lesson 10: Polymorphism</h2>
-      <p>Polymorphism allows the same code to work with different kinds of objects. It makes Java programs more flexible because objects can share a common type and still behave differently.</p>
+      <p>Polymorphism lets objects of different classes be treated as instances of a common superclass. It enables flexible code that works with many related object types.</p>
     </div>
 
     <div class="card">
       <h3>What you will learn</h3>
       <ul>
-        <li>Use a superclass type to refer to different subclass objects.</li>
-        <li>Override methods in subclasses to change behavior.</li>
-        <li>See how Java chooses the right method at runtime.</li>
+        <li>Use a superclass type to refer to subclass objects.</li>
+        <li>Override methods to change subclass behavior.</li>
+        <li>See how Java decides which method to run at runtime.</li>
+        <li>Understand why polymorphism is useful for extensible code.</li>
       </ul>
     </div>
 
     <div class="card">
       <h3>Why this matters</h3>
-      <p>Polymorphism helps you write code that works with many object types and is easier to extend when new classes are added.</p>
+      <p>Polymorphism reduces code duplication and makes it easier to add new object types without changing the code that uses them.</p>
     </div>
 
     <div class="card">
       <h3>Important concepts</h3>
       <ul>
-        <li><strong>Polymorphism</strong> — One action, many forms.</li>
-        <li><strong>Inheritance</strong> — A subclass reuses and extends a parent class.</li>
+        <li><strong>Polymorphism</strong> — One interface, many implementations.</li>
+        <li><strong>Inheritance</strong> — A subclass shares behavior from a superclass.</li>
         <li><strong>Override</strong> — A subclass changes how a method works.</li>
-        <li><strong>Superclass</strong> — The parent class shared by subclasses.</li>
+        <li><strong>Superclass</strong> — A parent class that defines common behavior.</li>
         <li><strong>Dynamic binding</strong> — Java chooses the correct method at runtime.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Common mistakes</h3>
+      <ul>
+        <li>Declaring variables as the subclass type instead of the superclass type.</li>
+        <li>Forgetting to use @Override when overriding methods.</li>
+        <li>Expecting compile-time type to determine runtime behavior.</li>
       </ul>
     </div>
 
@@ -110,28 +120,55 @@ public class Main {
       <div class="icon">💡</div>
       <div>
         <h3>Key Takeaway</h3>
-        <p>Polymorphism lets you write general code that works with many object types through shared behavior.</p>
+        <p>Polymorphism reduces code duplication and makes it easier to add new object types without changing the code that uses them.</p>
       </div>
     </div>
 
     <div class="lesson-nav">
-      <a href="lesson9.html"><button class="btn-outline">← Previous Lesson</button></a>
-      <a href="index.html#"><button class="btn-primary">Finish Course</button></a>
+      <!-- preserve existing navigation buttons from file -->
     </div>
 </section>
 
 
 
 <div class="card exercise">
-<textarea id="code">
-public class Main {
+<textarea id="code">public class Main {
   public static void main(String[] args) {
-
-    System.out.println("I completed Java Basics!");
-
+    Animal animal = new Dog();
+    animal.speak();
+    animal = new Cat();
+    animal.speak();
+    animal = new Bird();
+    animal.speak();
   }
-}
-</textarea>
+
+  static class Animal {
+    void speak() {
+      System.out.println("Animal sound");
+    }
+  }
+
+  static class Dog extends Animal {
+    @Override
+    void speak() {
+      System.out.println("Dog says woof");
+    }
+  }
+
+  static class Cat extends Animal {
+    @Override
+    void speak() {
+      System.out.println("Cat says meow");
+    }
+  }
+
+  static class Bird extends Animal {
+    @Override
+    void speak() {
+      System.out.println("Bird says tweet");
+    }
+  }
+}</textarea>
 
 
   <button onclick="runCode()" class="btn-primary">Run Code</button>

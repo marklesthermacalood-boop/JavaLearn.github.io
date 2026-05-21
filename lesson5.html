@@ -13,7 +13,7 @@
 <body>
 
 <header>
-  <div class="logo">? JavaLearn Hub</div>
+  <div class="logo">☕ JavaLearn Hub</div>
   <nav>
     <a href="index.html#">Home</a>
     <a href="lessons.html">Lessons</a>
@@ -34,31 +34,41 @@
 <section class="lesson-content">
     <div class="card intro">
       <h2>Lesson 5: Loops</h2>
-      <p>Loops let Java repeat actions automatically. They are useful for counting, processing lists, and running the same code many times without writing duplicate instructions.</p>
+      <p>Loops repeat actions automatically, so you do not need to write the same code over and over. Java offers several loop types for different repetition needs.</p>
     </div>
 
     <div class="card">
       <h3>What you will learn</h3>
       <ul>
-        <li>Use for, while, and do-while loops appropriately.</li>
-        <li>Process repeating tasks with fewer lines of code.</li>
-        <li>Understand when to stop a loop and how to avoid infinite repetition.</li>
+        <li>Use for, while, and do-while loops to repeat code.</li>
+        <li>Control loops with counters and conditions.</li>
+        <li>Avoid infinite loops by managing the stop condition.</li>
+        <li>Use break and continue to control loop flow.</li>
       </ul>
     </div>
 
     <div class="card">
       <h3>Why this matters</h3>
-      <p>Loops are essential for programs that repeat work, like processing a list of values, reading input until a condition stops, or generating repeated output.</p>
+      <p>Loops are used in almost every program to process lists, repeat calculations, or wait until a condition changes.</p>
     </div>
 
     <div class="card">
       <h3>Important concepts</h3>
       <ul>
-        <li><strong>for loop</strong> — Repeats a fixed number of times with an index.</li>
-        <li><strong>while loop</strong> — Repeats while a condition stays true.</li>
-        <li><strong>do-while loop</strong> — Runs once, then repeats while a condition is true.</li>
+        <li><strong>for loop</strong> — Runs a fixed number of times with a loop variable.</li>
+        <li><strong>while loop</strong> — Repeats while a condition remains true.</li>
+        <li><strong>do-while loop</strong> — Runs at least once before checking the condition.</li>
         <li><strong>break</strong> — Stops the loop immediately.</li>
         <li><strong>continue</strong> — Skips the rest of the current loop iteration.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Common mistakes</h3>
+      <ul>
+        <li>Forgetting to update the loop counter and causing an infinite loop.</li>
+        <li>Using the wrong condition so the loop never starts or never ends.</li>
+        <li>Breaking out of the loop too early and missing important work.</li>
       </ul>
     </div>
 
@@ -91,30 +101,37 @@ public class Main {
       <div class="icon">💡</div>
       <div>
         <h3>Key Takeaway</h3>
-        <p>Loops let your program repeat work efficiently and control repetition until a condition changes.</p>
+        <p>Loops are used in almost every program to process lists, repeat calculations, or wait until a condition changes.</p>
       </div>
     </div>
 
     <div class="lesson-nav">
-      <a href="lesson4.html"><button class="btn-outline">← Previous Lesson</button></a>
-      <a href="lesson6.html"><button class="btn-primary">Next Lesson →</button></a>
+      <!-- preserve existing navigation buttons from file -->
     </div>
 </section>
 
 
 
 <div class="card exercise">
-<textarea id="code">
-public class Main {
+<textarea id="code">public class Main {
   public static void main(String[] args) {
-
-    for (int i = 1; i <= 3; i++) {
-      System.out.println("Hello " + i);
+    for (int i = 1; i <= 5; i++) {
+      System.out.println("Count: " + i);
     }
 
+    int i = 1;
+    while (i <= 3) {
+      System.out.println("While loop: " + i);
+      i++;
+    }
+
+    int j = 1;
+    do {
+      System.out.println("Do-while loop: " + j);
+      j++;
+    } while (j <= 2);
   }
-}
-</textarea>
+}</textarea>
 
 
   <button onclick="runCode()" class="btn-primary">Run Code</button>

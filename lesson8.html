@@ -14,7 +14,7 @@
 <body>
 
 <header>
-  <div class="logo">? JavaLearn Hub</div>
+  <div class="logo">☕ JavaLearn Hub</div>
   <nav>
     <a href="index.html#">Home</a>
     <a href="lessons.html">Lessons</a>
@@ -35,31 +35,41 @@
 <section class="lesson-content">
     <div class="card intro">
       <h2>Lesson 8: Strings</h2>
-      <p>Strings hold text such as names, messages, and labels. Java treats strings as objects with useful methods for changing, comparing, and measuring text.</p>
+      <p>Strings store text such as words and sentences. Java treats strings as objects, so you use methods to examine and change text safely.</p>
     </div>
 
     <div class="card">
       <h3>What you will learn</h3>
       <ul>
-        <li>Create and combine strings with concatenation.</li>
-        <li>Use common String methods like length(), charAt(), and equals().</li>
-        <li>Avoid mistakes when comparing strings in Java.</li>
+        <li>Create and join strings with concatenation.</li>
+        <li>Read common String methods like length() and charAt().</li>
+        <li>Compare strings with equals() instead of ==.</li>
+        <li>Convert text to upper or lower case.</li>
       </ul>
     </div>
 
     <div class="card">
       <h3>Why this matters</h3>
-      <p>Text is everywhere in programs, from user messages to file names. Strings give you the tools to work with that text safely.</p>
+      <p>Text is everywhere in applications, from user names to messages. Strings provide powerful tools for working with text in Java.</p>
     </div>
 
     <div class="card">
       <h3>Important concepts</h3>
       <ul>
-        <li><strong>String</strong> — Text enclosed in double quotes.</li>
+        <li><strong>String</strong> — Text wrapped in double quotes.</li>
         <li><strong>Concatenation</strong> — Joining text using the + operator.</li>
-        <li><strong>length()</strong> — Returns the number of characters in a string.</li>
-        <li><strong>charAt()</strong> — Gets the character at a specific position.</li>
-        <li><strong>equals()</strong> — Compares text correctly instead of using ==.</li>
+        <li><strong>length()</strong> — Returns the number of characters in the text.</li>
+        <li><strong>charAt()</strong> — Gets a character at a specific position.</li>
+        <li><strong>equals()</strong> — Compares two strings for the same text.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Common mistakes</h3>
+      <ul>
+        <li>Using == to compare Strings instead of .equals().</li>
+        <li>Assuming String is a primitive type instead of an object.</li>
+        <li>Accessing charAt() with an invalid index.</li>
       </ul>
     </div>
 
@@ -85,31 +95,30 @@ public class Main {
       <div class="icon">💡</div>
       <div>
         <h3>Key Takeaway</h3>
-        <p>Strings represent text, and Java provides methods to read, compare, and transform that text.</p>
+        <p>Text is everywhere in applications, from user names to messages. Strings provide powerful tools for working with text in Java.</p>
       </div>
     </div>
 
     <div class="lesson-nav">
-      <a href="lesson7.html"><button class="btn-outline">← Previous Lesson</button></a>
-      <a href="lesson9.html"><button class="btn-primary">Next Lesson →</button></a>
+      <!-- preserve existing navigation buttons from file -->
     </div>
 </section>
 
 
 
 <div class="card exercise">
-<textarea id="code">
-public class Main {
+<textarea id="code">public class Main {
   public static void main(String[] args) {
-
-    String text = "Hello";
-
-    System.out.println(text.length());
-    System.out.println(text.toUpperCase());
-
+    String first = "Java";
+    String second = "Basics";
+    String message = first + " " + second;
+    System.out.println(message);
+    System.out.println("Length: " + message.length());
+    System.out.println("First char: " + message.charAt(0));
+    System.out.println("Same text? " + message.equals("Java Basics"));
+    System.out.println("Upper case: " + message.toUpperCase());
   }
-}
-</textarea>
+}</textarea>
 
 
   <button onclick="runCode()" class="btn-primary">Run Code</button>

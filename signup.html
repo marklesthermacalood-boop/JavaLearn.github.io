@@ -122,7 +122,7 @@ button:hover {
 <body>
 
 <header>
-  <div class="logo">? JavaLearn Hub</div>
+  <div class="logo">☕ JavaLearn Hub</div>
 
   <nav>
     <a href="index.html">Home</a>
@@ -183,7 +183,7 @@ async function signupUser() {
 
   if (!username || !email || !password) {
     messageDiv.style.display = "block";
-    messageDiv.textContent = "?? Please fill in all fields!";
+    messageDiv.textContent = "⚠️ Please fill in all fields!";
     messageDiv.style.background = "rgba(239, 68, 68, 0.12)";
     messageDiv.style.color = "#fecaca";
     return;
@@ -191,7 +191,7 @@ async function signupUser() {
 
   if (password.length < 6) {
     messageDiv.style.display = "block";
-    messageDiv.textContent = "?? Password must be at least 6 characters!";
+    messageDiv.textContent = "⚠️ Password must be at least 6 characters!";
     messageDiv.style.background = "rgba(239, 68, 68, 0.12)";
     messageDiv.style.color = "#fecaca";
     return;
